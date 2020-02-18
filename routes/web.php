@@ -14,3 +14,13 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/manage', 'ManageController@index')->name('manage');
+
+Route::get('/manage/member', 'MemberController@show')->name('member');
+Route::get('/manage/member/edit/{id}', 'MemberController@edit')->name('member.edit');
+Route::put('/manage/member/update/{id}', 'MemberController@update')->name('member.update');
+Route::get('/manage/member/delete/{id}', 'MemberController@destroy')->name('member.delete');
