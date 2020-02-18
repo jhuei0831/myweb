@@ -6,9 +6,14 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 use App\User;
 class MemberController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -26,7 +31,7 @@ class MemberController extends Controller
      */
     public function create()
     {
-        //
+        return view('manage.member.create');
     }
 
     /**
@@ -37,7 +42,20 @@ class MemberController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // echo $request->input("name") . "<br/>";
+
+        $user = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:1', 'confirmed'],
+            'permission' => ['required', 'string', 'max:1'],
+        ]);
+       
+        if ($user) {
+            User::create($request->all());
+        } 
+
+        return back()->with('success','Item created successfully!');
     }
 
     /**
@@ -48,7 +66,7 @@ class MemberController extends Controller
      */
     public function show()
     {
-        $users = User::paginate(10);
+        $users = DB::table('users')->paginate(10);
         return view('manage.member.index',compact('users'));
     }
 
@@ -60,6 +78,10 @@ class MemberController extends Controller
      */
     public function edit($id)
     {
+        $login_data = User::where('id', Auth::id())->first();
+        if ($login_data->permission < '3') {
+            return back()->with('warning', 'Permission denied!');
+        }
         $user = User::where('id',$id)->first();
         return view('manage.member.edit',compact('user'));
     }
@@ -75,11 +97,11 @@ class MemberController extends Controller
     {
         $user = User::where('id',$id)->first();
 
-        if ($request->input('password') !== 'null') {
+        if ($request->input('password')) {
                 $data = $this->validate($request, [
                 'name' => 'required',
                 'email' => 'required',
-                'permission' => ['required', 'integer', 'min:1','max:5'],
+                'permission' => ['required', 'integer', 'min:0','max:5'],
                 'password' => ['required', 'string', 'min:8', 'confirmed'],
             ]);
             $user->name = $data['name'];
@@ -91,7 +113,7 @@ class MemberController extends Controller
             $data = $this->validate($request, [
                 'name' => 'required',
                 'email' => 'required',
-                'permission' => ['required', 'integer', 'min:1','max:5'],
+                'permission' => ['required', 'integer', 'min:0','max:5'],
             ]);
             $user->name = $data['name'];
             $user->email = $data['email'];
@@ -111,6 +133,10 @@ class MemberController extends Controller
      */
     public function destroy($id)
     {
+        $login_data = User::where('id', Auth::id())->first();
+        if ($login_data->permission < '5') {
+            return back()->with('warning', 'Permission denied!');
+        }
         User::destroy($id);
         return redirect()->route('member');
     }
