@@ -1,7 +1,7 @@
 <?php
 
 namespace App;
-
+use URL;
 use Illuminate\Database\Eloquent\Model;
 
 class Button extends Model
@@ -14,15 +14,17 @@ class Button extends Model
 		}
 
 		public static function Deleting($id)
-		{						
-			echo "<a class='btn btn-xs btn-danger btn-delete' href='/manage/member/delete/{$id}'>";
+		{		
+			$url = URL::full();				
+			echo "<a class='btn btn-xs btn-danger btn-delete' onclick=\"return confirm('確認刪除?')\" href='{$url}/delete/{$id}'>";
 			echo 	"<i class='fas fa-trash-alt'></i> 刪除";
 			echo "</a>";		
 		}
 
 		public static function Edit($id)
 		{
-			echo "<a class='btn btn-xs btn-success' href='/manage/member/edit/{$id}'>";
+			$url = URL::full();
+			echo "<a class='btn btn-xs btn-success' href='{$url}/edit/{$id}'>";
 			echo 	"<i class='fas fa-pencil-alt'></i> 修改";
 			echo "</a>";
 		}
