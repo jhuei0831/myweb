@@ -42,3 +42,4 @@ If you want to work on this project on your local machine, you may follow the in
     ```bash
     php artisan db:seed --class=DatabaseSeeder
     ```
+    

@@ -21,5 +21,16 @@
     "Permission": "權限",
     "Create": "新增",
     "Action": "動作",
-    "Member manage": "會員管理"
+    "Member manage": "會員管理",
+    "Member Create": "會員新增",
+    "Page Create": "會員新增",
+    "Page manage": "頁面管理",
+    "Page name": "頁面名稱",
+    "Manage": "管理後台",
+    "Fontstage": "前台頁面",
+    "Title": "標題",
+    "Content": "內容",
+    "Is_open": "是否開放",
+    "Yes": "是",
+    "No": "否"
 }

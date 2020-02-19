@@ -26,3 +26,6 @@ Route::post('/manage/member/store', 'MemberController@store')->name('member.stor
 Route::get('/manage/member/edit/{id}', 'MemberController@edit')->name('member.edit');
 Route::put('/manage/member/update/{id}', 'MemberController@update')->name('member.update');
 Route::get('/manage/member/delete/{id}', 'MemberController@destroy')->name('member.delete');
+
+Route::get('/manage/page', 'PageController@index')->name('page');
+Route::get('/manage/page/create', 'PageController@create')->name('page.create');

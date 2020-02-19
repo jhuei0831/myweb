@@ -42,8 +42,9 @@ class MemberController extends Controller
      */
     public function store(Request $request)
     {
-        // echo $request->input("name") . "<br/>";
-
+        if (Auth::check() && Auth::user()->permission < '5') {
+            return back()->with('warning', '權限不足以訪問該頁面 !');
+        }
         $user = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
@@ -55,7 +56,7 @@ class MemberController extends Controller
             User::create($request->all());
         } 
 
-        return back()->with('success','Item created successfully!');
+        return back()->with('success','會員新增成功 !');
     }
 
     /**
@@ -66,6 +67,10 @@ class MemberController extends Controller
      */
     public function show()
     {
+        if (Auth::check() && Auth::user()->permission < '5') {
+            return back()->with('warning', '權限不足以訪問該頁面 !');
+        }
+
         $users = DB::table('users')->paginate(10);
         return view('manage.member.index',compact('users'));
     }
@@ -78,9 +83,8 @@ class MemberController extends Controller
      */
     public function edit($id)
     {
-        $login_data = User::where('id', Auth::id())->first();
-        if ($login_data->permission < '3') {
-            return back()->with('warning', 'Permission denied!');
+        if (Auth::check() && Auth::user()->permission < '5') {
+            return back()->with('warning', '權限不足以訪問該頁面 !');
         }
         $user = User::where('id',$id)->first();
         return view('manage.member.edit',compact('user'));
@@ -122,7 +126,8 @@ class MemberController extends Controller
         
         $user->save();
 
-        return redirect()->route('member');
+        return back()->with('success', '會員更新成功 !');
+
     }
 
     /**
@@ -138,6 +143,6 @@ class MemberController extends Controller
             return back()->with('warning', 'Permission denied!');
         }
         User::destroy($id);
-        return redirect()->route('member');
+        return back()->with('success', '會員刪除成功 !');
     }
 }
