@@ -25,13 +25,17 @@ If you want to work on this project on your local machine, you may follow the in
     cp .env.example .env
     ```
 7. ```bash
+
     php artisan key:generate
     ```
 8. Set up database
+
     ```bash
     php artisan migrate
     ```
 9. Insert account in database, email:`admin@gmail.com`,password:`admin`
+
     ```bash
     php artisan db:seed --class=DatabaseSeeder
     ```
+    

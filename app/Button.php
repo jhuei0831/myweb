@@ -48,9 +48,8 @@ class Button extends Model
 		public static function GoBack($url = "#")
 		{
 			$current_url = $_SERVER["HTTP_HOST"].$_SERVER["REQUEST_URI"];
-			$target_url = (isset($_SERVER["HTTP_REFERER"]) && 
-				strpos($_SERVER["HTTP_REFERER"], $current_url) === false) ? $_SERVER["HTTP_REFERER"] : $url;
-
+			$target_url = URL::previous();
+			
 			echo "<a class='btn btn-xs btn-default' href='{$target_url}'>";
 			echo 	"<i class='fas fa-arrow-left'></i> 上一頁";
 			echo "</a>";
