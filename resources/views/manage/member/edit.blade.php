@@ -9,7 +9,7 @@
                     
                 <div class="card-body">
                 	<ul class="list-unstyled">
-						<li>{{ App\Button::GoBack() }}</li>
+						<li>{{ App\Button::GoBack(route('member')) }}</li>
 					</ul>
                 	<form method="POST" action="{{ route('member.update' , $user->id) }}">
                 		@csrf
@@ -60,7 +60,7 @@
                             <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
 
                             <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password"  autocomplete="new-password" value="{{ old('password') }}">
+                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password"  autocomplete="new-password">
 
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">
@@ -74,7 +74,7 @@
                             <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
 
                             <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation"  autocomplete="new-password" value="{{ old('password-confirm') }}">
+                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation"  autocomplete="new-password">
                             </div>
                         </div>
 

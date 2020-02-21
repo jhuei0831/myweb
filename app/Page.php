@@ -11,6 +11,6 @@ class Page extends Model
     protected $primaryKey = 'id';
 
     protected $fillable = [
-        "name", "title", "content", "is_open",
+        "name", "title", "url", "content", "is_open",
     ];
 }

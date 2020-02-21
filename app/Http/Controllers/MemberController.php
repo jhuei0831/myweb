@@ -31,6 +31,9 @@ class MemberController extends Controller
      */
     public function create()
     {
+        if (Auth::check() && Auth::user()->permission < '5') {
+            return back()->with('warning', '權限不足以訪問該頁面 !');
+        }
         return view('manage.member.create');
     }
 
@@ -49,7 +52,7 @@ class MemberController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:1', 'confirmed'],
-            'permission' => ['required', 'string', 'max:1'],
+            'permission' => ['required', 'string', 'max:5', 'min:0'],
         ]);
        
         if ($user) {
@@ -99,31 +102,47 @@ class MemberController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $user = User::where('id',$id)->first();
+        if (Auth::check() && Auth::user()->permission < '5') {
+            return back()->with('warning', '權限不足以訪問該頁面 !');
+        }
 
-        if ($request->input('password')) {
+        $user = User::where('id',$id)->first();        
+
+        // 如果有輸入密碼
+        if ($request->filled('password')) {
                 $data = $this->validate($request, [
-                'name' => 'required',
-                'email' => 'required',
-                'permission' => ['required', 'integer', 'min:0','max:5'],
-                'password' => ['required', 'string', 'min:8', 'confirmed'],
+                'name' => ['required', 'string', 'max:255'],
+                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+                'password' => ['required', 'string', 'min:1', 'confirmed'],
+                'permission' => ['required', 'string', 'max:5', 'min:0'],
             ]);
-            $user->name = $data['name'];
-            $user->email = $data['email'];
-            $user->permission = $data['permission'];
-            $user->password = Hash::make($data['password']);
+
+            foreach ($request->except('_token','_method','password_confirmation') as $key => $value) {
+                if ($request->filled($key) && $key == 'password') {
+                    $user->password = Hash::make($data['password']);
+                }
+                elseif ($request->filled($key)) {
+                    $user->$key = strip_tags(clean($data[$key]));
+                }
+            }
         }
         else{
+
             $data = $this->validate($request, [
-                'name' => 'required',
-                'email' => 'required',
-                'permission' => ['required', 'integer', 'min:0','max:5'],
+                'name' => ['required', 'string', 'max:255'],
+                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+                'permission' => ['required', 'string', 'max:5', 'min:0'],
             ]);
-            $user->name = $data['name'];
-            $user->email = $data['email'];
-            $user->permission = $data['permission'];
+
+            // 逐筆進行htmlpurufier 並去掉<p></p>
+            foreach ($request->except('_token','_method') as $key => $value) {
+                if ($request->filled($key)) {
+                    $user->$key = strip_tags(clean($data[$key]));
+                }
+            }
         }
         
+        // 儲存資料
         $user->save();
 
         return back()->with('success', '會員更新成功 !');
@@ -138,10 +157,10 @@ class MemberController extends Controller
      */
     public function destroy($id)
     {
-        $login_data = User::where('id', Auth::id())->first();
-        if ($login_data->permission < '5') {
-            return back()->with('warning', 'Permission denied!');
+        if (Auth::check() && Auth::user()->permission < '5') {
+            return back()->with('warning', '權限不足以訪問該頁面 !');
         }
+        
         User::destroy($id);
         return back()->with('success', '會員刪除成功 !');
     }

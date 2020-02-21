@@ -29,8 +29,11 @@
     "Manage": "管理後台",
     "Fontstage": "前台頁面",
     "Title": "標題",
+    "Page url": "頁面網址",
     "Content": "內容",
     "Is_open": "是否開放",
     "Yes": "是",
-    "No": "否"
+    "No": "否",
+    "Please check the form below for errors": "請檢查表單內的錯誤 !",
+    "Navbar manage": "導覽列管理"
 }

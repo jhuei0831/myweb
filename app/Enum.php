@@ -15,4 +15,15 @@ class Enum extends Model
         '5' => '所有權限',
     ];
 
+    const is_open = [
+    	'0' => 'times',
+    	'1' => 'check',
+    ];
+
+    const type =[
+    	'navbar' => [
+    		'1' => '導覽目錄',
+    		'2' => '一般頁面',
+    	],
+    ];
 }

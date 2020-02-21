@@ -8,7 +8,7 @@
                     <div class="card-header">{{ __('Member Create') }}</div>
                     <div class="card-body">  
                         <ul class="list-unstyled">
-                            <li>{{ App\Button::GoBack() }}</li>
+                            <li>{{ App\Button::GoBack(route('member')) }}</li>
                         </ul>                 
                         @csrf
                         <div class="form-group row">
@@ -63,7 +63,7 @@
                         </div>            
                     </div>
                     <div class="card-footer text-center">
-                        <input type="submit" class="btn btn-primary" value="{{ __('Submit') }}">
+                        <input type="submit" class="btn btn-primary" value="{{ __('Create') }}">
                     </div>
                 </form>
             </div>

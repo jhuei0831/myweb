@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePagesTable extends Migration
+class CreateNavbarsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,17 @@ class CreatePagesTable extends Migration
      */
     public function up()
     {
-        Schema::create('pages', function (Blueprint $table) {
+        Schema::create('navbars', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name')->comment('頁面名稱');
-            $table->string('title')->comment('標題');
-            $table->string('url')->comment('頁面網址');
-            $table->text('content')->comment('頁面內容');
+            $table->unsignedBigInteger('page_id')->comment('頁面id');
+            $table->foreign('page_id')->references('id')->on('pages');
+            $table->string('name')->comment('導覽名稱');
+            $table->string('link')->comment('對外連結');
+            $table->integer('type')->comment('類型');
+            $table->integer('sort')->comment('排序');
             $table->boolean('is_open')->default(true)->comment('是否開放');
-            $table->boolean('is_slide')->default(true)->comment('是否輪播');
             $table->timestamps();
         });
-
     }
 
     /**
@@ -33,6 +33,6 @@ class CreatePagesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pages');
+        Schema::dropIfExists('navbars');
     }
 }
