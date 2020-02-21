@@ -1,18 +1,19 @@
 @extends('_layouts.manage.app')
+
 @section('content')
 <div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <form action="{{ route('page.store') }}" method="POST">
-                    <div class="card-header">{{ __('Page Create') }}</div>
+                <form action="{{ route('navbar.store') }}" method="POST">
+                    <div class="card-header">{{ __('Navbar Create') }}</div>
                     <div class="card-body">  
                         <ul class="list-unstyled">
-                            <li>{{ App\Button::GoBack(route('page')) }}</li>
+                            <li>{{ App\Button::GoBack(route('navbar')) }}</li>
                         </ul>                 
                         @csrf
                         <div class="form-group row">
-                            <label for="name" class="col-sm-1 col-form-label">{{ __('Page name') }}</label>
+                            <label for="name" class="col-sm-2 col-form-label">{{ __('Navbar name') }}</label>
                             <div class="col-sm-4">
                                 <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ old('name') }}" placeholder="{{ __('Page name') }}">
                                 @error('name')
@@ -23,10 +24,10 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="title" class="col-sm-1 col-form-label">{{ __('Title') }}</label>
+                            <label for="link" class="col-sm-2 col-form-label">{{ __('Link') }}</label>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title" value="{{ old('title') }}" placeholder="{{ __('Title') }}">
-                                @error('title')
+                                <input type="text" class="form-control @error('link') is-invalid @enderror" id="link" name="link" value="{{ old('link') }}" placeholder="{{ __('Link') }}">
+                                @error('link')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -34,7 +35,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="url" class="col-sm-1 col-form-label">{{ __('Page url') }}</label>
+                            <label for="url" class="col-sm-2 col-form-label">{{ __('Page url') }}</label>
                             <div class="col-sm-4">
                                 <input type="text" class="form-control @error('url') is-invalid @enderror" id="url" name="url" value="{{ old('url') }}" placeholder="{{ __('Page url') }}">
                                 @error('url')
@@ -45,13 +46,28 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="content" class="col-sm-1 col-form-label">{{ __('Content') }}</label>
-                            <div class="col-sm-12">
-                                <textarea id="content" name="content" class="form-control ckeditor" ></textarea>
+                            <label for="type" class="col-sm-2 col-form-label">{{ __('Type') }}</label>
+                            <div class="col-sm-8">
+                                <select class='form-control' name='type' required aria-describedby="typeHelp">
+									<option value=''>請選擇類型</option>
+									@foreach(App\Enum::type['navbar'] as $key => $value)
+										<option value='{{ $key }}'>{{ $key }}. {{ $value }}</option>
+									@endforeach
+								</select>
+			                    <span id="typeHelp" class="help-block">
+			                        導覽目錄：顯示選單目錄；</br>
+			                        一般頁面：不顯示選單目錄，直接列出底下的頁面；</br>
+			                        例如：點選[XXX中心]，底下還有簡介和各實驗室等選單細項，或是直接呈現介紹的頁面內容或頁面清單。
+			                    </span>
+                                @error('url')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="is_open" class="col-sm-1 col-form-label">{{ __('Is_open') }}</label>
+                            <label for="is_open" class="col-sm-2 col-form-label">{{ __('Is_open') }}</label>
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="is_open" id="is_open" value="1">
                                 <label class="form-check-label" for="inlineRadio1">{{ __('Yes') }}</label>
@@ -71,10 +87,3 @@
     </div>
 </div>
 @endsection
-<script type="text/javascript">
-         CKEDITOR.replace( 'messageArea',
-         {
-          customConfig : 'config.js',
-          toolbar : 'simple'
-          })
-</script> 

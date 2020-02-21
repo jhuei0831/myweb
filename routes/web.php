@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
 
 Auth::routes();
@@ -29,3 +29,11 @@ Route::get('/manage/member/delete/{id}', 'MemberController@destroy')->name('memb
 
 Route::get('/manage/page', 'PageController@index')->name('page');
 Route::get('/manage/page/create', 'PageController@create')->name('page.create');
+Route::post('/manage/page/store', 'PageController@store')->name('page.store');
+Route::get('/manage/page/edit/{id}', 'PageController@edit')->name('page.edit');
+Route::put('/manage/page/update/{id}', 'PageController@update')->name('page.update');
+Route::get('/manage/page/delete/{id}', 'PageController@destroy')->name('page.delete');
+
+Route::get('/manage/navbar', 'NavbarController@index')->name('navbar');
+Route::get('/manage/navbar/create', 'NavbarController@create')->name('navbar.create');
+Route::post('/manage/navbar/store', 'NavbarController@store')->name('navbar.store');

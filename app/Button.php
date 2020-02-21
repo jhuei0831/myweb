@@ -29,6 +29,14 @@ class Button extends Model
 			echo "</a>";
 		}
 
+		public static function Create()
+		{
+			$url = URL::full();
+			echo "<a class='btn btn-xs btn-primary' href='{$url}/create'>";
+			echo 	"<i class='fas fa-plus'></i> 新增";
+			echo "</a>";
+		}
+
 		public static function Reset()
 		{
 			echo "<p class='text-right'>";
@@ -48,7 +56,7 @@ class Button extends Model
 		public static function GoBack($url = "#")
 		{
 			$current_url = $_SERVER["HTTP_HOST"].$_SERVER["REQUEST_URI"];
-			$target_url = URL::previous();
+			$target_url = ($url) ? $url: URL::previous();
 			
 			echo "<a class='btn btn-xs btn-default' href='{$target_url}'>";
 			echo 	"<i class='fas fa-arrow-left'></i> 上一頁";

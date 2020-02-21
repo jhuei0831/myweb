@@ -8,7 +8,9 @@
                 <div class="card-header">帳號管理</div>
                     
                 <div class="card-body">
-					<p><button type="button" class="btn btn-primary" onclick="location.href='{{ route('member.create') }}'"><i class="fas fa-plus"></i> {{ __('Create') }}</button></p>
+					<ul class="list-unstyled">
+						<li>{{ App\Button::Create() }}</li>
+					</ul>
                 	<table class="table table-hover table-bordered text-center">
 	                	<thead>
 	                		<tr class="active">
