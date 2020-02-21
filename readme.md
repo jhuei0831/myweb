@@ -9,22 +9,18 @@ If you want to work on this project on your local machine, you may follow the in
 1. Fork this repository 
 2. Open your terminal and `cd` to your `~/Sites` folder
 3. Clone your fork into the `~/Sites/laravel` folder, by running the following command *with your username placed into the {username} slot*:
-
     ```bash
     https://github.com/jhuei0831/web.git
     ```
 4. CD into the new directory you just created:
-
     ```bash
-    cd web
+    cd myweb
     ```
 5. Install the composer plugin:
-
     ```bash
     composer update
     ```
 6. Create `.env` file:
-
     ```bash
     cp .env.example .env
     ```
