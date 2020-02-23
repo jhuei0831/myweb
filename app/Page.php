@@ -11,6 +11,11 @@ class Page extends Model
     protected $primaryKey = 'id';
 
     protected $fillable = [
-        "name", "title", "url", "content", "is_open",
+        "name", "navbar_id" ,"title", "url", "content", "is_open",
     ];
+
+    public function navbars()
+    {
+        return $this->belongsTo('App\Navbar');
+    }
 }

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Page;
+use App\Navbar;
 class PageController extends Controller
 {
     public function __construct()
@@ -33,7 +34,8 @@ class PageController extends Controller
         if (Auth::check() && Auth::user()->permission < '2') {
             return back()->with('warning', '權限不足以訪問該頁面 !');
         }
-        return view('manage.page.create');
+        $navbars = Navbar::where('type','=','1')->get();
+        return view('manage.page.create',compact('navbars'));
     }
 
     /**
@@ -83,7 +85,8 @@ class PageController extends Controller
             return back()->with('warning', '權限不足以訪問該頁面 !');
         }
         $page = Page::where('id',$id)->first();
-        return view('manage.page.edit',compact('page'));
+        $navbars = Navbar::where('type', '=', '1')->get();
+        return view('manage.page.edit',compact('page','navbars'));
     }
 
     /**
@@ -103,6 +106,7 @@ class PageController extends Controller
 
         $data = $this->validate($request, [
             'name' => ['required', 'string', 'max:255'],
+            'navbar_id' => ['string', 'max:255'],
             'title' => ['required', 'string', 'max:255'],
             'url' => ['required', 'string', 'max:255'],
             'is_open' => ['required'],

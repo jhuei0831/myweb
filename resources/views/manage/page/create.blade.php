@@ -5,7 +5,7 @@
         <div class="col-md-12">
             <div class="card">
                 <form action="{{ route('page.store') }}" method="POST">
-                    <div class="card-header">{{ __('Page Create') }}</div>
+                    <div class="card-header">{{ __('Page') }}{{ __('Create') }}</div>
                     <div class="card-body">  
                         <ul class="list-unstyled">
                             <li>{{ App\Button::GoBack(route('page')) }}</li>
@@ -20,6 +20,20 @@
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="navbar_id" class="col-sm-1 col-form-label">{{ __('Navbar') }}</label>
+                            <div class="col-sm-4">
+                                <select class='form-control' name='navbar_id' required aria-describedby="navHelp">
+                                    <option value=''>請選擇導覽列</option>
+									@foreach($navbars as $key => $value)
+										<option value='{{ $value['id'] }}'>{{ $value['name'] }}</option>
+									@endforeach
+								</select>
+			                    <span id="navHelp" class="help-block">
+			                        選擇要加入的導覽列項目。
+			                    </span>
                             </div>
                         </div>
                         <div class="form-group row">

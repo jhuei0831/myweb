@@ -15,10 +15,11 @@ class CreatePagesTable extends Migration
     {
         Schema::create('pages', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('navbar_id')->comment('導覽列id');
             $table->string('name')->comment('頁面名稱');
             $table->string('title')->comment('標題');
             $table->string('url')->comment('頁面網址');
-            $table->text('content')->comment('頁面內容');
+            $table->text('content')->nullable()->comment('頁面內容');
             $table->boolean('is_open')->default(true)->comment('是否開放');
             $table->boolean('is_slide')->default(true)->comment('是否輪播');
             $table->timestamps();

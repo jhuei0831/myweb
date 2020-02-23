@@ -27,9 +27,9 @@
 								<tr>
 									<td>{{ $navbar->name }}</td>
 									<td>{{ $navbar->link }}</td>
-									<td>{{ $navbar->type }}</td>
+									<td>{{App\Enum::type['navbar'][$navbar->type]}}</td>
 									<td>{{ $navbar->sort }}</td>
-									<td><i class="fas fa-{{App\Enum::is_open[$navbar->is_open]}}"></i></td>
+									<td><font color="{{App\Enum::is_open['color'][$navbar->is_open]}}"><i class="fas fa-{{App\Enum::is_open['label'][$navbar->is_open]}}"></i></font></td>
 									<td>{{ App\Button::edit($navbar->id) }}
 										{{ App\Button::deleting($navbar->id) }}</td>
 								</tr>

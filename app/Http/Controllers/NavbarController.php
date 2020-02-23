@@ -44,7 +44,20 @@ class NavbarController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if (Auth::check() && Auth::user()->permission < '5') {
+            return back()->with('warning', '權限不足以訪問該頁面 !');
+        }
+        $navbar = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'type' => ['required'],
+            'is_open' => ['required'],          
+        ]);
+
+        if ($navbar) {
+            Navbar::create($request->all());
+        }
+
+        return back()->with('success', '導覽列新增成功 !');
     }
 
     /**
@@ -66,7 +79,11 @@ class NavbarController extends Controller
      */
     public function edit($id)
     {
-        //
+        if (Auth::check() && Auth::user()->permission < '3') {
+            return back()->with('warning', '權限不足以訪問該頁面 !');
+        }
+        $navbar = Navbar::where('id',$id)->first();
+        return view('manage.navbar.edit',compact('navbar'));
     }
 
     /**
@@ -78,7 +95,28 @@ class NavbarController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if (Auth::check() && Auth::user()->permission < '3') {
+            return back()->with('warning', '權限不足以訪問該頁面 !');
+        }
+
+        $navbar = Navbar::where('id', $id)->first();
+
+        $data = $this->validate($request, [
+            'name' => ['required', 'string', 'max:255'],
+            'link' => ['string', 'max:255'],
+            'type' => ['required'],
+            'is_open' => ['required'],
+        ]);
+
+        // 逐筆進行htmlpurufier 並去掉<p></p>
+        foreach ($request->except('_token', '_method') as $key => $value) {
+            if ($request->filled($key)) {
+                $navbar->$key = strip_tags(clean($data[$key]));
+            }
+        }
+
+        $navbar->save();
+        return back()->with('success', '修改導覽列成功 !');
     }
 
     /**
@@ -89,6 +127,11 @@ class NavbarController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if (Auth::check() && Auth::user()->permission < '4') {
+            return back()->with('warning', '權限不足以訪問該頁面 !');
+        }
+        Navbar::destroy($id);
+        return back()->with('success', '刪除導覽列成功 !');
+
     }
 }

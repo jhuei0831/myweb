@@ -37,3 +37,13 @@ Route::get('/manage/page/delete/{id}', 'PageController@destroy')->name('page.del
 Route::get('/manage/navbar', 'NavbarController@index')->name('navbar');
 Route::get('/manage/navbar/create', 'NavbarController@create')->name('navbar.create');
 Route::post('/manage/navbar/store', 'NavbarController@store')->name('navbar.store');
+Route::get('/manage/navbar/edit/{id}', 'NavbarController@edit')->name('navbar.edit');
+Route::put('/manage/navbar/update/{id}', 'NavbarController@update')->name('navbar.update');
+Route::get('/manage/navbar/delete/{id}', 'NavbarController@destroy')->name('navbar.delete');
+
+View::composer(['_partials.home.nav'], function ($view) {
+    $navbars = App\Navbar::all();
+    $pages = App\Page::all();
+    $view->with('navbars',$navbars);
+    $view->with('pages',$pages);
+});

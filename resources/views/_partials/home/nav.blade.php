@@ -12,7 +12,33 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <!-- Left Side Of Navbar -->
             <ul class="navbar-nav mr-auto">
-
+                @foreach ($navbars as $navbar)
+                    @if ($navbar->is_open == '1')
+                        @switch($navbar->type)
+                            @case(1)
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    {{ $navbar->name }}
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    @foreach ($pages as $page)
+                                        @if ($page->navbar_id == $navbar->id)                                          
+                                            <a class="dropdown-item" href="{{ $page->url }}">{{ $page->name }}</a>                                           
+                                        @endif                                       
+                                    @endforeach  
+                                    </div>                                
+                                </li>
+                                @break
+                            @case(2)
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ $navbar->link }}">{{ $navbar->name }}</a>
+                                </li>
+                                @break
+                            @default
+                                
+                        @endswitch
+                    @endif
+                @endforeach
             </ul>
 
             <!-- Right Side Of Navbar -->

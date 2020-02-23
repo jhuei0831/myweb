@@ -16,8 +16,15 @@ class Enum extends Model
     ];
 
     const is_open = [
-    	'0' => 'times',
-    	'1' => 'check',
+        'color' =>[
+            '0' => 'red',
+            '1' => 'green',
+        ],
+        'label'=>[
+            '0' => 'times',
+    	    '1' => 'check',
+        ],
+    	
     ];
 
     const type =[

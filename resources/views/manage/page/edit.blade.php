@@ -27,6 +27,24 @@
                         </div>
 
                         <div class="form-group row">
+                            <label for="navbar_id" class="col-sm-1 col-form-label">{{ __('Navbar') }}</label>
+                            <div class="col-sm-4">
+                                <select class='form-control' name='navbar_id' required aria-describedby="navHelp">
+                                    @foreach($navbars as $key => $value)
+                                        @if ($value['id'] == $page->navbar_id)
+                                            <option value='{{ $value['id'] }}' selected>{{ $value['name'] }}</option>
+                                        @else
+                                            <option value='{{ $value['id'] }}'>{{ $value['name'] }}</option>
+                                        @endif
+									@endforeach
+								</select>
+			                    <span id="navHelp" class="help-block">
+			                        選擇要加入的導覽列項目。
+			                    </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
                             <label for="title" class="col-sm-1 col-form-label">{{ __('Title') }}</label>
 
                             <div class="col-md-4">
