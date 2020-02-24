@@ -9472,6 +9472,8 @@ a.text-dark:hover {
     box-shadow: 0 2px 4px rgba(0, 0, 0, .04)
 }
 
+/*--------------new----------------------*/
+
 html,body {
     position: relative;
     min-height: 100%
@@ -9486,4 +9488,11 @@ body {
 
 .navbar {
     font-size: larger
+}
+
+.help-block {
+    display: block;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    color: #737373
 }

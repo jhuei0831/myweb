@@ -1,21 +1,20 @@
 @extends('_layouts.manage.app')
-
 @section('content')
 <div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <form action="{{ route('navbar.store') }}" method="POST">
-                    <div class="card-header">{{ __('Navbar') }}{{ __('Create') }}</div>
+                <form action="{{ route('slide.store') }}" method="POST" enctype="multipart/form-data">
+                    <div class="card-header">{{ __('Slide') }}{{ __('Create') }}</div>
                     <div class="card-body">  
                         <ul class="list-unstyled">
-                            <li>{{ App\Button::GoBack(route('navbar.index')) }}</li>
+                            <li>{{ App\Button::GoBack(route('slide.index')) }}</li>
                         </ul>                 
                         @csrf
                         <div class="form-group row">
-                            <label for="name" class="col-sm-1 col-form-label">{{ __('Navbar name') }}</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ old('name') }}" placeholder="{{ __('Page name') }}">
+                            <label for="name" class="col-sm-1 col-form-label">{{ __('Slide') }}{{ __('Name') }}</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ old('name') }}" placeholder="{{ __('Slide') }}{{ __('Name') }}">
                                 @error('name')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -24,31 +23,24 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="link" class="col-sm-1 col-form-label">{{ __('Link') }}</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control @error('link') is-invalid @enderror" id="link" name="link" value="{{ old('link') }}" placeholder="{{ __('Link') }}">
-                                @error('link')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                            <label for="page_id" class="col-sm-1 col-form-label">{{ __('Page') }}</label>
+                            <div class="col-sm-4">
+                                <select class='form-control' name='page_id' aria-describedby="pageHelp">
+                                    <option value=''>{{ __('Please choose') }}{{ __('Page') }}</option>
+									@foreach($pages as $key => $value)
+										<option value="{{ $value['id'] }}">{{ $value['name'] }}</option>
+									@endforeach
+								</select>
+			                    <span id="pageHelp" class="help-block">
+			                        若沒有選擇特定頁面則全域播放。
+			                    </span>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="type" class="col-sm-1 col-form-label">{{ __('Type') }}</label>
-                            <div class="col-sm-8">
-                                <select class='form-control' name='type' required aria-describedby="typeHelp">
-									<option value=''>請選擇類型</option>
-									@foreach(App\Enum::type['navbar'] as $key => $value)
-										<option value='{{ $key }}'>{{ $key }}.{{ $value }}</option>
-									@endforeach
-								</select>
-			                    <span id="typeHelp" class="help-block">
-			                        導覽目錄：顯示選單目錄；</br>
-			                        一般頁面：不顯示選單目錄，直接列出底下的頁面；</br>
-			                        例如：點選[XXX中心]，底下還有簡介和各實驗室等選單細項，或是直接呈現介紹的頁面內容或頁面清單。
-			                    </span>
-                                @error('url')
+                            <label for="image" class="col-sm-1 col-form-label">{{ __('Image') }}</label>
+                            <div class="col-sm-4">
+                                <input type="file" class="form-control @error('image') is-invalid @enderror" id="image" name="image" value="{{ old('image') }}" placeholder="{{ __('Image') }}">
+                                @error('image')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

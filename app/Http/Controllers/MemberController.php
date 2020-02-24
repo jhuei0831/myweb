@@ -10,10 +10,6 @@ use Illuminate\Support\Facades\DB;
 use App\User;
 class MemberController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
     /**
      * Display a listing of the resource.
      *
@@ -21,7 +17,12 @@ class MemberController extends Controller
      */
     public function index()
     {
-        return view('manage.member.index');
+        if (Auth::check() && Auth::user()->permission < '5') {
+            return back()->with('warning', '權限不足以訪問該頁面 !');
+        }
+
+        $users = DB::table('users')->paginate(10);
+        return view('manage.member.index',compact('users'));
     }
 
     /**
@@ -112,9 +113,9 @@ class MemberController extends Controller
         if ($request->filled('password')) {
                 $data = $this->validate($request, [
                 'name' => ['required', 'string', 'max:255'],
-                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+                'email' => ['required', 'string', 'email', 'max:255'],
                 'password' => ['required', 'string', 'min:1', 'confirmed'],
-                'permission' => ['required', 'string', 'max:5', 'min:0'],
+                'permission' => ['required', 'integer', 'max:5', 'min:0'],
             ]);
 
             foreach ($request->except('_token','_method','password_confirmation') as $key => $value) {
@@ -130,8 +131,8 @@ class MemberController extends Controller
 
             $data = $this->validate($request, [
                 'name' => ['required', 'string', 'max:255'],
-                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-                'permission' => ['required', 'string', 'max:5', 'min:0'],
+                'email' => ['required', 'string', 'email', 'max:255'],
+                'permission' => ['required', 'integer', 'max:5', 'min:0'],
             ]);
 
             // 逐筆進行htmlpurufier 並去掉<p></p>

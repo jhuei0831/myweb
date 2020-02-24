@@ -9,7 +9,7 @@
                     
                 <div class="card-body">
                 	<ul class="list-unstyled">
-						<li>{{ App\Button::GoBack(route('member')) }}</li>
+						<li>{{ App\Button::GoBack(route('member.index')) }}</li>
 					</ul>
                 	<form method="POST" action="{{ route('member.update' , $user->id) }}">
                 		@csrf
@@ -46,7 +46,15 @@
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Permission') }}</label>
 
                             <div class="col-md-6">
-                                <input id="permission" type="text" class="form-control @error('permission') is-invalid @enderror" name="permission" value="{{ $user->permission }}" required autocomplete="name" autofocus>
+                                <select class='form-control @error('permission') is-invalid @enderror' id="permission" name='permission' required>
+                                    @foreach(App\Enum::permission as $key => $value)
+                                        @if ($key == $user->permission)
+                                            <option value='{{ $key }}' selected>{{ $value }}</option>
+                                        @else
+                                            <option value='{{ $key }}'>{{ $value }}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
 
                                 @error('permission')
                                     <span class="invalid-feedback" role="alert">

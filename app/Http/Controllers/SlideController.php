@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use App\Page;
-use App\Navbar;
-class PageController extends Controller
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Input;
+use App\Slide;
+class SlideController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +16,8 @@ class PageController extends Controller
      */
     public function index()
     {
-        $pages = DB::table('pages')->paginate(10);
-        return view('manage.page.index',compact('pages'));
+        $slides = Slide::paginate(10);
+        return view('manage.slide.index',compact('slides'));
     }
 
     /**
@@ -30,8 +30,7 @@ class PageController extends Controller
         if (Auth::check() && Auth::user()->permission < '2') {
             return back()->with('warning', '權限不足以訪問該頁面 !');
         }
-        $navbars = Navbar::where('type','=','1')->get();
-        return view('manage.page.create',compact('navbars'));
+        return view('manage.slide.create');
     }
 
     /**
@@ -45,17 +44,29 @@ class PageController extends Controller
         if (Auth::check() && Auth::user()->permission < '2') {
             return back()->with('warning', '權限不足以訪問該頁面 !');
         }
-        $page = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'title' => ['required', 'string', 'max:255'],
-            'url' => ['required', 'string', 'max:255'],
-            'is_open' => ['required'],
-        ]);
-        if ($page) {
-            Page::create($request->all());
-        } 
+        $slide = new Slide;
 
-        return back()->with('success','頁面新增成功 !');
+        $data = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:4096',
+            'is_open' => ['required'],          
+        ]);
+
+        $imageName = date('Ymd_H_i_s').'.'.Input::file('image')->getClientOriginalExtension();
+
+        Input::file('image')->move(public_path('images/slide'), $imageName);
+        if ($request->has('page_id')) {
+            $slide->page_id = $request->page_id;
+        }
+        $slide->name = $request->name;
+        $slide->image = $imageName;
+        $slide->is_open = $request->is_open;
+
+        if ($data) {
+           $slide->save();
+        }
+
+        return back()->with('success', '輪播新增成功 !');
     }
 
     /**
@@ -80,9 +91,8 @@ class PageController extends Controller
         if (Auth::check() && Auth::user()->permission < '3') {
             return back()->with('warning', '權限不足以訪問該頁面 !');
         }
-        $page = Page::where('id',$id)->first();
-        $navbars = Navbar::where('type', '=', '1')->get();
-        return view('manage.page.edit',compact('page','navbars'));
+        $slide = Slide::where('id',$id)->first();
+        return view('manage.slide.edit',compact('slide'));
     }
 
     /**
@@ -98,27 +108,27 @@ class PageController extends Controller
             return back()->with('warning', '權限不足以訪問該頁面 !');
         }
 
-        $page = Page::where('id',$id)->first();
+        $slide = Slide::where('id',$id)->first();
 
         $data = $this->validate($request, [
             'name' => ['required', 'string', 'max:255'],
-            'navbar_id' => ['string', 'max:255'],
-            'title' => ['required', 'string', 'max:255'],
-            'url' => ['required', 'string', 'max:255'],
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:4096',
             'is_open' => ['required'],
-            'is_slide' => ['required'],
         ]);
 
+        $imageName = date('Ymd_H_i_s').'.'.Input::file('image')->getClientOriginalExtension();
+        unlink($slide->image);
+        Input::file('image')->move(public_path('images/slide'), $imageName);       
         // 逐筆進行htmlpurufier 並去掉<p></p>
         foreach ($request->except('_token','_method') as $key => $value) {
-            if ($request->filled($key) && $key != 'content') {
+            if ($request->filled($key) && $key != 'image') {
                 $page->$key = strip_tags(clean($data[$key]));
             }
-            $page->content = $request->input('content');
+            $page->image = $imageName;
         }
 
         $page->save();
-        return back()->with('success','修改頁面成功 !');
+        return back()->with('success','修改輪播成功 !');
     }
 
     /**
@@ -129,17 +139,6 @@ class PageController extends Controller
      */
     public function destroy($id)
     {
-        if (Auth::check() && Auth::user()->permission < '4') {
-            return back()->with('warning', '權限不足以訪問該頁面 !');
-        }
-        Page::destroy($id);
-        return back()->with('success','刪除頁面成功 !');
-    }
-
-    //
-    public function pages($url)
-    {
-        $pages = Page::where('url',$url)->get();
-        return view('page',compact('pages'));
+        //
     }
 }

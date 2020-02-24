@@ -8,7 +8,7 @@
                     <div class="card-header">{{ __('Page') }}{{ __('Create') }}</div>
                     <div class="card-body">  
                         <ul class="list-unstyled">
-                            <li>{{ App\Button::GoBack(route('page')) }}</li>
+                            <li>{{ App\Button::GoBack(route('page.index')) }}</li>
                         </ul>                 
                         @csrf
                         <div class="form-group row">

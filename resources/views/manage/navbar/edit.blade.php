@@ -9,7 +9,7 @@
                     
                 <div class="card-body">
                 	<ul class="list-unstyled">
-						<li>{{ App\Button::GoBack(route('navbar')) }}</li>
+						<li>{{ App\Button::GoBack(route('navbar.index')) }}</li>
 					</ul>
                 	<form method="POST" action="{{ route('navbar.update' , $navbar->id) }}">
                 		@csrf
@@ -43,10 +43,13 @@
                         <div class="form-group row">
                             <label for="type" class="col-sm-1 col-form-label">{{ __('Type') }}</label>
                             <div class="col-sm-8">
-                                <select class='form-control' name='type' required aria-describedby="typeHelp" required>
-									<option value='{{ $navbar->type }}'>{{ App\Enum::type['navbar'][$navbar->type] }}</option>
+                                <select class="form-control @error('type') is-invalid @enderror" name='type' required aria-describedby="typeHelp" required>
 									@foreach(App\Enum::type['navbar'] as $key => $value)
-										<option value='{{ $key }}'>{{ $key }}.{{ $value }}</option>
+                                        @if ($key == $navbar->type)
+                                            <option value='{{ $key }}' selected>{{ $value }}</option>
+                                        @else
+                                            <option value='{{ $key }}'>{{ $value }}</option>
+                                        @endif
 									@endforeach
 								</select>
 			                    <span id="typeHelp" class="help-block">
@@ -54,7 +57,7 @@
 			                        一般頁面：不顯示選單目錄，直接列出底下的頁面；</br>
 			                        例如：點選[XXX中心]，底下還有簡介和各實驗室等選單細項，或是直接呈現介紹的頁面內容或頁面清單。
 			                    </span>
-                                @error('url')
+                                @error('type')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

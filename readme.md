@@ -38,4 +38,8 @@ If you want to work on this project on your local machine, you may follow the in
     ```bash
     php artisan db:seed --class=DatabaseSeeder
     ```
+10. Create the `images/slide` folder in public , and run the command below.
     
+    ```bash
+    php artisan storage:link
+    ```    

@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">帳號管理</div>
+                <div class="card-header">{{ __('Slide') }}{{ __('Manage') }}</div>
                     
                 <div class="card-body">
 					<ul class="list-unstyled">
@@ -14,24 +14,28 @@
                 	<table class="table table-hover table-bordered text-center">
 	                	<thead>
 	                		<tr class="active">
-	                			<th class="text-nowrap text-center">{{ __('Name') }}</th>
-	                			<th class="text-nowrap text-center">{{ __('E-Mail Address') }}</th>
-	                			<th class="text-nowrap text-center">{{ __('Permission') }}</th>
+	                			<th class="text-nowrap text-center">{{ __('Slide') }}{{ __('Name') }}</th>
+	                			<th class="text-nowrap text-center">{{ __('Page') }}</th>
+	                			<th class="text-nowrap text-center">{{ __('Sort') }}</th>
+	                			<th class="text-nowrap text-center">{{ __('Is_open') }}</th>
 	                			<th class="text-nowrap text-center">{{ __('Action') }}</th>	                			
 	                		</tr>
 	                	</thead>
 	                	<tbody>
-							@foreach ($users as $user)
+							@foreach ($slides as $slide)
 								<tr>
-									<td>{{ $user->name }}</td>
-									<td>{{ $user->email }}</td>
-									<td>{{App\Enum::permission[$user->permission]}}</td>
+									<td>{{ $slide->name }}</td>
+									<td>{{ App\Page::where('id','=',$slide->page_id)->first('name')['name'] }}</td>
+									<td>{{ $slide->sort }}</td>
 									<td>
-										<form action="{{ route('member.destroy',$user->id) }}" method="POST">
+										<font color="{{App\Enum::is_open['color'][$slide->is_open]}}"><i class="fas fa-{{App\Enum::is_open['label'][$slide->is_open]}}"></i></font>
+									</td>
+									<td>
+										<form action="{{ route('slide.destroy',$slide->id) }}" method="POST">
 										@method('DELETE')
 										@csrf
-										{{ App\Button::edit($user->id) }}
-										{{ App\Button::deleting($user->id) }}
+										{{ App\Button::edit($slide->id) }}
+										{{ App\Button::deleting($slide->id) }}
 										</form>
 									</td>
 								</tr>
@@ -40,7 +44,7 @@
                     </table>
                 </div>
                 <div class="card-footer pagination justify-content-center">
-					{!! $users->links("pagination::bootstrap-4") !!}
+					{!! $slides->links("pagination::bootstrap-4") !!}
 				</div>
             </div>
         </div>

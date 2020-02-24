@@ -22,7 +22,7 @@
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     @foreach ($pages as $page)
-                                        @if ($page->navbar_id == $navbar->id)                                          
+                                        @if ($page->navbar_id == $navbar->id && $page->is_open == '1')                                          
                                             <a class="dropdown-item" href="{{ $page->url }}">{{ $page->name }}</a>                                           
                                         @endif                                       
                                     @endforeach  
@@ -33,9 +33,7 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ $navbar->link }}">{{ $navbar->name }}</a>
                                 </li>
-                                @break
-                            @default
-                                
+                                @break                              
                         @endswitch
                     @endif
                 @endforeach
@@ -55,7 +53,7 @@
                     @endif
                 @else
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('manage') }}">{{ __('Manage') }}</a>
+                        <a class="nav-link" href="{{ route('manage') }}">{{ __('Backstage') }}</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>

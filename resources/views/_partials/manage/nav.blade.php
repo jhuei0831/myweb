@@ -14,14 +14,17 @@
             <ul class="navbar-nav mr-auto">
                 @if (Auth::check() && Auth::user()->permission >= '4')
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('member') }}">{{ __('Member manage') }}</a>
+                    <a class="nav-link" href="{{ route('member.index') }}">{{ __('Member manage') }}</a>
                 </li>
                 @endif
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('page') }}">{{ __('Page manage') }}</a>
+                    <a class="nav-link" href="{{ route('page.index') }}">{{ __('Page manage') }}</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('navbar') }}">{{ __('Navbar manage') }}</a>
+                    <a class="nav-link" href="{{ route('navbar.index') }}">{{ __('Navbar manage') }}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('slide.index') }}">{{ __('Slide') }}{{ __('Manage') }}</a>
                 </li>
             </ul>
 

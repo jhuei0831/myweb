@@ -8,7 +8,7 @@
                     <div class="card-header">{{ __('Member Create') }}</div>
                     <div class="card-body">  
                         <ul class="list-unstyled">
-                            <li>{{ App\Button::GoBack(route('member')) }}</li>
+                            <li>{{ App\Button::GoBack(route('member.index')) }}</li>
                         </ul>                 
                         @csrf
                         <div class="form-group row">
@@ -34,9 +34,14 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="content" class="col-sm-2 col-form-label">{{ __('Permission') }}</label>
+                            <label for="permission" class="col-sm-2 col-form-label">{{ __('Permission') }}</label>
                             <div class="col-sm-4">
-                                <input type="number" min="0" max="6" class="form-control @error('permission') is-invalid @enderror" id="permission" name="permission" value="{{ old('permission') }}" placeholder="{{ __('Permission') }}">
+                                <select class="form-control @error('permission') is-invalid @enderror" id="permission" name='permission' required aria-describedby="typeHelp" value="{{ old('permission') }}" placeholder="{{ __('Permission') }}">
+                                    <option value=''>{{ __('Please choose')}}{{ __('Permission')}}</option>
+                                    @foreach(App\Enum::permission as $key => $value)
+                                        <option value='{{ $key }}'>{{ $value }}</option>
+                                    @endforeach
+                                </select>
                                 @error('permission')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>

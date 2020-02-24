@@ -18,4 +18,9 @@ class Page extends Model
     {
         return $this->belongsTo('App\Navbar');
     }
+
+    public function slides()
+    {
+        return $this->hasMany('App\Slide');
+    }
 }
