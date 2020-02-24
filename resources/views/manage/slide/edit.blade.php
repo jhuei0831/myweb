@@ -11,7 +11,7 @@
                 	<ul class="list-unstyled">
 						<li>{{ App\Button::GoBack(route('slide.index')) }}</li>
 					</ul>
-                	<form method="POST" action="{{ route('slide.update' , $slide->id) }}">
+                	<form method="POST" action="{{ route('slide.update' , $slide->id) }}" enctype="multipart/form-data">
                 		@csrf
 						@method('PUT')
 						<div class="form-group row">
@@ -29,12 +29,13 @@
                         <div class="form-group row">
                             <label for="page_id" class="col-sm-1 col-form-label">{{ __('Page') }}</label>
                             <div class="col-sm-4">
-                                <select class='form-control' name='page_id' required aria-describedby="navHelp">
+                                <select class='form-control' name='page_id' aria-describedby="navHelp">
+                                    <option value='' @isset($record)@endisset>{{ __('Please choose') }}{{ __('Page') }}</option>
                                     @foreach($pages as $key => $value)
-                                        @if ($value['id'] == $slide->id)
+                                        @if ($value['id'] == $slide->page_id)
                                             <option value="{{ $value['id'] }}" selected>{{ $value['name'] }}</option>
                                         @else
-                                            <option value="{{ $value['id'] }}">{{ __('Page') }}</option>
+                                            <option value="{{ $value['id'] }}">{{ $value['name'] }}</option>
                                         @endif
 									@endforeach
 								</select>
@@ -48,9 +49,9 @@
                             <label for="image" class="col-sm-1 col-form-label">{{ __('Image') }}</label>                          
                             <div class="col-md-4">
                                 <div class="input-group">
-                                    <input type="file" class="form-control @error('image') is-invalid @enderror" id="image" name="image" value="{{ old('image') }}" placeholder="{{ __('Image') }}">
+                                    <input type="file" class="form-control @error('image') is-invalid @enderror" id="image" name="image" placeholder="{{ __('Image') }}">
                                     <span class='input-group-text'>
-                                        <a target='_blank' href="{{ asset('/images/slide/'.$slide->image) }}"><i class="far fa-image"></i> 觀看圖片</a>
+                                        <a target='_blank' href="{{ asset('/images/slide/'.$slide->image) }}"><i class="far fa-image"></i>觀看圖片</a>
                                     </span>
                                     @error('image')
                                         <span class="invalid-feedback" role="alert">

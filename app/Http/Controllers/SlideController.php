@@ -109,25 +109,42 @@ class SlideController extends Controller
         }
 
         $slide = Slide::where('id',$id)->first();
+        
+        if (Input::has('image')) {
+            $data = $request->validate([
+                'name' => ['required', 'string', 'max:255'],
+                'page_id' => ['integer', 'max:255'],
+                'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:4096',
+                'is_open' => ['required'],
+            ]);
 
-        $data = $this->validate($request, [
-            'name' => ['required', 'string', 'max:255'],
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:4096',
-            'is_open' => ['required'],
-        ]);
-
-        $imageName = date('Ymd_H_i_s').'.'.Input::file('image')->getClientOriginalExtension();
-        unlink($slide->image);
-        Input::file('image')->move(public_path('images/slide'), $imageName);       
-        // 逐筆進行htmlpurufier 並去掉<p></p>
-        foreach ($request->except('_token','_method') as $key => $value) {
-            if ($request->filled($key) && $key != 'image') {
-                $page->$key = strip_tags(clean($data[$key]));
+            $imageName = date('Ymd_H_i_s') . '.' . Input::file('image')->getClientOriginalExtension();
+            unlink(public_path('images/slide/' . $slide->image));
+            Input::file('image')->move(public_path('images/slide'), $imageName);
+            // 逐筆進行htmlpurufier 並去掉<p></p>
+            foreach ($request->except('_token', '_method') as $key => $value) {
+                if ($request->filled($key) && $key != 'image') {
+                    $slide->$key = strip_tags(clean($data[$key]));
+                }
+                $slide->image = $imageName;
             }
-            $page->image = $imageName;
         }
+        else {
+            $data = $this->validate($request, [
+                'name' => ['required', 'string', 'max:255'],
+                'page_id' => ['integer', 'max:255'],
+                'is_open' => ['required'],
+            ]);
 
-        $page->save();
+            // 逐筆進行htmlpurufier 並去掉<p></p>
+            foreach ($request->except('_token', '_method') as $key => $value) {
+                if ($request->filled($key)) {
+                    $slide->$key = strip_tags(clean($data[$key]));
+                }
+            }
+        }
+              
+        $slide->save();
         return back()->with('success','修改輪播成功 !');
     }
 
@@ -139,6 +156,12 @@ class SlideController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if (Auth::check() && Auth::user()->permission < '4') {
+            return back()->with('warning', '權限不足以訪問該頁面 !');
+        }
+        $slide = Slide::where('id', $id)->first();
+        unlink(public_path('images/slide/'.$slide->image));
+        Slide::destroy($id);
+        return back()->with('success', '刪除輪播成功 !');
     }
 }

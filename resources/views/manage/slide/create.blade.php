@@ -39,7 +39,7 @@
                         <div class="form-group row">
                             <label for="image" class="col-sm-1 col-form-label">{{ __('Image') }}</label>
                             <div class="col-sm-4">
-                                <input type="file" class="form-control @error('image') is-invalid @enderror" id="image" name="image" value="{{ old('image') }}" placeholder="{{ __('Image') }}">
+                                <input type="file" class="form-control @error('image') is-invalid @enderror" id="image" name="image" placeholder="{{ __('Image') }}">
                                 @error('image')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
