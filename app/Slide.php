@@ -11,7 +11,7 @@ class Slide extends Model
     protected $primaryKey = 'id';
 
     protected $fillable = [
-        "name", "page_id" ,"image", "sort", "is_open",
+        "name", "page_id" ,"image","link", "sort", "is_open",
     ];
 
     public function pages()

@@ -130,4 +130,20 @@ class NavbarController extends Controller
         return back()->with('success', '刪除導覽列成功 !');
 
     }
+
+    //拖曳排序
+    public function sort(Request $request)
+    {
+        $navbars = Navbar::all();
+
+        foreach ($navbars as $navbar) {
+            foreach ($request->order as $order) {
+                if ($order['id'] == $navbar->id) {
+                    $navbar->update(['sort' => $order['position']]);
+                }
+            }
+        }
+        
+        return response('Update Successfully.', 200);
+    }
 }

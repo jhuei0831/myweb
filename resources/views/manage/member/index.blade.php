@@ -1,11 +1,11 @@
 @extends('_layouts.manage.app')
-
+@section('title', __('Member').__('Manage'))
 @section('content')
 <div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">帳號管理</div>
+                <div class="card-header">{{ __('Member').__('Manage') }}</div>
                     
                 <div class="card-body">
 					<ul class="list-unstyled">

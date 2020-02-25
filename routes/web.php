@@ -14,12 +14,41 @@
 Route::get('/', function () {
     return view('home');
 });
-
+Route::get('/welcome', function () {
+    return view('welcome');
+});
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/manage', 'ManageController@index')->name('manage');
 Route::get('/{url}', 'PageController@pages')->name('page');
+Route::post('navbar-sortable','NavbarController@sort')->name('navbar.sort');
+Route::post('slide-sortable','SlideController@sort')->name('slide.sort');
+Route::get('/manage/navbar/sort', function () {return view('manage.navbar.sort');});
+Route::get('/manage/slide/sort', function () {return view('manage.slide.sort');});
+
+Route::prefix('manage')->middleware('auth')->group(function(){
+    Route::resource('member', 'MemberController');
+    Route::resource('page', 'PageController');
+    Route::resource('navbar', 'NavbarController');
+    Route::resource('slide', 'SlideController');
+});
+
+
+View::composer(['*'], function ($view) {
+    $navbars = App\Navbar::orderby('sort')->paginate(10);
+    $pages = App\Page::paginate(10);
+    $current_page = App\Page::where('url',Request::path())->first();
+    $users = App\User::paginate(10);
+    $slides = App\Slide::orderby('sort')->paginate(10);
+
+    $view->with('navbars',$navbars);
+    $view->with('pages',$pages);
+    $view->with('users',$users);
+    $view->with('slides',$slides);
+    $view->with('current_page',$current_page);
+});
+
 // Route::get('/manage/member', 'MemberController@show')->name('member');
 // Route::get('/manage/member/create', 'MemberController@create')->name('member.create');
 // Route::post('/manage/member/store', 'MemberController@store')->name('member.store');
@@ -40,21 +69,3 @@ Route::get('/{url}', 'PageController@pages')->name('page');
 // Route::get('/manage/navbar/edit/{id}', 'NavbarController@edit')->name('navbar.edit');
 // Route::put('/manage/navbar/update/{id}', 'NavbarController@update')->name('navbar.update');
 // Route::get('/manage/navbar/delete/{id}', 'NavbarController@destroy')->name('navbar.delete');
-
-Route::prefix('manage')->middleware('auth')->group(function(){
-    Route::resource('member', 'MemberController');
-    Route::resource('page', 'PageController');
-    Route::resource('navbar', 'NavbarController');
-    Route::resource('slide', 'SlideController');
-});
-
-
-View::composer(['*'], function ($view) {
-    $navbars = App\Navbar::paginate(10);
-    $pages = App\Page::paginate(10);
-    $users = App\User::paginate(10);
-
-    $view->with('navbars',$navbars);
-    $view->with('pages',$pages);
-    $view->with('users',$users);
-});

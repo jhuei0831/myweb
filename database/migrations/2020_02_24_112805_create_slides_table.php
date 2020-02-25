@@ -15,9 +15,9 @@ class CreateSlidesTable extends Migration
     {
         Schema::create('slides', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('page_id')->nullable()->comment('頁面id');
             $table->string('name')->comment('輪播名稱');
             $table->string('image')->comment('圖片');
+            $table->string('link')->nullable()->comment('連結');
             $table->integer('sort')->nullable()->comment('排序');
             $table->boolean('is_open')->default(true)->comment('是否開放');
             $table->timestamps();

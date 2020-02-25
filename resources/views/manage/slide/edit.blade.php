@@ -27,21 +27,14 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="page_id" class="col-sm-1 col-form-label">{{ __('Page') }}</label>
+                            <label for="link" class="col-sm-1 col-form-label">{{ __('Link') }}</label>
                             <div class="col-sm-4">
-                                <select class='form-control' name='page_id' aria-describedby="navHelp">
-                                    <option value='' @isset($record)@endisset>{{ __('Please choose') }}{{ __('Page') }}</option>
-                                    @foreach($pages as $key => $value)
-                                        @if ($value['id'] == $slide->page_id)
-                                            <option value="{{ $value['id'] }}" selected>{{ $value['name'] }}</option>
-                                        @else
-                                            <option value="{{ $value['id'] }}">{{ $value['name'] }}</option>
-                                        @endif
-									@endforeach
-								</select>
-			                    <span id="navHelp" class="help-block">
-			                        選擇要加入的導覽列項目。
-			                    </span>
+                                <input id="link" type="text" class="form-control @error('link') is-invalid @enderror" name="link" value="{{ $slide->link }}" autocomplete="{{ __('Link') }}">
+                                @error('link')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
                         </div>
 

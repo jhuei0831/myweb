@@ -1,11 +1,12 @@
 @extends('_layouts.manage.app')
+@section('title', __('Member').__('Create'))
 @section('content')
 <div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
                 <form action="{{ route('member.store') }}" method="POST">
-                    <div class="card-header">{{ __('Member Create') }}</div>
+                    <div class="card-header">{{ __('Member').__('Create') }}</div>
                     <div class="card-body">  
                         <ul class="list-unstyled">
                             <li>{{ App\Button::GoBack(route('member.index')) }}</li>

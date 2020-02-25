@@ -9,7 +9,7 @@ class Button extends Model
     	public static function Detail($id)
 		{
 			echo "<a class='btn btn-sm btn-default' href='detail.php?{$id}'>";
-			echo 	"<i class='fas fa-info-circle'></i> 詳細";
+			echo 	"<i class='fas fa-info-circle'></i> ".__('Detail');
 			echo "</a>";
 		}
 
@@ -17,7 +17,7 @@ class Button extends Model
 		{		
 			// $url = URL::full();				
 			echo "<button type=\"submmit\" class='btn btn-sm btn-danger btn-delete' onclick=\"return confirm('確認刪除?')\">";
-			echo 	"<i class='fas fa-trash-alt'></i> 刪除";
+			echo 	"<i class='fas fa-trash-alt'></i> ".__('Delete');
 			echo "</button>";		
 		}
 
@@ -25,7 +25,7 @@ class Button extends Model
 		{
 			$url = URL::full();
 			echo "<a class='btn btn-sm btn-success' href='{$url}/{$id}/edit'>";
-			echo 	"<i class='fas fa-pencil-alt'></i> 修改";
+			echo 	"<i class='fas fa-pencil-alt'></i> ".__('Edit');
 			echo "</a>";
 		}
 
@@ -33,7 +33,7 @@ class Button extends Model
 		{
 			$url = URL::full();
 			echo "<a class='btn btn-sm btn-primary' href='{$url}/create'>";
-			echo 	"<i class='fas fa-plus'></i> 新增";
+			echo 	"<i class='fas fa-plus'></i> ".__('Create');
 			echo "</a>";
 		}
 
@@ -41,15 +41,16 @@ class Button extends Model
 		{
 			echo "<p class='text-right'>";
 			echo	"<a class='btn btn-sm btn-reset btn-danger' href='reset.php'>";
-			echo		"<i class='fas fa-undo-alt'></i> 清空資料表";
+			echo		"<i class='fas fa-undo-alt'></i> ".__('Reset');
 			echo 	"</a>";
 			echo "</p>";
 		}
 
-		public static function To($url, $txt, $query="", $class="btn-default")
+		public static function To($to, $txt, $query="", $class="btn-secondary")
 		{
-			echo "<a class='btn btn-sm {$class}' href='{$url}?{$query}'>";
-			echo 	"{$txt}";
+			$url = URL::full();
+			echo "<a class='btn btn-sm {$class}' href='{$url}/{$to}?{$query}'>";
+			echo 	"<i class='fas fa-list-ol'></i> {$txt}";
 			echo "</a>";
 		}
 
@@ -59,7 +60,7 @@ class Button extends Model
 			$target_url = ($url) ? $url: URL::previous();
 			
 			echo "<a class='btn btn-sm btn-default' href='{$target_url}'>";
-			echo 	"<i class='fas fa-arrow-left'></i> 上一頁";
+			echo 	"<i class='fas fa-arrow-left'></i> ".__('Previous');
 			echo "</a>";
 		}
 }

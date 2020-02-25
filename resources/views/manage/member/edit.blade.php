@@ -1,11 +1,11 @@
 @extends('_layouts.manage.app')
-
+@section('title', __('Member').__('Edit'))
 @section('content')
 <div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">帳號修改</div>
+                <div class="card-header">{{ __('Member').__('Edit') }}</div>
                     
                 <div class="card-body">
                 	<ul class="list-unstyled">
@@ -46,7 +46,7 @@
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Permission') }}</label>
 
                             <div class="col-md-6">
-                                <select class='form-control @error('permission') is-invalid @enderror' id="permission" name='permission' required>
+                                <select class="form-control @error('permission') is-invalid @enderror" id="permission" name='permission' required>
                                     @foreach(App\Enum::permission as $key => $value)
                                         @if ($key == $user->permission)
                                             <option value='{{ $key }}' selected>{{ $value }}</option>

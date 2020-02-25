@@ -1,99 +1,82 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        <title>Laravel</title>
-
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
-
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Nunito', sans-serif;
-                font-weight: 200;
-                height: 100vh;
-                margin: 0;
-            }
-
-            .full-height {
-                height: 100vh;
-            }
-
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
-
-            .position-ref {
-                position: relative;
-            }
-
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
-
-            .content {
-                text-align: center;
-            }
-
-            .title {
-                font-size: 84px;
-            }
-
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 13px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
-
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Register</a>
-                        @endif
-                    @endauth
-                </div>
-            @endif
-
-            <div class="content">
-                <div class="title m-b-md">
-                    Laravel
-                </div>
-
-                <div class="links">
-                    <a href="https://laravel.com/docs">Docs</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://blog.laravel.com">Blog</a>
-                    <a href="https://nova.laravel.com">Nova</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
-                </div>
-            </div>
+<html>
+<head>
+    <title>Create Drag and Droppable Datatables Using jQuery UI Sortable in Laravel</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.12/datatables.min.css"/>
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+</head>
+<body>
+    <div class="row mt-5">
+        <div class="col-md-10 offset-md-1">
+            <h3 class="text-center mb-4">Drag and Drop Datatables Using jQuery UI Sortable - Demo </h3>
+            <table id="table" class="table table-striped">
+              <thead>
+                <tr>
+                  <th width="30px">#</th>
+                  <th>Title</th>
+                  <th>Created At</th>
+                </tr>
+              </thead>
+              <tbody id="tablecontents">
+                @foreach($navbars as $navbar)
+                    <tr class="row1" data-id="{{ $navbar->id }}">
+                      <td class="pl-3"><i class="fa fa-sort"></i></td>
+                      <td>{{ $navbar->name }}</td>
+                      <td>{{ date('Y-m-d H:m:s',strtotime($navbar->created_at)) }}</td>
+                    </tr>
+                @endforeach
+              </tbody>                  
+            </table>
+            <hr>
+            <h5>Drag and Drop the table rows and <button class="btn btn-success btn-sm" onclick="window.location.reload()">REFRESH</button> the page to check the Demo.</h5> 
         </div>
-    </body>
+    </div>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.12/datatables.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $("#table").DataTable();
+
+        $( "#tablecontents" ).sortable({
+            items: "tr",
+            cursor: 'move',
+            opacity: 0.6,
+            update: function() {
+                sendOrderToServer();
+            }
+        });
+
+        function sendOrderToServer() {
+            var order = [];
+            var token = $('meta[name="csrf-token"]').attr('content');
+            $('tr.row1').each(function(index,element) {
+                order.push({
+                    id: $(this).attr('data-id'),
+                    position: index+1
+                });
+            });
+
+            $.ajax({
+                type: "POST", 
+                dataType: "json", 
+                url: "{{ url('navbar-sortable') }}",
+                data: {
+                    order: order,
+                    _token: token
+                },
+                success: function(response) {
+                    if (response.status == "success") {
+                      console.log(response);
+                    } else {
+                      console.log(response);
+                    }
+                }
+            });
+        }
+    });
+</script>
+</body>
 </html>

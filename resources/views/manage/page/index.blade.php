@@ -1,11 +1,11 @@
 @extends('_layouts.manage.app')
-
+@section('title', __('Page').__('Manage'))
 @section('content')
 <div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">頁面管理</div>
+                <div class="card-header">{{ __('Page').__('Manage') }}</div>
                     
                 <div class="card-body">
 					<ul class="list-unstyled">
@@ -14,10 +14,10 @@
                 	<table class="table table-hover table-bordered text-center">
 	                	<thead>
 	                		<tr class="active">
-	                			<th class="text-nowrap text-center">{{ __('Page name') }}</th>
+	                			<th class="text-nowrap text-center">{{ __('Page').__('Name') }}</th>
 	                			<th class="text-nowrap text-center">{{ __('Navbar') }}</th>
 	                			<th class="text-nowrap text-center">{{ __('Title') }}</th>
-	                			<th class="text-nowrap text-center">{{ __('Page url') }}</th>
+	                			<th class="text-nowrap text-center">{{ __('Page').__('Url') }}</th>
 	                			<th class="text-nowrap text-center">{{ __('Is_open') }}</th>
 	                			<th class="text-nowrap text-center">{{ __('Is_slide') }}</th>
 	                			<th class="text-nowrap text-center">{{ __('Action') }}</th>	                			

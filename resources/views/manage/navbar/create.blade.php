@@ -1,19 +1,19 @@
 @extends('_layouts.manage.app')
-
+@section('title', __('Navbar').__('Create'))
 @section('content')
 <div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
                 <form action="{{ route('navbar.store') }}" method="POST">
-                    <div class="card-header">{{ __('Navbar') }}{{ __('Create') }}</div>
+                    <div class="card-header">{{ __('Navbar').__('Create') }}</div>
                     <div class="card-body">  
                         <ul class="list-unstyled">
                             <li>{{ App\Button::GoBack(route('navbar.index')) }}</li>
                         </ul>                 
                         @csrf
                         <div class="form-group row">
-                            <label for="name" class="col-sm-1 col-form-label">{{ __('Navbar name') }}</label>
+                            <label for="name" class="col-sm-1 col-form-label">{{ __('Navbar').__('Name') }}</label>
                             <div class="col-sm-8">
                                 <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ old('name') }}" placeholder="{{ __('Page name') }}">
                                 @error('name')

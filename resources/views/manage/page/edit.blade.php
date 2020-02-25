@@ -1,11 +1,11 @@
 @extends('_layouts.manage.app')
-
+@section('title', __('Page').__('Edit'))
 @section('content')
 <div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">頁面修改</div>
+                <div class="card-header">{{ __('Page').__('Edit') }}</div>
                     
                 <div class="card-body">
                 	<ul class="list-unstyled">
@@ -15,7 +15,7 @@
                 		@csrf
 						@method('PUT')
 						<div class="form-group row">
-                            <label for="name" class="col-sm-1 col-form-label">{{ __('Page name') }}</label>
+                            <label for="name" class="col-sm-1 col-form-label">{{ __('Page').__('Name') }}</label>
                             <div class="col-sm-4">
                                 <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ $page->name }}" required autocomplete="{{ __('Page name') }}" autofocus>
                                 @error('name')
@@ -32,9 +32,9 @@
                                 <select class='form-control' name='navbar_id' required aria-describedby="navHelp">
                                     @foreach($navbars as $key => $value)
                                         @if ($value['id'] == $page->navbar_id)
-                                            <option value='{{ $value['id'] }}' selected>{{ $value['name'] }}</option>
+                                            <option value="{{ $value['id'] }}" selected>{{ $value['name'] }}</option>
                                         @else
-                                            <option value='{{ $value['id'] }}'>{{ $value['name'] }}</option>
+                                            <option value="{{ $value['id'] }}">{{ $value['name'] }}</option>
                                         @endif
 									@endforeach
 								</select>
@@ -59,7 +59,7 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="url" class="col-sm-1 col-form-label">{{ __('Page url') }}</label>
+                            <label for="url" class="col-sm-1 col-form-label">{{ __('Page').__('Url') }}</label>
 
                             <div class="col-md-4">
                                 <input id="url" type="text" class="form-control @error('permission') is-invalid @enderror" name="url" value="{{ $page->url }}" required autocomplete="{{ __('Page url') }}" autofocus>

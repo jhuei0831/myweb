@@ -1,20 +1,21 @@
 @extends('_layouts.manage.app')
-
+@section('title', __('Navbar').__('Manage'))
 @section('content')
 <div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">導覽列管理</div>
+                <div class="card-header">{{ __('Navbar').__('Manage') }}</div>
                     
                 <div class="card-body">
-					<ul class="list-unstyled">
-						<li>{{ App\Button::Create() }}</li>
+					<ul class="list-inline">
+						<li class="list-inline-item">{{ App\Button::Create() }}</li>
+						<li class="list-inline-item">{{ App\Button::To('sort',__('Sort'),'','btn-primary') }}</li>
 					</ul>
                 	<table class="table table-hover table-bordered text-center">
 	                	<thead>
 	                		<tr class="active">
-	                			<th class="text-nowrap text-center">{{ __('Navbar name') }}</th>
+	                			<th class="text-nowrap text-center">{{ __('Navbar').__('Name') }}</th>
 	                			<th class="text-nowrap text-center">{{ __('Link') }}</th>
 	                			<th class="text-nowrap text-center">{{ __('Type') }}</th>
 	                			<th class="text-nowrap text-center">{{ __('Sort') }}</th>

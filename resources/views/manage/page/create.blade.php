@@ -1,18 +1,19 @@
 @extends('_layouts.manage.app')
+@section('title', __('Page').__('Create'))
 @section('content')
 <div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
                 <form action="{{ route('page.store') }}" method="POST">
-                    <div class="card-header">{{ __('Page') }}{{ __('Create') }}</div>
+                    <div class="card-header">{{ __('Page').__('Create') }}</div>
                     <div class="card-body">  
                         <ul class="list-unstyled">
                             <li>{{ App\Button::GoBack(route('page.index')) }}</li>
                         </ul>                 
                         @csrf
                         <div class="form-group row">
-                            <label for="name" class="col-sm-1 col-form-label">{{ __('Page name') }}</label>
+                            <label for="name" class="col-sm-1 col-form-label">{{ __('Page').__('Name') }}</label>
                             <div class="col-sm-4">
                                 <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ old('name') }}" placeholder="{{ __('Page name') }}">
                                 @error('name')
@@ -48,7 +49,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="url" class="col-sm-1 col-form-label">{{ __('Page url') }}</label>
+                            <label for="url" class="col-sm-1 col-form-label">{{ __('Page').__('Url') }}</label>
                             <div class="col-sm-4">
                                 <input type="text" class="form-control @error('url') is-invalid @enderror" id="url" name="url" value="{{ old('url') }}" placeholder="{{ __('Page url') }}">
                                 @error('url')
@@ -74,7 +75,18 @@
                                 <input class="form-check-input" type="radio" name="is_open" id="is_open" value="0">
                                 <label class="form-check-label" for="inlineRadio2">{{ __('No') }}</label>
                             </div>
-                        </div>       
+                        </div>  
+                        <div class="form-group row">
+                            <label for="is_slide" class="col-sm-1 col-form-label">{{ __('Is_slide') }}</label>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="is_slide" id="is_slide" value="1">
+                                <label class="form-check-label" for="inlineRadio1">{{ __('Yes') }}</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="is_slide" id="is_slide" value="0">
+                                <label class="form-check-label" for="inlineRadio2">{{ __('No') }}</label>
+                            </div>
+                        </div>     
                     </div>
                     <div class="card-footer text-center">
                         <input type="submit" class="btn btn-primary" value="{{ __('Create') }}">
@@ -86,9 +98,9 @@
 </div>
 @endsection
 <script type="text/javascript">
-         CKEDITOR.replace( 'messageArea',
-         {
-          customConfig : 'config.js',
-          toolbar : 'simple'
-          })
+    CKEDITOR.replace('content',
+    {
+        customConfig : 'config.js',
+        toolbar : 'simple'
+    })
 </script> 

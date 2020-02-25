@@ -1,11 +1,12 @@
 @extends('_layouts.manage.app')
+@section('title', __('Slide').__('Create'))
 @section('content')
 <div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
                 <form action="{{ route('slide.store') }}" method="POST" enctype="multipart/form-data">
-                    <div class="card-header">{{ __('Slide') }}{{ __('Create') }}</div>
+                    <div class="card-header">{{ __('Slide').__('Create') }}</div>
                     <div class="card-body">  
                         <ul class="list-unstyled">
                             <li>{{ App\Button::GoBack(route('slide.index')) }}</li>
@@ -23,17 +24,14 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="page_id" class="col-sm-1 col-form-label">{{ __('Page') }}</label>
+                            <label for="link" class="col-sm-1 col-form-label">{{ __('Link') }}</label>
                             <div class="col-sm-4">
-                                <select class='form-control' name='page_id' aria-describedby="pageHelp">
-                                    <option value=''>{{ __('Please choose') }}{{ __('Page') }}</option>
-									@foreach($pages as $key => $value)
-										<option value="{{ $value['id'] }}">{{ $value['name'] }}</option>
-									@endforeach
-								</select>
-			                    <span id="pageHelp" class="help-block">
-			                        若沒有選擇特定頁面則全域播放。
-			                    </span>
+                                <input type="text" class="form-control @error('link') is-invalid @enderror" id="link" name="link" value="{{ old('link') }}" placeholder="{{ __('Link') }}">
+                                @error('link')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
                         </div>
                         <div class="form-group row">

@@ -9496,3 +9496,7 @@ body {
     margin-bottom: 10px;
     color: #737373
 }
+
+.img-full {
+  width: 100%;
+}

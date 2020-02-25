@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>@yield('title')::{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -22,6 +22,7 @@
 <body>
     <div id="app">
         @include('_partials.home.nav')
+        @include('_partials.home.slide')
 
         <main class="py-4">
             @yield('content')
