@@ -77,7 +77,7 @@ body {
     line-height: 1.6;
     color: #212529;
     text-align: left;
-    background-color: #f8fafc
+    background-color: #ffffff
 }
 
 [tabindex="-1"]:focus {
@@ -9480,9 +9480,9 @@ html,body {
 }
 
 body {
-    font-family: 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
+    font-family: 'Microsoft JhengHei',Arial;
     font-weight:bold;
-    font-size: 16px;
+    font-size: 14px;
     margin-bottom: 50px
 }
 

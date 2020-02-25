@@ -6,7 +6,7 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
+    {{ Config::set('app.name', 'Q_Q') }}
     <title>@yield('title')::{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
@@ -19,12 +19,12 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
-<body>
+<body style="background-image: url('{{ asset('images/background.jpg')}}');">
     <div id="app">
         @include('_partials.home.nav')
         @include('_partials.home.slide')
 
-        <main class="py-4">
+        <main class="py-4" >
             @yield('content')
         </main>
     </div>
