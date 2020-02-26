@@ -13,18 +13,19 @@
 
 Route::get('/', function () {return view('home');})->middleware('browser');
 Route::get('/welcome', function () {return view('welcome');});
-Route::get('/_error/change_browser', function () {return view('_error.change_browser');});
+Route::get('/errors/change_browser', function () {return view('errors.change_browser');});
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/manage', 'ManageController@index')->name('manage');
 Route::get('/{url}', 'PageController@pages')->middleware('browser')->name('page');
-Route::post('navbar-sortable','NavbarController@sort')->name('navbar.sort');
-Route::post('slide-sortable','SlideController@sort')->name('slide.sort');
-Route::get('/manage/navbar/sort', function () {return view('manage.navbar.sort');});
-Route::get('/manage/slide/sort', function () {return view('manage.slide.sort');});
-Route::get('/manage/config/delete_background/{id}', 'ConfigController@delete_background')->name('config.delete_background');
+
+Route::post('navbar-sortable','NavbarController@sort')->middleware('auth')->name('navbar.sort');
+Route::post('slide-sortable','SlideController@sort')->middleware('auth')->name('slide.sort');
+Route::get('/manage/navbar/sort', function () {return view('manage.navbar.sort');})->middleware('auth');
+Route::get('/manage/slide/sort', function () {return view('manage.slide.sort');})->middleware('auth');
+Route::get('/manage/config/delete_background/{id}', 'ConfigController@delete_background')->middleware('auth')->name('config.delete_background');
 
 Route::prefix('manage')->middleware('auth')->group(function(){
     Route::resource('member', 'MemberController');
