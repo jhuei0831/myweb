@@ -13,7 +13,7 @@
                         </ul>                 
                         @csrf
                         <div class="form-group row">
-                            <label for="name" class="col-sm-1 col-form-label">{{ __('Slide') }}{{ __('Name') }}</label>
+                            <label for="name" class="col-sm-1 col-form-label">{{ __('Slide').__('Name') }}</label>
                             <div class="col-sm-4">
                                 <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ old('name') }}" placeholder="{{ __('Slide') }}{{ __('Name') }}">
                                 @error('name')

@@ -11,42 +11,44 @@
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-});
-Route::get('/welcome', function () {
-    return view('welcome');
-});
+Route::get('/', function () {return view('home');})->middleware('browser');
+Route::get('/welcome', function () {return view('welcome');});
+Route::get('/_error/change_browser', function () {return view('_error.change_browser');});
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/manage', 'ManageController@index')->name('manage');
-Route::get('/{url}', 'PageController@pages')->name('page');
+Route::get('/{url}', 'PageController@pages')->middleware('browser')->name('page');
 Route::post('navbar-sortable','NavbarController@sort')->name('navbar.sort');
 Route::post('slide-sortable','SlideController@sort')->name('slide.sort');
 Route::get('/manage/navbar/sort', function () {return view('manage.navbar.sort');});
 Route::get('/manage/slide/sort', function () {return view('manage.slide.sort');});
+Route::get('/manage/config/delete_background/{id}', 'ConfigController@delete_background')->name('config.delete_background');
 
 Route::prefix('manage')->middleware('auth')->group(function(){
     Route::resource('member', 'MemberController');
     Route::resource('page', 'PageController');
     Route::resource('navbar', 'NavbarController');
     Route::resource('slide', 'SlideController');
+    Route::resource('config', 'ConfigController');
 });
 
 
 View::composer(['*'], function ($view) {
+	$current_page = App\Page::where('url',Request::path())->first();
     $navbars = App\Navbar::orderby('sort')->paginate(10);
-    $pages = App\Page::paginate(10);
-    $current_page = App\Page::where('url',Request::path())->first();
-    $users = App\User::paginate(10);
     $slides = App\Slide::orderby('sort')->paginate(10);
-
+    $pages = App\Page::paginate(10);
+    $users = App\User::paginate(10);
+    $config = App\Config::where('id','1')->first();
+    
     $view->with('navbars',$navbars);
     $view->with('pages',$pages);
     $view->with('users',$users);
     $view->with('slides',$slides);
     $view->with('current_page',$current_page);
+    $view->with('config',$config);
 });
 
 // Route::get('/manage/member', 'MemberController@show')->name('member');

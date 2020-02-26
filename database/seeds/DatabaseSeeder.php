@@ -19,6 +19,21 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@gmail.com',
             'permission' => '5',
             'password' => bcrypt('admin'),
+            'created_at' => now(),
+        ]);
+
+        DB::table('configs')->insert([
+            'app_name' => 'Website',
+            'font_family' => 'Helvetica, Arial',
+            'font_size' => 'large',
+            'font_weight' => 'bold',
+            'background' => 'null',
+            'background_color' => 'null',
+            'navbar_bcolor' => 'fff',
+            'navbar_wcolor' => 'fff',
+            'navbar_size' => 'large',
+            'is_open' => '1',
+            'created_at' => now(),
         ]);
     }
 }

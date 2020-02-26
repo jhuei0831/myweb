@@ -7,7 +7,7 @@
             <div class="container">
                 <div class="row justify-content-center" >
                     <div class="col-lg-12">
-                        <div class="card border-light" style="border: none;">
+                        <div class="card-transparent border-light" style="border: none;">
                             <div class="card-header bg-transparent">
                                 <h1><b>{{$page->name}}</b></h1>
                             </div>

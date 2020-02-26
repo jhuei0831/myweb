@@ -43,7 +43,7 @@
                         <div class="form-group row">
                             <label for="type" class="col-sm-1 col-form-label">{{ __('Type') }}</label>
                             <div class="col-sm-8">
-                                <select class="form-control @error('type') is-invalid @enderror" name='type' required aria-describedby="typeHelp" required>
+                                <select class="form-control @error('type') is-invalid @enderror" name='type' required aria-describedby="typeHelp">
 									@foreach(App\Enum::type['navbar'] as $key => $value)
                                         @if ($key == $navbar->type)
                                             <option value='{{ $key }}' selected>{{ $value }}</option>

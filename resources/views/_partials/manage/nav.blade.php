@@ -16,6 +16,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('member.index') }}">{{ __('Member').__('Manage') }}</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('config.index') }}">{{ __('Config') }}</a>
+                </li>
                 @endif
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('page.index') }}">{{ __('Page').__('Manage') }}</a>

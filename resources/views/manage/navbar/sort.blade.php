@@ -11,6 +11,10 @@
 					<ul class="list-unstyled">
 						<li>{{ App\Button::GoBack(route('navbar.index')) }}</li>
 					</ul>
+                    <div class="alert alert-warning" role="alert">
+                        1. 請直接拖曳目標列進行排序。<br>
+                        2. 調整完請點重新整理進行確認。
+                    </div>
                 	<table id="table" class="table table-hover table-bordered text-center">
 	                	<thead>
 	                		<tr class="active">

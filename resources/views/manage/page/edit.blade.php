@@ -121,3 +121,10 @@
     </div>
 </div>
 @endsection
+<script type="text/javascript">
+    CKEDITOR.replace('content',
+    {
+        customConfig : 'config.js',
+        toolbar : 'simple'
+    })
+</script> 

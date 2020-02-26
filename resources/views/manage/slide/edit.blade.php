@@ -1,11 +1,11 @@
 @extends('_layouts.manage.app')
-
+@section('title',__('Slide').__('Edit'))
 @section('content')
 <div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">{{ __('Slide') }}{{ __('Edit') }}</div>
+                <div class="card-header">{{ __('Slide').__('Edit') }}</div>
                     
                 <div class="card-body">
                 	<ul class="list-unstyled">
@@ -15,7 +15,7 @@
                 		@csrf
 						@method('PUT')
 						<div class="form-group row">
-                            <label for="name" class="col-sm-1 col-form-label">{{ __('Slide') }}{{ __('Name') }}</label>
+                            <label for="name" class="col-sm-1 col-form-label">{{ __('Slide').__('Name') }}</label>
                             <div class="col-sm-4">
                                 <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ $slide->name }}" required autocomplete="{{ __('Slide') }}{{ __('Name') }}" autofocus>
                                 @error('name')

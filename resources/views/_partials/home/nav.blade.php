@@ -1,8 +1,8 @@
-<nav class="navbar navbar-expand-md navbar-light" style="background-color: #e3f2fd;font-size: large">
+<nav class="navbar navbar-expand-md navbar-dark" style="background-color: #{{ $config->navbar_bcolor }};font-size: {{ $config->navbar_size }}">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="{{ url('/') }}">
-                {{ config('app.name', 'Laravel') }}
+            <a class="navbar-brand" href="{{ url('/') }}" style="color: #{{ $config->navbar_wcolor }};font-size: {{ $config->navbar_size }}">
+                {{ config('app.name') }}
             </a>
         </div>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -17,7 +17,7 @@
                         @switch($navbar->type)
                             @case(1)
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: #{{ $config->navbar_wcolor }}">
                                     {{ $navbar->name }}
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -30,8 +30,8 @@
                                 </li>
                                 @break
                             @case(2)
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ $navbar->link }}">{{ $navbar->name }}</a>
+                                <li class="nav-item" >
+                                    <a class="nav-link" href="{{ $navbar->link }}" style="color: #{{ $config->navbar_wcolor }}">{{ $navbar->name }}</a>
                                 </li>
                                 @break                              
                         @endswitch

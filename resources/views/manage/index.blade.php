@@ -1,5 +1,5 @@
 @extends('_layouts.manage.app')
-
+@section('title',__('Backstage'))
 @section('content')
 <div class="container">
     <div class="row justify-content-center">

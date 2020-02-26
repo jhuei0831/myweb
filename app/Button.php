@@ -46,11 +46,14 @@ class Button extends Model
 			echo "</p>";
 		}
 
-		public static function To($to, $txt, $query="", $class="btn-secondary")
+		public static function To($to, $txt, $query="", $class="btn-secondary", $fas="list-ol", $confirm=false)
 		{
 			$url = URL::full();
-			echo "<a class='btn btn-sm {$class}' href='{$url}/{$to}?{$query}'>";
-			echo 	"<i class='fas fa-list-ol'></i> {$txt}";
+			if ($confirm == true) {
+				$confirm = 'onclick="return confirm(\'確認刪除?\')"';
+			}
+			echo "<a class='btn btn-sm {$class}' href='{$url}/{$to}/{$query}' {$confirm}>";
+			echo 	"<i class='fas fa-{$fas}'></i> {$txt}";
 			echo "</a>";
 		}
 
