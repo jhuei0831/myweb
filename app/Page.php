@@ -11,16 +11,11 @@ class Page extends Model
     protected $primaryKey = 'id';
 
     protected $fillable = [
-        "name", "navbar_id" ,"title", "url", "content", "is_open",
+        "name", "menu_id" ,"title", "url", "content", "is_open",
     ];
 
-    public function navbars()
+    public function menus()
     {
-        return $this->belongsTo('App\Navbar');
-    }
-
-    public function slides()
-    {
-        return $this->hasMany('App\Slide');
+        return $this->belongsTo('App\Menu');
     }
 }

@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Menu;
+use App\Navbar;
+use App\Page;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use App\Navbar;
-class NavbarController extends Controller
+
+class MenuController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +18,8 @@ class NavbarController extends Controller
      */
     public function index()
     {
-        $navbars = Navbar::paginate(10);
-        return view('manage.navbar.index',compact('navbars'));
+        $menus = Menu::paginate(10);
+        return view('manage.menu.index',compact('menus'));
     }
 
     /**
@@ -29,7 +32,7 @@ class NavbarController extends Controller
         if (Auth::check() && Auth::user()->permission < '2') {
             return back()->with('warning', '權限不足以訪問該頁面 !');
         }
-        return view('manage.navbar.create');
+        return view('manage.menu.create');
     }
 
     /**
@@ -40,29 +43,31 @@ class NavbarController extends Controller
      */
     public function store(Request $request)
     {
-        if (Auth::check() && Auth::user()->permission < '5') {
+        if (Auth::check() && Auth::user()->permission < '2') {
             return back()->with('warning', '權限不足以訪問該頁面 !');
         }
-        $navbar = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'type' => ['required'],
-            'is_open' => ['required'],          
+        $menu = $request->validate([
+            'name' => ['required', 'string', 'max:255','unique:menus,name'],
+            'navbar_id' => ['required','integer'],
+            'link' => ['nullable'],
+            'is_open' => ['required'],
+            'is_list' => ['required'],
         ]);
 
-        if ($navbar) {
-            Navbar::create($request->all());
+        if ($menu) {
+            Menu::create($request->all());
         }
 
-        return back()->with('success', '導覽列新增成功 !');
+        return back()->with('success', '選單新增成功 !');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Menu  $menu
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Menu $menu)
     {
         //
     }
@@ -70,7 +75,7 @@ class NavbarController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Menu  $menu
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -78,15 +83,16 @@ class NavbarController extends Controller
         if (Auth::check() && Auth::user()->permission < '3') {
             return back()->with('warning', '權限不足以訪問該頁面 !');
         }
-        $navbar = Navbar::where('id',$id)->first();
-        return view('manage.navbar.edit',compact('navbar'));
+
+        $menu = Menu::where('id',$id)->first();
+        return view('manage.menu.edit',compact('menu'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Menu  $menu
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -95,30 +101,31 @@ class NavbarController extends Controller
             return back()->with('warning', '權限不足以訪問該頁面 !');
         }
 
-        $navbar = Navbar::where('id', $id)->first();
+        $menu = Menu::where('id', $id)->first();
 
         $data = $this->validate($request, [
-            'name' => ['required', 'string', 'max:255'],
-            'link' => ['string', 'max:255'],
-            'type' => ['required'],
-            'is_open' => ['required'],
+            'name' => ['required', 'string', 'max:255','unique:menus,name'],
+            'navbar_id' => ['required','integer'],
+            'link' => ['nullable','string'],
+            'is_open' => ['required','boolean'],
+            'is_list' => ['required','boolean'],
         ]);
 
         // 逐筆進行htmlpurufier 並去掉<p></p>
         foreach ($request->except('_token', '_method') as $key => $value) {
             if ($request->filled($key)) {
-                $navbar->$key = strip_tags(clean($data[$key]));
+                $menu->$key = strip_tags(clean($data[$key]));
             }
         }
 
-        $navbar->save();
-        return back()->with('success', '修改導覽列成功 !');
+        $menu->save();
+        return back()->with('success', '修改選單成功 !');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Menu  $menu
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
@@ -126,9 +133,8 @@ class NavbarController extends Controller
         if (Auth::check() && Auth::user()->permission < '4') {
             return back()->with('warning', '權限不足以訪問該頁面 !');
         }
-        Navbar::destroy($id);
-        return back()->with('success', '刪除導覽列成功 !');
-
+        Menu::destroy($id);
+        return back()->with('success', '刪除選單成功 !');
     }
 
     //拖曳排序
@@ -137,17 +143,26 @@ class NavbarController extends Controller
         if (Auth::check() && Auth::user()->permission < '3') {
             return back()->with('warning', '權限不足以訪問該頁面 !');
         }
-        
-        $navbars = Navbar::all();
 
-        foreach ($navbars as $navbar) {
+        $menus = Menu::all();
+
+        foreach ($menus as $menu) {
             foreach ($request->order as $order) {
-                if ($order['id'] == $navbar->id) {
-                    $navbar->update(['sort' => $order['position']]);
+                if ($order['id'] == $menu->id) {
+                    $menu->update(['sort' => $order['position']]);
                 }
             }
         }
         
         return response('Update Successfully.', 200);
+    }
+
+    public function menus($id,$name)
+    {
+        $navbar = Navbar::where('id',$id)->first();
+        $pages = Page::all();
+        $menus = Menu::where('navbar_id',$navbar->id)->get();
+        $select_menu = Menu::where('name',$name)->first();
+        return view('menu',compact('menus','select_menu','navbar','pages'));
     }
 }

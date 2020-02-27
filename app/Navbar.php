@@ -14,8 +14,8 @@ class Navbar extends Model
         "name", "sort", "link", "type", "is_open",
     ];
 
-    public function pages()
+    public function menus()
     {
-        return $this->hasMany('App\Page');
+        return $this->hasMany('App\Menu');
     }
 }

@@ -1,26 +1,38 @@
 @extends('_layouts.home.app')
 
+@section('menu')
+<div class="col-md-2">
+    <nav class="navbar-vertical">
+        <ul class="navbar-nav">
+            @foreach($menus as $menu)
+                @if($menu->name == $select_menu->name)
+                <li class="active">
+                    <a class="nav-link" href="/menu/{{ $menu->navbar_id }}/{{ $menu->name }}">{{ $menu->name }}</a>
+                </li>
+                @else
+                <li class="">
+                    <a class="nav-link" href="/menu/{{ $menu->navbar_id }}/{{ $menu->name }}">{{ $menu->name }}</a>
+                </li>
+                @endif
+            @endforeach
+        </ul>
+    </nav>
+</div>
+@endsection
+
 @section('content')
-    @foreach($pages as $page)
-        @if($page->url == Request::path())
-            @section('title',$page->name)
-            <div class="container">
-                <div class="row justify-content-center" >
-                    <div class="col-lg-12">
-                        <div class="card border-light" style="border: none;">
-                            <div class="card-header bg-transparent">
-                                <h1><b>{{$page->name}}</b></h1>
-                            </div>
-                            <div class="card-body">               
-                                @php           
-                                    echo clean($page->content);
-                                @endphp                                                                   
-                            </div>
-                        </div>
-                    </div>
-                </div>
+    @section('title',$page->name)
+    <div class="col-md-10">
+        <div class="card border-light" style="border: none;">
+            <div class="card-header bg-transparent">
+                <h1><b>{{$page->name}}</b></h1>
             </div>
-        @endif
-    @endforeach
+            <div class="card-body">               
+                @php           
+                    echo clean($page->content);
+                @endphp                                                                   
+            </div>
+        </div>
+    </div>
 @endsection
 

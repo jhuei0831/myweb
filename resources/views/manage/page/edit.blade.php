@@ -27,18 +27,18 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="navbar_id" class="col-sm-1 col-form-label">{{ __('Navbar') }}</label>
+                            <label for="menu_id" class="col-sm-1 col-form-label">{{ __('Menu') }}</label>
                             <div class="col-sm-4">
-                                <select class='form-control' name='navbar_id' required aria-describedby="navHelp">
-                                    @foreach($navbars as $key => $value)
-                                        @if ($value['id'] == $page->navbar_id)
+                                <select class='form-control' name='menu_id' required aria-describedby="menuHelp">
+                                    @foreach($menus as $key => $value)
+                                        @if ($value['id'] == $page->menu_id)
                                             <option value="{{ $value['id'] }}" selected>{{ $value['name'] }}</option>
                                         @else
                                             <option value="{{ $value['id'] }}">{{ $value['name'] }}</option>
                                         @endif
 									@endforeach
 								</select>
-			                    <span id="navHelp" class="help-block">
+			                    <span id="menuHelp" class="help-block">
 			                        選擇要加入的導覽列項目。
 			                    </span>
                             </div>
@@ -62,9 +62,9 @@
                             <label for="url" class="col-sm-1 col-form-label">{{ __('Page').__('Url') }}</label>
 
                             <div class="col-md-4">
-                                <input id="url" type="text" class="form-control @error('permission') is-invalid @enderror" name="url" value="{{ $page->url }}" required autocomplete="{{ __('Page url') }}" autofocus>
+                                <input id="url" type="text" class="form-control @error('url') is-invalid @enderror" name="url" value="{{ $page->url }}" required autocomplete="{{ __('Page').__('Url') }}" autofocus>
 
-                                @error('permission')
+                                @error('url')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

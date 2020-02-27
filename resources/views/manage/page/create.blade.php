@@ -15,7 +15,7 @@
                         <div class="form-group row">
                             <label for="name" class="col-sm-1 col-form-label">{{ __('Page').__('Name') }}</label>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ old('name') }}" placeholder="{{ __('Page name') }}">
+                                <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ old('name') }}" placeholder="{{ __('Page').__('Name') }}">
                                 @error('name')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -24,15 +24,15 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="navbar_id" class="col-sm-1 col-form-label">{{ __('Navbar') }}</label>
+                            <label for="menu_id" class="col-sm-1 col-form-label">{{ __('Menu') }}</label>
                             <div class="col-sm-4">
-                                <select class='form-control' name='navbar_id' required aria-describedby="navHelp">
-                                    <option value=''>請選擇導覽列</option>
-									@foreach($navbars as $key => $value)
-										<option value='{{ $value['id'] }}'>{{ $value['name'] }}</option>
+                                <select class='form-control' name='menu_id' aria-describedby="menuHelp">
+                                    <option value=''>{{ __('Please choose').__('Menu') }}</option>
+									@foreach($menus as $key => $value)
+										<option value="{{ $value['id'] }}">{{ $value['name'] }}</option>
 									@endforeach
 								</select>
-			                    <span id="navHelp" class="help-block">
+			                    <span id="menuHelp" class="help-block">
 			                        選擇要加入的導覽列項目。
 			                    </span>
                             </div>
@@ -51,7 +51,7 @@
                         <div class="form-group row">
                             <label for="url" class="col-sm-1 col-form-label">{{ __('Page').__('Url') }}</label>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control @error('url') is-invalid @enderror" id="url" name="url" value="{{ old('url') }}" placeholder="{{ __('Page url') }}">
+                                <input type="text" class="form-control @error('url') is-invalid @enderror" id="url" name="url" value="{{ old('url') }}" placeholder="{{ __('Page').__('Url') }}">
                                 @error('url')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>

@@ -11,28 +11,39 @@
 |
 */
 
-Route::get('/', function () {return view('home');})->middleware('browser');
-Route::get('/welcome', function () {return view('welcome');});
 Route::get('/errors/change_browser', function () {return view('errors.change_browser');});
 
-Auth::routes();
+//非IE瀏覽器
+Route::middleware('browser')->group(function() {
+	Auth::routes();
+	Route::get('/', function () {return view('home');})->middleware('browser');
+    Route::get('/home', 'HomeController@index')->middleware('browser')->name('home');
+	Route::get('/page/{url}', 'PageController@pages')->middleware('browser')->name('page');
+	Route::get('/menu/{id}/{name}', 'MenuController@menus')->middleware('browser')->name('menu');
+});
 
-Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/manage', 'ManageController@index')->name('manage');
-Route::get('/{url}', 'PageController@pages')->middleware('browser')->name('page');
+//要登入和非IE瀏覽器
+Route::middleware('auth','browser')->group(function() {
+	//排序
+    Route::post('navbar-sortable','NavbarController@sort')->name('navbar.sort');
+	Route::post('slide-sortable','SlideController@sort')->name('slide.sort');
+	Route::post('menu-sortable','MenuController@sort')->name('menu.sort');
+	Route::get('/manage/navbar/sort', function () {return view('manage.navbar.sort');});
+	Route::get('/manage/slide/sort', function () {return view('manage.slide.sort');});
+	Route::get('/manage/menu/sort', function () {return view('manage.menu.sort');});
+	//刪除背景
+	Route::get('/manage/config/delete_background/{id}', 'ConfigController@delete_background')->name('config.delete_background');
+});
 
-Route::post('navbar-sortable','NavbarController@sort')->middleware('auth')->name('navbar.sort');
-Route::post('slide-sortable','SlideController@sort')->middleware('auth')->name('slide.sort');
-Route::get('/manage/navbar/sort', function () {return view('manage.navbar.sort');})->middleware('auth');
-Route::get('/manage/slide/sort', function () {return view('manage.slide.sort');})->middleware('auth');
-Route::get('/manage/config/delete_background/{id}', 'ConfigController@delete_background')->middleware('auth')->name('config.delete_background');
-
-Route::prefix('manage')->middleware('auth')->group(function(){
+//Resource
+Route::prefix('manage')->middleware('auth','browser')->group(function(){
     Route::resource('member', 'MemberController');
     Route::resource('page', 'PageController');
     Route::resource('navbar', 'NavbarController');
     Route::resource('slide', 'SlideController');
     Route::resource('config', 'ConfigController');
+    Route::resource('menu', 'MenuController');
+    Route::resource('manage', 'ManageController');
 });
 
 
@@ -40,13 +51,15 @@ View::composer(['*'], function ($view) {
 	$current_page = App\Page::where('url',Request::path())->first();
     $navbars = App\Navbar::orderby('sort')->paginate(10);
     $slides = App\Slide::orderby('sort')->paginate(10);
-    $pages = App\Page::paginate(10);
-    $users = App\User::paginate(10);
+    $menus = App\Menu::orderby('sort')->paginate(10);
     $config = App\Config::where('id','1')->first();
-    
+    $pages = App\Page::paginate(10);   
+    $users = App\User::paginate(10);
+       
     $view->with('navbars',$navbars);
     $view->with('pages',$pages);
     $view->with('users',$users);
+    $view->with('menus',$menus);
     $view->with('slides',$slides);
     $view->with('current_page',$current_page);
     $view->with('config',$config);

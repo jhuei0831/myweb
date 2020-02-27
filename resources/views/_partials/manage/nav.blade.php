@@ -12,6 +12,18 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <!-- Left Side Of Navbar -->
             <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('navbar.index') }}">{{ __('Navbar').__('Manage') }}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('menu.index') }}">{{ __('Menu').__('Manage') }}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('page.index') }}">{{ __('Page').__('Manage') }}</a>
+                </li>               
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('slide.index') }}">{{ __('Slide').__('Manage') }}</a>
+                </li>
                 @if (Auth::check() && Auth::user()->permission >= '4')
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('member.index') }}">{{ __('Member').__('Manage') }}</a>
@@ -20,15 +32,6 @@
                     <a class="nav-link" href="{{ route('config.index') }}">{{ __('Config') }}</a>
                 </li>
                 @endif
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('page.index') }}">{{ __('Page').__('Manage') }}</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('navbar.index') }}">{{ __('Navbar').__('Manage') }}</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('slide.index') }}">{{ __('Slide').__('Manage') }}</a>
-                </li>
             </ul>
 
             <!-- Right Side Of Navbar -->

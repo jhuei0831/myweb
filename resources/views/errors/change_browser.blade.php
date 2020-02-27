@@ -9,7 +9,7 @@
 				<tr>
 					<td>
 						<a target='_blank' href="https://www.google.com.tw/chrome/" rel = "noopener noreferrer">
-							<img src='{{ asset('images/icon/google.png') }}'>
+							<img src="{{ asset('images/icon/google.png') }}">
 						</a>
 					</td>
 					<td>
@@ -21,7 +21,7 @@
 				<tr>
 					<td>
 						<a target='_blank' href="https://mozilla.com.tw/free-fox/" rel = "noopener noreferrer">
-							<img src='{{ asset('images/icon/firefox.png') }}'>
+							<img src="{{ asset('images/icon/firefox.png') }}">
 						</a>
 					</td>
 					<td>

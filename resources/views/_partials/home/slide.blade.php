@@ -1,4 +1,4 @@
-@if(isset($current_page) && $current_page->is_slide == '1' || Request::path() == '/' || Request::path() == '/home')
+@if(count($slides) > 0 && (isset($current_page) && $current_page->is_slide == '1' || Request::path() == '/' || Request::path() == '/home'))
 <div id="carouselExampleControls" class="carousel slide" data-ride="carousel" data-interval="3000">
     <ol class="carousel-indicators">
         <li data-target="#carouselExampleControls" data-slide-to="0" class="active"></li>

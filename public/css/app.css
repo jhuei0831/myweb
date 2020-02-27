@@ -9500,3 +9500,142 @@ body {
 .img-full {
   width: 100%;
 }
+
+.navbar-vertical {
+    background-color: transparent;
+    border-color: transparent;
+    padding-left: 5px;
+    padding-right: 5px;
+    width: 100%; 
+    text-align: center;
+}
+  
+.navbar-vertical .navbar-brand {
+    color: #444444; 
+}
+.navbar-vertical .navbar-brand:hover, .navbar-vertical .navbar-brand:focus {
+    color: #fff;
+    background-color: transparent; 
+}
+.navbar-vertical .navbar-text {
+    color: #444444; 
+}
+.navbar-vertical .navbar-nav {
+    width: 100%; 
+}
+@media (min-width: 992px) {
+    .navbar-vertical .navbar-nav {
+        padding-top: 25%; 
+    } 
+}
+.navbar-vertical .navbar-nav > li {
+    float: none;
+    border-bottom: 1px #FFFFFF solid;
+    width: 100%; 
+}
+.navbar-vertical .navbar-nav > li > a {
+    color: #444444;
+    border-left: 5px transparent solid;
+    background-repeat: no-repeat;
+    background-position: right center; 
+}
+.navbar-vertical .navbar-nav > li > a:hover, .navbar-vertical .navbar-nav > li > a:focus {
+    color: #7F0015;
+    background-color: transparent;
+    border-left: 5px #7F0015 solid; 
+}
+.navbar-vertical .navbar-nav > .active > a, .navbar-vertical .navbar-nav > .active > a:hover, .navbar-vertical .navbar-nav > .active > a:focus {
+    color: #7F0015;
+    background-color: transparent;
+    /*background-image: url("/images/icon/google.png");*/
+    border-left: 5px #7F0015 solid; 
+}
+.navbar-vertical .navbar-nav > .disabled > a, .navbar-vertical .navbar-nav > .disabled > a:hover, .navbar-vertical .navbar-nav > .disabled > a:focus {
+    color: #444;
+    background-color: transparent; 
+}
+.navbar-vertical .navbar-toggle {
+    border-color: #ddd;    
+}
+.navbar-vertical .navbar-toggle a {
+    color: #444444; 
+}
+.navbar-vertical .navbar-toggle a:hover {
+    text-decoration: none; 
+}
+.navbar-vertical .navbar-toggle:hover, .navbar-vertical .navbar-toggle:focus {
+  background-color: #ddd; 
+}
+.navbar-vertical .navbar-toggle .icon-bar {
+  background-color: #888; 
+}
+.navbar-vertical .navbar-collapse, .navbar-vertical .navbar-form {
+  border-color: transparent; 
+}
+.navbar-vertical .navbar-nav > .open > a, .navbar-vertical .navbar-nav > .open > a:hover, .navbar-vertical .navbar-nav > .open > a:focus {
+  background-color: transparent;
+  color: #7F0015; 
+}
+@media (max-width: 991px) {
+    .navbar-vertical .navbar-nav .open .dropdown-menu > li > a {
+        color: #444444; 
+    }
+    .navbar-vertical .navbar-nav .open .dropdown-menu > li > a:hover, .navbar-vertical .navbar-nav .open .dropdown-menu > li > a:focus {
+        color: #7F0015;
+        background-color: transparent; 
+    }
+  .navbar-vertical .navbar-nav .open .dropdown-menu > .active > a, .navbar-vertical .navbar-nav .open .dropdown-menu > .active > a:hover, .navbar-vertical .navbar-nav .open .dropdown-menu > .active > a:focus {
+        color: #7F0015;
+        background-color: transparent; 
+    }
+  .navbar-vertical .navbar-nav .open .dropdown-menu > .disabled > a, .navbar-vertical .navbar-nav .open .dropdown-menu > .disabled > a:hover, .navbar-vertical .navbar-nav .open .dropdown-menu > .disabled > a:focus {
+        color: #444;
+        background-color: transparent; 
+    } 
+}
+.navbar-vertical .navbar-link {
+    color: #444444; 
+}
+.navbar-vertical .navbar-link:hover {
+    color: #7F0015; 
+}
+.navbar-vertical .btn-link {
+    color: #444444; 
+}
+.navbar-vertical .btn-link:hover, .navbar-vertical .btn-link:focus {
+    color: #7F0015; 
+}
+.navbar-vertical .btn-link[disabled]:hover, .navbar-vertical .btn-link[disabled]:focus, fieldset[disabled] .navbar-vertical .btn-link:hover, fieldset[disabled] .navbar-vertical .btn-link:focus {
+    color: #444; 
+}
+@media (min-width: 992px) {
+    .navbar-vertical.affix {
+        padding-top: 5px;
+        width: 15.75%; 
+    }
+
+    .navbar-vertical {
+        z-index: 0; 
+    }
+    .navbar-vertical > .affix-bottom {
+        position: static; 
+    } 
+}
+@media (max-width: 992px) {
+    .navbar-vertical {
+        padding-left: 15px;
+        padding-right: 15px; 
+    }
+
+    .navbar-vertical.affix {
+        position: fixed;
+        padding-top: 0px;
+        top: 57px;
+        left: 0px;
+        width: 100%; 
+    } 
+}
+
+.text-list{
+    font-family:'Noto Sans TC', 'Microsoft JhengHei', sans-serif;word-break:break-all
+}

@@ -8,7 +8,7 @@
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
             <span class="navbar-toggler-icon"></span>
         </button>
-
+    
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <!-- Left Side Of Navbar -->
             <ul class="navbar-nav mr-auto">
@@ -21,9 +21,9 @@
                                     {{ $navbar->name }}
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    @foreach ($pages as $page)
-                                        @if ($page->navbar_id == $navbar->id && $page->is_open == '1')                                          
-                                            <a class="dropdown-item" href="{{ $page->url }}">{{ $page->name }}</a>                                           
+                                    @foreach ($menus as $menu)
+                                        @if ($menu->navbar_id == $navbar->id && $menu->is_open == '1')                                          
+                                            <a class="dropdown-item" href="/menu/{{ $navbar->id }}/{{ $menu->name }}">{{ $menu->name }}</a>                                           
                                         @endif                                       
                                     @endforeach  
                                     </div>                                
@@ -53,7 +53,7 @@
                     @endif
                 @else
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('manage') }}">{{ __('Backstage') }}</a>
+                        <a class="nav-link" href="{{ route('manage.index') }}">{{ __('Backstage') }}</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>

@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Page;
 use App\Navbar;
+use App\menu;
 class PageController extends Controller
 {
     /**
@@ -30,8 +31,8 @@ class PageController extends Controller
         if (Auth::check() && Auth::user()->permission < '2') {
             return back()->with('warning', '權限不足以訪問該頁面 !');
         }
-        $navbars = Navbar::where('type','=','1')->get();
-        return view('manage.page.create',compact('navbars'));
+
+        return view('manage.page.create');
     }
 
     /**
@@ -47,9 +48,11 @@ class PageController extends Controller
         }
         $page = $request->validate([
             'name' => ['required', 'string', 'max:255'],
+            'menu_id' => ['integer'],
             'title' => ['required', 'string', 'max:255'],
-            'url' => ['required', 'string', 'max:255'],
+            'url' => ['required', 'string', 'max:255','unique:pages,url'],
             'is_open' => ['required'],
+            'is_slide' => ['required'],
         ]);
         if ($page) {
             Page::create($request->all());
@@ -102,9 +105,9 @@ class PageController extends Controller
 
         $data = $this->validate($request, [
             'name' => ['required', 'string', 'max:255'],
-            'navbar_id' => ['string', 'max:255'],
+            'menu_id' => ['integer'],
             'title' => ['required', 'string', 'max:255'],
-            'url' => ['required', 'string', 'max:255'],
+            'url' => ['required', 'string', 'max:255','unique:pages,url'],
             'is_open' => ['required'],
             'is_slide' => ['required'],
         ]);
@@ -139,7 +142,9 @@ class PageController extends Controller
     //
     public function pages($url)
     {
-        $pages = Page::where('url',$url)->get();
-        return view('page',compact('pages'));
+        $page = Page::where('url',$url)->first();
+        $select_menu = Menu::where('id',$page->menu_id)->first();
+        $menus = Menu::where('navbar_id',$select_menu->navbar_id)->get();
+        return view('page',compact('page','select_menu','menus'));
     }
 }

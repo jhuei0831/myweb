@@ -29,7 +29,7 @@ class DatabaseSeeder extends Seeder
             'font_weight' => 'bold',
             'background' => 'null',
             'background_color' => 'null',
-            'navbar_bcolor' => 'fff',
+            'navbar_bcolor' => '000',
             'navbar_wcolor' => 'fff',
             'navbar_size' => 'large',
             'is_open' => '1',

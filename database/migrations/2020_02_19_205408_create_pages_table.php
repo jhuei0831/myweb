@@ -15,7 +15,7 @@ class CreatePagesTable extends Migration
     {
         Schema::create('pages', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('navbar_id')->comment('導覽列id');
+            $table->string('menu_id')->comment('選單id');
             $table->string('name')->comment('頁面名稱');
             $table->string('title')->comment('標題');
             $table->string('url')->comment('頁面網址');

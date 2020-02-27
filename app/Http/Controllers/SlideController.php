@@ -169,6 +169,9 @@ class SlideController extends Controller
     //拖曳排序
     public function sort(Request $request)
     {
+        if (Auth::check() && Auth::user()->permission < '3') {
+            return back()->with('warning', '權限不足以訪問該頁面 !');
+        }
         $slides = Slide::all();
 
         foreach ($slides as $slide) {

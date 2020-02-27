@@ -15,7 +15,7 @@
 	                	<thead>
 	                		<tr class="active">
 	                			<th class="text-nowrap text-center">{{ __('Page').__('Name') }}</th>
-	                			<th class="text-nowrap text-center">{{ __('Navbar') }}</th>
+	                			<th class="text-nowrap text-center">{{ __('Menu') }}</th>
 	                			<th class="text-nowrap text-center">{{ __('Title') }}</th>
 	                			<th class="text-nowrap text-center">{{ __('Page').__('Url') }}</th>
 	                			<th class="text-nowrap text-center">{{ __('Is_open') }}</th>
@@ -27,7 +27,7 @@
 							@foreach ($pages as $page)
 								<tr>
 									<td>{{ $page->name }}</td>
-									<td>{{ App\Navbar::where('id','=',$page->navbar_id)->first('name')['name'] }}</td>
+									<td>{{ App\Menu::where('id','=',$page->menu_id)->first('name')['name'] }}</td>
 									<td>{{ $page->title }}</td>
 									<td>
 										<a href="{{ $page->url }}" target="_blank" rel = "noopener noreferrer"><i class="fas fa-link"></i></a>
