@@ -23,7 +23,7 @@
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     @foreach ($menus as $menu)
                                         @if ($menu->navbar_id == $navbar->id && $menu->is_open == '1')                                          
-                                            <a class="dropdown-item" href="/menu/{{ $navbar->id }}/{{ $menu->name }}">{{ $menu->name }}</a>                                           
+                                            <a class="dropdown-item" href="/article/{{ $navbar->name }}/{{ $menu->name }}">{{ $menu->name }}</a>                                           
                                         @endif                                       
                                     @endforeach  
                                     </div>                                
@@ -53,10 +53,10 @@
                     @endif
                 @else
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('manage.index') }}">{{ __('Backstage') }}</a>
+                        <a class="nav-link" href="{{ route('manage') }}" style="color: #{{ $config->navbar_wcolor }}">{{ __('Backstage') }}</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                        <a id="navbarDropdown" class="nav-link dropdown-toggle" style="color: #{{ $config->navbar_wcolor }}" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre >
                             {{ Auth::user()->name }} <span class="caret"></span>
                         </a>
 

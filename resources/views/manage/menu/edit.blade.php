@@ -17,7 +17,7 @@
 						<div class="form-group row">
                             <label for="name" class="col-sm-1 col-form-label">{{ __('Menu').__('Name') }}</label>
                             <div class="col-sm-4">
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ $menu->name }}" required autocomplete="{{ __('Menu').__('Name') }}" autofocus>
+                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ $menu->name }}" required autocomplete="{{ __('Menu').__('Name') }}" autofocus readonly>
                                 @error('name')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>

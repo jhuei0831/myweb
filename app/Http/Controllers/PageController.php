@@ -48,7 +48,7 @@ class PageController extends Controller
         }
         $page = $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'menu_id' => ['integer'],
+            'menu_id' => ['nullable','integer'],
             'title' => ['required', 'string', 'max:255'],
             'url' => ['required', 'string', 'max:255','unique:pages,url'],
             'is_open' => ['required'],
@@ -105,9 +105,9 @@ class PageController extends Controller
 
         $data = $this->validate($request, [
             'name' => ['required', 'string', 'max:255'],
-            'menu_id' => ['integer'],
+            'menu_id' => ['nullable'],
             'title' => ['required', 'string', 'max:255'],
-            'url' => ['required', 'string', 'max:255','unique:pages,url'],
+            'url' => ['required', 'string', 'max:255'],
             'is_open' => ['required'],
             'is_slide' => ['required'],
         ]);
@@ -118,6 +118,9 @@ class PageController extends Controller
                 $page->$key = strip_tags(clean($data[$key]));
             }
             $page->content = $request->input('content');
+        }
+        if (!$request->filled('menu_id')) {
+            $page->menu_id = NULL;
         }
 
         $page->save();
@@ -140,11 +143,11 @@ class PageController extends Controller
     }
 
     //
-    public function pages($url)
+    /* public function pages($nav,$menu,$page)
     {
-        $page = Page::where('url',$url)->first();
+        $page = Page::where('url',$page)->first();
         $select_menu = Menu::where('id',$page->menu_id)->first();
-        $menus = Menu::where('navbar_id',$select_menu->navbar_id)->get();
-        return view('page',compact('page','select_menu','menus'));
-    }
+        $menus_nav = Menu::where('navbar_id',$select_menu->navbar_id)->get();
+        return view('page',compact('page','select_menu','menus_nav'));
+    } */
 }

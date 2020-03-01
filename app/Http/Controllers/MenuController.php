@@ -104,7 +104,7 @@ class MenuController extends Controller
         $menu = Menu::where('id', $id)->first();
 
         $data = $this->validate($request, [
-            'name' => ['required', 'string', 'max:255','unique:menus,name'],
+            'name' => ['required', 'string', 'max:255'],
             'navbar_id' => ['required','integer'],
             'link' => ['nullable','string'],
             'is_open' => ['required','boolean'],
@@ -157,12 +157,19 @@ class MenuController extends Controller
         return response('Update Successfully.', 200);
     }
 
-    public function menus($id,$name)
+    public function menus($nav,$menu)
     {
-        $navbar = Navbar::where('id',$id)->first();
-        $pages = Page::all();
-        $menus = Menu::where('navbar_id',$navbar->id)->get();
-        $select_menu = Menu::where('name',$name)->first();
-        return view('menu',compact('menus','select_menu','navbar','pages'));
+        $navbar = Navbar::where('name',$nav)->first();
+        $menus_nav = Menu::where('navbar_id',$navbar->id)->get();
+
+        $select_menu = Menu::where('name',$menu)->first();
+        if ($select_menu->is_list == '1') {
+            $menu_pages = Page::all();
+        }
+        else {
+            $menu_pages = Page::where('menu_id',$select_menu->id)->first();
+        }
+        
+        return view('menu',compact('menus_nav','select_menu','navbar','menu_pages'));
     }
 }

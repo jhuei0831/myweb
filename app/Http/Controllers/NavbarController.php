@@ -99,7 +99,7 @@ class NavbarController extends Controller
 
         $data = $this->validate($request, [
             'name' => ['required', 'string', 'max:255'],
-            'link' => ['string', 'max:255'],
+            'link' => [ 'max:255'],
             'type' => ['required'],
             'is_open' => ['required'],
         ]);

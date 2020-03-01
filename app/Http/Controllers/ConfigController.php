@@ -151,7 +151,7 @@ class ConfigController extends Controller
 
     public function delete_background($id)
     {
-        DB::table('configs')->where('id',$id)->update(['background'=>'Null']);
+        DB::table('configs')->where('id',$id)->update(['background'=>Null]);
         unlink(public_path('images/background.jpg'));
         return back()->with('success','刪除背景圖案成功 !');
     }

@@ -9502,7 +9502,7 @@ body {
 }
 
 .navbar-vertical {
-    background-color: transparent;
+    background-color: #F0F0F0;
     border-color: transparent;
     padding-left: 5px;
     padding-right: 5px;
@@ -9547,8 +9547,8 @@ body {
 .navbar-vertical .navbar-nav > .active > a, .navbar-vertical .navbar-nav > .active > a:hover, .navbar-vertical .navbar-nav > .active > a:focus {
     color: #7F0015;
     background-color: transparent;
-    /*background-image: url("/images/icon/google.png");*/
-    border-left: 5px #7F0015 solid; 
+    background-image: url("/images/icon/focus.png");
+    /* border-left: 5px #7F0015 solid; */
 }
 .navbar-vertical .navbar-nav > .disabled > a, .navbar-vertical .navbar-nav > .disabled > a:hover, .navbar-vertical .navbar-nav > .disabled > a:focus {
     color: #444;

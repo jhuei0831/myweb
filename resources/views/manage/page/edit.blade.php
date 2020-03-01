@@ -29,7 +29,8 @@
                         <div class="form-group row">
                             <label for="menu_id" class="col-sm-1 col-form-label">{{ __('Menu') }}</label>
                             <div class="col-sm-4">
-                                <select class='form-control' name='menu_id' required aria-describedby="menuHelp">
+                                <select class='form-control' name='menu_id' aria-describedby="menuHelp">
+                                    <option value='NULL' {{ ($page->menu_id) ? "selected" : "" }}>{{ __('Please choose').__('Menu') }}</option>
                                     @foreach($menus as $key => $value)
                                         @if ($value['id'] == $page->menu_id)
                                             <option value="{{ $value['id'] }}" selected>{{ $value['name'] }}</option>
@@ -62,7 +63,7 @@
                             <label for="url" class="col-sm-1 col-form-label">{{ __('Page').__('Url') }}</label>
 
                             <div class="col-md-4">
-                                <input id="url" type="text" class="form-control @error('url') is-invalid @enderror" name="url" value="{{ $page->url }}" required autocomplete="{{ __('Page').__('Url') }}" autofocus>
+                                <input id="url" type="text" class="form-control @error('url') is-invalid @enderror" name="url" value="{{ $page->url }}" required autocomplete="{{ __('Page').__('Url') }}" autofocus readonly>
 
                                 @error('url')
                                     <span class="invalid-feedback" role="alert">

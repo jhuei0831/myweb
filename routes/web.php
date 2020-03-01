@@ -17,9 +17,10 @@ Route::get('/errors/change_browser', function () {return view('errors.change_bro
 Route::middleware('browser')->group(function() {
 	Auth::routes();
 	Route::get('/', function () {return view('home');})->middleware('browser');
+	Route::get('/manage', function () {return view('manage.index');})->middleware('browser','auth')->name('manage');
     Route::get('/home', 'HomeController@index')->middleware('browser')->name('home');
-	Route::get('/page/{url}', 'PageController@pages')->middleware('browser')->name('page');
-	Route::get('/menu/{id}/{name}', 'MenuController@menus')->middleware('browser')->name('menu');
+	Route::get('/article/{nav}/{menu}?{page}', 'PageController@pages')->middleware('browser')->name('page');
+	Route::get('/article/{nav}/{menu}', 'MenuController@menus')->middleware('browser')->name('menu');
 });
 
 //要登入和非IE瀏覽器
@@ -43,12 +44,14 @@ Route::prefix('manage')->middleware('auth','browser')->group(function(){
     Route::resource('slide', 'SlideController');
     Route::resource('config', 'ConfigController');
     Route::resource('menu', 'MenuController');
-    Route::resource('manage', 'ManageController');
 });
 
 
 View::composer(['*'], function ($view) {
-	$current_page = App\Page::where('url',Request::path())->first();
+    if (Request::getQueryString()) {
+        $current_page = App\Page::where('url', $_SERVER['QUERY_STRING'])->first();
+        $view->with('current_page', $current_page);
+    }
     $navbars = App\Navbar::orderby('sort')->paginate(10);
     $slides = App\Slide::orderby('sort')->paginate(10);
     $menus = App\Menu::orderby('sort')->paginate(10);
@@ -61,7 +64,6 @@ View::composer(['*'], function ($view) {
     $view->with('users',$users);
     $view->with('menus',$menus);
     $view->with('slides',$slides);
-    $view->with('current_page',$current_page);
     $view->with('config',$config);
 });
 
