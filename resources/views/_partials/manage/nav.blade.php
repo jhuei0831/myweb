@@ -24,6 +24,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('slide.index') }}">{{ __('Slide').__('Manage') }}</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('notice.index') }}">{{ __('Notice').__('Manage') }}</a>
+                </li>
                 @if (Auth::check() && Auth::user()->permission >= '4')
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('member.index') }}">{{ __('Member').__('Manage') }}</a>

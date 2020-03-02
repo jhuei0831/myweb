@@ -27,7 +27,7 @@
 							@foreach ($slides as $slide)
 								<tr>
 									<td>{{ $slide->name }}</td>
-									<td><a target='_blank' href="{{ asset('/images/slide/'.$slide->image) }}"><i class="far fa-images"></i></a></td>
+									<td><a target='_blank' href="{{ $slide->image }}"><i class="far fa-images"></i></a></td>
 									<td>
 										<a href="{{ $slide->link }}" target="_blank" rel = "noopener noreferrer"><i class="fas fa-link"></i></a>
 									</td>

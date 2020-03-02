@@ -49,16 +49,17 @@ class SlideController extends Controller
         $data = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'link' => ['max:255'],
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:4096',
+            'image' => ['required'],
             'is_open' => ['required'],          
         ]);
 
-        $imageName = date('Ymd_H_i_s').'.'.Input::file('image')->getClientOriginalExtension();
+        // $imageName = date('Ymd_H_i_s').'.'.Input::file('image')->getClientOriginalExtension();
 
-        Input::file('image')->move(public_path('images/slide'), $imageName);
+        // Input::file('image')->move(public_path('images/slide'), $imageName);
         $slide->name = $request->name;
         $slide->link = $request->link;
-        $slide->image = $imageName;
+        $slide->image = $request->image;
+        // $slide->image = $imageName;
         $slide->is_open = $request->is_open;
 
         if ($data) {

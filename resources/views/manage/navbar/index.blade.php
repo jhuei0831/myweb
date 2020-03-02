@@ -12,6 +12,10 @@
 						<li class="list-inline-item">{{ App\Button::Create() }}</li>
 						<li class="list-inline-item">{{ App\Button::To('sort',__('Sort'),'','btn-primary') }}</li>
 					</ul>
+					<div class="alert alert-warning" role="alert">
+                        1. 新增頁面連結連結請照{{Request::root()}}/article/導覽列名稱/選單名稱?頁面名稱。<br>
+                        2. 外部連結請直接貼上整段網址即可。
+                    </div>
                 	<table class="table table-hover table-bordered text-center">
 	                	<thead>
 	                		<tr class="active">

@@ -62,7 +62,7 @@
                         <div class="form-group row">
                             <label for="content" class="col-sm-1 col-form-label">{{ __('Content') }}</label>
                             <div class="col-sm-12">
-                                <textarea id="content" name="content" class="form-control ckeditor" ></textarea>
+                                <textarea id="content" name="content" class="form-control ckeditor" >{!! old('content') !!}</textarea>
                             </div>
                         </div>
                         <div class="form-group row">

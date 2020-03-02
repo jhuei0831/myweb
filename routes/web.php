@@ -12,7 +12,10 @@
 */
 
 Route::get('/errors/change_browser', function () {return view('errors.change_browser');});
-
+// File manager
+Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
+ \UniSharp\LaravelFilemanager\Lfm::routes();
+});
 //非IE瀏覽器
 Route::middleware('browser')->group(function() {
 	Auth::routes();
@@ -44,6 +47,7 @@ Route::prefix('manage')->middleware('auth','browser')->group(function(){
     Route::resource('slide', 'SlideController');
     Route::resource('config', 'ConfigController');
     Route::resource('menu', 'MenuController');
+    Route::resource('notice', 'NoticeController');
 });
 
 

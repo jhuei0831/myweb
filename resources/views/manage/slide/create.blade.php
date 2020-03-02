@@ -36,8 +36,14 @@
                         </div>
                         <div class="form-group row">
                             <label for="image" class="col-sm-1 col-form-label">{{ __('Image') }}</label>
-                            <div class="col-sm-4">
-                                <input type="file" class="form-control @error('image') is-invalid @enderror" id="image" name="image" placeholder="{{ __('Image') }}">
+                            <div class="input-group col-sm-4">
+                                <div class="input-group-prepend">
+                                    <a id="lfm" data-input="image" data-preview="holder" class="btn btn-secondary">
+                                        <i class="far fa-folder-open"></i>
+                                    </a>
+                                </div>
+                                <input type="text" class="form-control @error('image') is-invalid @enderror" id="image" name="image" placeholder="{{ __('Image') }}" value="{{ old('image') }}">
+                                <img id="holder" style="margin-top:15px;max-height:100px;">
                                 @error('image')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -65,4 +71,10 @@
         </div>
     </div>
 </div>
+@endsection
+@section('script')
+@parent
+<script>
+    $('#lfm').filemanager('image');
+</script>
 @endsection

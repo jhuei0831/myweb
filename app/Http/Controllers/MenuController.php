@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Menu;
 use App\Navbar;
 use App\Page;
+use App\Notice;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -156,13 +157,18 @@ class MenuController extends Controller
         
         return response('Update Successfully.', 200);
     }
-
+    /**
+     * [menus description]
+     * @param  [type] $nav  [description]
+     * @param  [type] $menu [description]
+     * @return [type]       [description]
+     */
     public function menus($nav,$menu)
     {
         $navbar = Navbar::where('name',$nav)->first();
-        $menus_nav = Menu::where('navbar_id',$navbar->id)->get();
-
+        $menus_nav = Menu::where('navbar_id',$navbar->id)->orderby('sort')->get();
         $select_menu = Menu::where('name',$menu)->first();
+        $notice = Notice::where('menu_id',$select_menu->id)->first();
         if ($select_menu->is_list == '1') {
             $menu_pages = Page::all();
         }
@@ -170,6 +176,6 @@ class MenuController extends Controller
             $menu_pages = Page::where('menu_id',$select_menu->id)->first();
         }
         
-        return view('menu',compact('menus_nav','select_menu','navbar','menu_pages'));
+        return view('menu',compact('menus_nav','select_menu','navbar','menu_pages','notice'));
     }
 }
