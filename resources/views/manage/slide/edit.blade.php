@@ -39,19 +39,20 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="image" class="col-sm-1 col-form-label">{{ __('Image') }}</label>                          
-                            <div class="col-md-4">
-                                <div class="input-group">
-                                    <input type="file" class="form-control @error('image') is-invalid @enderror" id="image" name="image" placeholder="{{ __('Image') }}">
-                                    <span class='input-group-text'>
-                                        <a target='_blank' href="{{ asset('/images/slide/'.$slide->image) }}"><i class="far fa-image"></i>觀看圖片</a>
-                                    </span>
-                                    @error('image')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
+                            <label for="image" class="col-sm-1 col-form-label">{{ __('Image') }}</label>
+                            <div class="input-group col-sm-4">
+                                <div class="input-group-prepend">
+                                    <a id="lfm" data-input="image" data-preview="holder" class="btn btn-secondary">
+                                        <i class="far fa-folder-open"></i>
+                                    </a>
                                 </div>
+                                <input type="text" class="form-control @error('image') is-invalid @enderror" id="image" name="image" placeholder="{{ __('Image') }}" value="{{ $slide->image }}">
+                                <img id="holder" style="margin-top:15px;max-height:100px;">
+                                @error('image')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
                         </div>
 

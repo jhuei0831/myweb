@@ -64,15 +64,3 @@
     </div>
 </div>
 @endsection
-@section('script')
-@parent
-<script>
-    var options = {
-        filebrowserImageBrowseUrl: '/laravel-filemanager?type=Images',
-        filebrowserImageUploadUrl: '/laravel-filemanager/upload?type=Images',
-        filebrowserBrowseUrl: '/laravel-filemanager?type=Files',
-        filebrowserUploadUrl: '/laravel-filemanager/upload?type=Files'
-    };
-    CKEDITOR.replace('content',options)
-</script> 
-@endsection

@@ -26,7 +26,7 @@
 {{-- 通知顯示 --}}
 @isset($notice)
 <div class="modal fade" id="my_modal" tabindex="-1" role="dialog" aria-labelledby="savePageLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" id="savePageLabel">{{$notice->title}}</h5>
@@ -61,7 +61,7 @@
     <div id="content" class="col-md-10">
         <div class="card border-light" style="border: none;">
             <div class="card-header bg-transparent">
-                <h1><b>{{$select_menu->title}}</b></h1>
+                <h1><b>{{$select_menu->name}}</b></h1>
             </div>
             <div class="card-body">
                 @foreach($menu_pages as $page)

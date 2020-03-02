@@ -168,7 +168,7 @@ class MenuController extends Controller
         $navbar = Navbar::where('name',$nav)->first();
         $menus_nav = Menu::where('navbar_id',$navbar->id)->orderby('sort')->get();
         $select_menu = Menu::where('name',$menu)->first();
-        $notice = Notice::where('menu_id',$select_menu->id)->first();
+        $notice = Notice::where('menu_id',$select_menu->id)->where('is_open',1)->first();
         if ($select_menu->is_list == '1') {
             $menu_pages = Page::all();
         }

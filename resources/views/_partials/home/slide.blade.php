@@ -9,7 +9,7 @@
     <div class="carousel-inner" role="listbox">           
         @foreach( $slides as $slide )
             <div class="carousel-item {{ $loop->first ? 'active' : '' }}" align="center">
-                <a href="{{ $slide->link }}"><img class="d-block" src="{{ asset('/images/slide/'.$slide->image) }}" alt="{{ $slide->name }}"></a>
+                <a href="{{ $slide->link }}"><img class="d-block" src="{{ $slide->image }}" alt="{{ $slide->name }}"></a>
                 <div class="carousel-caption d-none d-md-block"></div>
             </div>
         @endforeach           

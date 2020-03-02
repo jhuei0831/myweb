@@ -53,13 +53,9 @@ class SlideController extends Controller
             'is_open' => ['required'],          
         ]);
 
-        // $imageName = date('Ymd_H_i_s').'.'.Input::file('image')->getClientOriginalExtension();
-
-        // Input::file('image')->move(public_path('images/slide'), $imageName);
         $slide->name = $request->name;
         $slide->link = $request->link;
         $slide->image = $request->image;
-        // $slide->image = $imageName;
         $slide->is_open = $request->is_open;
 
         if ($data) {
@@ -110,41 +106,19 @@ class SlideController extends Controller
 
         $slide = Slide::where('id',$id)->first();
         
-        if (Input::has('image')) {
-            $data = $request->validate([
-                'name' => ['required', 'string', 'max:255'],
-                'link' => ['nullable','string', 'max:255'],
-                'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:4096',
-                'is_open' => ['required'],
-            ]);
+        $data = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'link' => ['nullable','string', 'max:255'],
+            'image' => ['required'],
+            'is_open' => ['required'],
+        ]);
 
-            $imageName = date('Ymd_H_i_s') . '.' . Input::file('image')->getClientOriginalExtension();
-            //刪除原本的圖片
-            unlink(public_path('images/slide/' . $slide->image));
-            //將新圖移到設定資料夾
-            Input::file('image')->move(public_path('images/slide'), $imageName);
-            // 逐筆進行htmlpurufier 並去掉<p></p>
-            foreach ($request->except('_token', '_method') as $key => $value) {
-                if ($request->filled($key) && $key != 'image') {
-                    $slide->$key = strip_tags(clean($data[$key]));
-                }
-                $slide->image = $imageName;
+        foreach ($request->except('_token', '_method') as $key => $value) {
+            if ($request->filled($key)) {
+                $slide->$key = strip_tags(clean($data[$key]));
             }
         }
-        else {
-            $data = $this->validate($request, [
-                'name' => ['required', 'string', 'max:255'],
-                'link' => ['nullable', 'string', 'max:255'],
-                'is_open' => ['required'],
-            ]);
 
-            // 逐筆進行htmlpurufier 並去掉<p></p>
-            foreach ($request->except('_token', '_method') as $key => $value) {
-                if ($request->filled($key)) {
-                    $slide->$key = strip_tags(clean($data[$key]));
-                }
-            }
-        } 
         $slide->save();
         return back()->with('success','修改輪播成功 !');
     }
@@ -160,9 +134,7 @@ class SlideController extends Controller
         if (Auth::check() && Auth::user()->permission < '4') {
             return back()->with('warning', '權限不足以訪問該頁面 !');
         }
-        $slide = Slide::where('id', $id)->first();
-        //刪除原本的圖片
-        unlink(public_path('images/slide/'.$slide->image));
+
         Slide::destroy($id);
         return back()->with('success', '刪除輪播成功 !');
     }

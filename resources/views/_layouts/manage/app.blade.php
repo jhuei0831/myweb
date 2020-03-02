@@ -37,6 +37,17 @@
     <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.12/datatables.min.js"></script>
     <script src="/vendor/ckeditor/ckeditor/ckeditor.js"></script>
     <script src="/vendor/laravel-filemanager/js/stand-alone-button.js"></script>
+    {{-- file manager --}}
+    <script>
+        var options = {
+            filebrowserImageBrowseUrl: '/laravel-filemanager?type=Images',
+            filebrowserImageUploadUrl: '/laravel-filemanager/upload?type=Images',
+            filebrowserBrowseUrl: '/laravel-filemanager?type=Files',
+            filebrowserUploadUrl: '/laravel-filemanager/upload?type=Files'
+        };
+        CKEDITOR.replace('content',options)
+        $('#lfm').filemanager('image');
+    </script>
     @show
 </body>
 </html>
