@@ -12,9 +12,12 @@
 						<li class="list-inline-item">{{ App\Button::Create() }}</li>
 						<li class="list-inline-item">{{ App\Button::To('sort',__('Sort'),'','btn-primary') }}</li>
 					</ul>
+					<div class="alert alert-warning" role="alert">
+                        1. 輪播圖片尺寸大小請裁剪成統一大小。<br>
+                    </div>
                 	<table class="table table-hover table-bordered text-center">
 	                	<thead>
-	                		<tr class="active">
+	                		<tr class="table-info active">
 	                			<th class="text-nowrap text-center">{{ __('Slide').__('Name') }}</th>
 	                			<th class="text-nowrap text-center">{{ __('Image') }}</th>
 	                			<th class="text-nowrap text-center">{{ __('Link') }}</th>

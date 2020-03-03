@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use App\Slide;
+use App\Log;
 class SlideController extends Controller
 {
     /**
@@ -61,6 +62,8 @@ class SlideController extends Controller
         if ($data) {
            $slide->save();
         }
+        // 寫入log
+        Log::write_log('slides',$request->all());
 
         return back()->with('success', '輪播新增成功 !');
     }
@@ -114,10 +117,15 @@ class SlideController extends Controller
         ]);
 
         foreach ($request->except('_token', '_method') as $key => $value) {
-            if ($request->filled($key)) {
+            if ($request->filled($key) && $request->filled($key) != NULL) {
                 $slide->$key = strip_tags(clean($data[$key]));
             }
+            else{
+                $slide->$key = NULL;
+            }
         }
+        // 寫入log
+        Log::write_log('slides',$request->all());
 
         $slide->save();
         return back()->with('success','修改輪播成功 !');
@@ -134,6 +142,8 @@ class SlideController extends Controller
         if (Auth::check() && Auth::user()->permission < '4') {
             return back()->with('warning', '權限不足以訪問該頁面 !');
         }
+        // 寫入log
+        Log::write_log('slides',Slide::where('id', $id)->first());
 
         Slide::destroy($id);
         return back()->with('success', '刪除輪播成功 !');
@@ -154,6 +164,9 @@ class SlideController extends Controller
                 }
             }
         }
+        // 寫入log
+        $sort = DB::table('slides')->select('name','sort')->orderby('sort')->get();
+        Log::write_log('slides',$sort,'排序');
         
         return response('Update Successfully.', 200);
     }

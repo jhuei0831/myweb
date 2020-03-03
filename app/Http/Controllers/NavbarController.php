@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Navbar;
+use App\Log;
 class NavbarController extends Controller
 {
     /**
@@ -44,14 +45,17 @@ class NavbarController extends Controller
             return back()->with('warning', '權限不足以訪問該頁面 !');
         }
         $navbar = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255','unique:navbars,name'],
             'type' => ['required'],
+            'link' => ['nullable'],
             'is_open' => ['required'],          
         ]);
 
         if ($navbar) {
             Navbar::create($request->all());
         }
+        // 寫入log
+        Log::write_log('navbars',$request->all());
 
         return back()->with('success', '導覽列新增成功 !');
     }
@@ -99,7 +103,7 @@ class NavbarController extends Controller
 
         $data = $this->validate($request, [
             'name' => ['required', 'string', 'max:255'],
-            'link' => [ 'max:255'],
+            'link' => [ 'nullable'],
             'type' => ['required'],
             'is_open' => ['required'],
         ]);
@@ -110,6 +114,11 @@ class NavbarController extends Controller
                 $navbar->$key = strip_tags(clean($data[$key]));
             }
         }
+        if ($request->filled('link') == null) {
+            $navbar->link = NULL;
+        }
+        // 寫入log
+        Log::write_log('navbars',$request->all());
 
         $navbar->save();
         return back()->with('success', '修改導覽列成功 !');
@@ -126,6 +135,8 @@ class NavbarController extends Controller
         if (Auth::check() && Auth::user()->permission < '4') {
             return back()->with('warning', '權限不足以訪問該頁面 !');
         }
+        // 寫入log
+        Log::write_log('navbars',Navbar::where('id',$id)->first());
         Navbar::destroy($id);
         return back()->with('success', '刪除導覽列成功 !');
 
@@ -147,6 +158,8 @@ class NavbarController extends Controller
                 }
             }
         }
+        $sort = DB::table('navbars')->select('name','sort')->orderby('sort')->get();
+        Log::write_log('navbars',$sort,'排序');
         
         return response('Update Successfully.', 200);
     }

@@ -18,7 +18,7 @@
                     </div>
                 	<table class="table table-hover table-bordered text-center">
 	                	<thead>
-	                		<tr class="active">
+	                		<tr class="table-info active">
 	                			<th class="text-nowrap text-center">{{ __('Navbar').__('Name') }}</th>
 	                			<th class="text-nowrap text-center">{{ __('Link') }}</th>
 	                			<th class="text-nowrap text-center">{{ __('Type') }}</th>

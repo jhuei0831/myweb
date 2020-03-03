@@ -95,10 +95,16 @@
                             <label for="background" class="col-sm-1 control-label">{{ __('Background') }}</label>                          
                             <div class="col-md-4">
                                 <div class="input-group">
-                                    <input type="file" class="form-control @error('background') is-invalid @enderror" id="background" name="background" placeholder="{{ __('Background') }}">
+                                    <div class="input-group-prepend">
+                                        <a id="lfm" data-input="background" data-preview="holder" class="btn btn-secondary">
+                                            <i class="far fa-folder-open"></i>
+                                        </a>
+                                    </div>
+                                    <input type="text" class="form-control @error('background') is-invalid @enderror" id="background" name="background" placeholder="{{ __('Background') }}" value="{{ $config->background }}">
+                                    <img id="holder" style="margin-top:15px;max-height:100px;">
                                     <span class='input-group-text'>
-                                        @if(file_exists(public_path().'/images/background.jpg'))
-                                        <a target='_blank' href="{{ asset('/images/'.$config->background) }}"><i class="far fa-image"></i>觀看圖片</a>
+                                        @if($config->background)
+                                        <a target='_blank' href="{{ $config->background }}"><i class="far fa-image"></i>觀看圖片</a>
                                         @else
                                         <a href="#"><i class="fas fa-times-circle"></i> 目前沒有背景</a>
                                         @endif

@@ -14,7 +14,7 @@
                     </div>
                     <table class="table table-hover table-bordered text-center">
                         <thead>
-                            <tr class="active">
+                            <tr class="table-info active">
                                 <th class="text-nowrap text-center">{{ __('App name') }}</th>
                                 <th class="text-nowrap text-center">{{ __('Font family') }}</th>
                                 <th class="text-nowrap text-center">{{ __('Font size') }}</th>
@@ -35,8 +35,8 @@
                                 <td style="font-size: {{ $config->font_size }}">{{ $config->font_size }}</td>
                                 <td style="font-weight: {{ $config->font_weight }}">{{App\Enum::config['font_weight'][$config->font_weight]}}</td>
                                 <td>
-                                    @if(file_exists(public_path().'/images/background.jpg'))
-                                    <a target='_blank' href="{{ asset('/images/background.jpg') }}"><i class="far fa-images"></i></a>
+                                    @if($config->background)
+                                    <a target='_blank' href="{{ $config->background }}"><i class="far fa-images"></i></a>
                                     @else
                                     <a class="btn btn-primary disabled" href="#"><i class="fas fa-times-circle"></i> 尚無背景</a>
                                     @endif
@@ -50,9 +50,9 @@
                                     </td>
                                 <td>
                                     {{ App\Button::edit($config->id) }}
-                                    @if(file_exists(public_path().'/images/background.jpg'))
-                                    {{ App\Button::to('delete_background',__('Delete').__('Background'),$config->id,'btn-danger','trash-alt',true) }}
-                                    @endif
+                                    @isset ($config->background)
+                                        {{ App\Button::to('delete_background',__('Delete').__('Background'),$config->id,'btn-danger','trash-alt',true) }}
+                                    @endisset
                                 </td>
                             </tr>
                         </tbody>

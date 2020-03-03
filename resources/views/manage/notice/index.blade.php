@@ -13,7 +13,7 @@
 					</ul>
                 	<table class="table table-hover table-bordered text-center">
 	                	<thead>
-	                		<tr class="active">
+	                		<tr class="table-info active">
 								<th class="text-nowrap text-center">{{ __('Title') }}</th>
 	                			<th class="text-nowrap text-center">{{ __('Menu') }}</th>	                			
 	                			<th class="text-nowrap text-center">{{ __('Is_open') }}</th>

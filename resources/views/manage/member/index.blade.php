@@ -13,7 +13,7 @@
 					</ul>
                 	<table class="table table-hover table-bordered text-center">
 	                	<thead>
-	                		<tr class="active">
+	                		<tr class="table-info active">
 	                			<th class="text-nowrap text-center">{{ __('Name') }}</th>
 	                			<th class="text-nowrap text-center">{{ __('E-Mail Address') }}</th>
 	                			<th class="text-nowrap text-center">{{ __('Permission') }}</th>

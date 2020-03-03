@@ -20,7 +20,7 @@ Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']
 Route::middleware('browser')->group(function() {
 	Auth::routes();
 	Route::get('/', function () {return view('home');})->middleware('browser');
-	Route::get('/manage', function () {return view('manage.index');})->middleware('browser','auth')->name('manage');
+	Route::get('/manage', function () {return view('manage.index');})->middleware('auth')->name('manage');
     Route::get('/home', 'HomeController@index')->middleware('browser')->name('home');
 	Route::get('/article/{nav}/{menu}?{page}', 'PageController@pages')->middleware('browser')->name('page');
 	Route::get('/article/{nav}/{menu}', 'MenuController@menus')->middleware('browser')->name('menu');
@@ -40,7 +40,7 @@ Route::middleware('auth','browser')->group(function() {
 });
 
 //Resource
-Route::prefix('manage')->middleware('auth','browser')->group(function(){
+Route::prefix('manage')->middleware('auth')->group(function(){
     Route::resource('member', 'MemberController');
     Route::resource('page', 'PageController');
     Route::resource('navbar', 'NavbarController');
@@ -48,6 +48,7 @@ Route::prefix('manage')->middleware('auth','browser')->group(function(){
     Route::resource('config', 'ConfigController');
     Route::resource('menu', 'MenuController');
     Route::resource('notice', 'NoticeController');
+    Route::resource('log', 'LogController');
 });
 
 

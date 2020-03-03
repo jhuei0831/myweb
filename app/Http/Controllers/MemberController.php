@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use App\User;
+use App\Log;
 class MemberController extends Controller
 {
     /**
@@ -49,17 +50,27 @@ class MemberController extends Controller
         if (Auth::check() && Auth::user()->permission < '5') {
             return back()->with('warning', '權限不足以訪問該頁面 !');
         }
-        $user = $request->validate([
+        $user = new User;
+
+        $data = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:1', 'confirmed'],
             'permission' => ['required', 'string', 'max:5', 'min:0'],
         ]);
        
-        if ($user) {
-            User::create($request->all());
+        foreach ($request->except('_token','_method','password_confirmation') as $key => $value) {
+            if ($request->filled($key) && $key == 'password') {
+                $user->password = Hash::make($data['password']);
+            }
+            elseif ($request->filled($key)) {
+                $user->$key = strip_tags(clean($data[$key]));
+            }
         } 
 
+        // 寫入log
+        Log::write_log('users',$request->except('password','password_confirmation'));
+        $user->save();
         return back()->with('success','會員新增成功 !');
     }
 
@@ -126,6 +137,11 @@ class MemberController extends Controller
                     $user->$key = strip_tags(clean($data[$key]));
                 }
             }
+
+            // 寫入log
+            Log::write_log('users',$request->except('password','password_confirmation'));
+            // 儲存資料
+            $user->save();
         }
         else{
 
@@ -141,13 +157,14 @@ class MemberController extends Controller
                     $user->$key = strip_tags(clean($data[$key]));
                 }
             }
-        }
-        
-        // 儲存資料
-        $user->save();
+
+            // 寫入log
+            Log::write_log('users',$request->all());
+            // 儲存資料
+            $user->save();
+        }       
 
         return back()->with('success', '會員更新成功 !');
-
     }
 
     /**
@@ -161,7 +178,9 @@ class MemberController extends Controller
         if (Auth::check() && Auth::user()->permission < '5') {
             return back()->with('warning', '權限不足以訪問該頁面 !');
         }
-        
+        // 寫入log
+        Log::write_log('users',User::where('id',$id)->first());
+
         User::destroy($id);
         return back()->with('success', '會員刪除成功 !');
     }

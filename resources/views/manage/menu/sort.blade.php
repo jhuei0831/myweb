@@ -17,7 +17,7 @@
                     </div>
                 	<table id="table" class="table table-hover table-bordered text-center">
 	                	<thead>
-	                		<tr class="active">
+	                		<tr class="table-info active">
 	                			<th class="text-nowrap text-center">{{ __('Menu').__('Name')}}</th>
 	                			<th class="text-nowrap text-center">{{ __('Navbar') }}</th>
 	                			<th class="text-nowrap text-center">{{ __('Sort') }}</th>
