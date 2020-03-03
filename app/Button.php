@@ -8,7 +8,8 @@ class Button extends Model
 {
     	public static function Detail($id)
 		{
-			echo "<a class='btn btn-sm btn-default' href='detail.php?{$id}'>";
+			$url = URL::full();
+			echo "<button type=\"submmit\" class='btn btn-sm btn-secondary'>";
 			echo 	"<i class='fas fa-info-circle'></i> ".__('Detail');
 			echo "</a>";
 		}

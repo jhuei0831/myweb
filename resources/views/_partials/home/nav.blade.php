@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md navbar-dark" style="background-color: #{{ $config->navbar_bcolor }};font-size: {{ $config->navbar_size }}">
+<nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color: #{{ $config->navbar_bcolor }};font-size: {{ $config->navbar_size }}">
     <div class="container-fluid">
         <div class="navbar-header">
             {{-- 有選單，才顯示選單開關按鈕 --}}

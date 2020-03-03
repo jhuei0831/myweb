@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\menu;
+use App\Log;
 class NoticeController extends Controller
 {
     /**
@@ -55,6 +56,8 @@ class NoticeController extends Controller
         if ($notice) {
             Notice::create($request->all());
         } 
+        // 寫入log
+        Log::write_log('notices',$request->all());
 
         return back()->with('success','通知新增成功 !');
     }
@@ -114,7 +117,8 @@ class NoticeController extends Controller
             }
             $notice->content = clean($request->input('content'));
         }
-
+        // 寫入log
+        Log::write_log('notices',$request->all());
         $notice->save();
         return back()->with('success','修改通知成功 !');
     }
@@ -130,6 +134,8 @@ class NoticeController extends Controller
         if (Auth::check() && Auth::user()->permission < '4') {
             return back()->with('warning', '權限不足以訪問該頁面 !');
         }
+        // 寫入log
+        Log::write_log('notices',Notice::where('id', $id)->first());
         Notice::destroy($id);
         return back()->with('success','刪除通知成功 !');
     }

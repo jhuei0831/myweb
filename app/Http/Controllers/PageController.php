@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use App\Page;
 use App\Navbar;
 use App\menu;
+use App\Log;
 class PageController extends Controller
 {
     /**
@@ -57,6 +58,8 @@ class PageController extends Controller
         if ($page) {
             Page::create($request->all());
         } 
+        // 寫入log
+        Log::write_log('pages',$request->all());
 
         return back()->with('success','頁面新增成功 !');
     }
@@ -122,6 +125,8 @@ class PageController extends Controller
         if (!$request->filled('menu_id')) {
             $page->menu_id = NULL;
         }
+        // 寫入log
+        Log::write_log('pages',$request->all());
 
         $page->save();
         return back()->with('success','修改頁面成功 !');
@@ -138,6 +143,8 @@ class PageController extends Controller
         if (Auth::check() && Auth::user()->permission < '4') {
             return back()->with('warning', '權限不足以訪問該頁面 !');
         }
+        // 寫入log
+        Log::write_log('pages',Page::where('id', $id)->first());
         Page::destroy($id);
         return back()->with('success','刪除頁面成功 !');
     }

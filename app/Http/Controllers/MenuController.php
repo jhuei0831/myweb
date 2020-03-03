@@ -6,6 +6,7 @@ use App\Menu;
 use App\Navbar;
 use App\Page;
 use App\Notice;
+use App\Log;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -58,6 +59,8 @@ class MenuController extends Controller
         if ($menu) {
             Menu::create($request->all());
         }
+        // 寫入log
+        Log::write_log('menus',$request->all());
 
         return back()->with('success', '選單新增成功 !');
     }
@@ -86,6 +89,7 @@ class MenuController extends Controller
         }
 
         $menu = Menu::where('id',$id)->first();
+
         return view('manage.menu.edit',compact('menu'));
     }
 
@@ -120,6 +124,8 @@ class MenuController extends Controller
         }
 
         $menu->save();
+        // 寫入log
+        Log::write_log('menus',$request->all());
         return back()->with('success', '修改選單成功 !');
     }
 
@@ -134,6 +140,10 @@ class MenuController extends Controller
         if (Auth::check() && Auth::user()->permission < '4') {
             return back()->with('warning', '權限不足以訪問該頁面 !');
         }
+
+        // 寫入log
+        Log::write_log('menus',Menu::where('id', $id)->first());
+
         Menu::destroy($id);
         return back()->with('success', '刪除選單成功 !');
     }
@@ -154,13 +164,20 @@ class MenuController extends Controller
                 }
             }
         }
-        
+        // 寫入log
+        $sort = DB::table('menus')->select('name','sort')->orderby('sort')->get();
+        Log::write_log('menus',$sort,'排序');
+
         return response('Update Successfully.', 200);
     }
     /**
      * [menus description]
-     * @param  [type] $nav  [description]
-     * @param  [type] $menu [description]
+     * @param  [type] $nav  [選取的導覽列]
+     * @param  [type] $menu [選取的選單]
+     * @param  [type] $menus_nav [導覽列下所有的選單資料]
+     * @param  [type] $select_menu [選取的選單資料]
+     * @param  [type] $notice [選取選單的通知資料]
+     * @param  [type] $menu_pages [選取選單下所有頁面的資料]
      * @return [type]       [description]
      */
     public function menus($nav,$menu)
@@ -168,12 +185,16 @@ class MenuController extends Controller
         $navbar = Navbar::where('name',$nav)->first();
         $menus_nav = Menu::where('navbar_id',$navbar->id)->orderby('sort')->get();
         $select_menu = Menu::where('name',$menu)->first();
+        if (empty($select_menu)) {
+            abort(404);
+        }
         $notice = Notice::where('menu_id',$select_menu->id)->where('is_open',1)->first();
+
         if ($select_menu->is_list == '1') {
-            $menu_pages = Page::all();
+            $menu_pages = Page::orderby('created_at','desc')->get();
         }
         else {
-            $menu_pages = Page::where('menu_id',$select_menu->id)->first();
+            $menu_pages = Page::where('menu_id',$select_menu->id)->orderby('created_at','desc')->first();
         }
         
         return view('menu',compact('menus_nav','select_menu','navbar','menu_pages','notice'));
