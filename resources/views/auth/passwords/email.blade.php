@@ -1,5 +1,5 @@
-@extends('layouts.home.app')
-
+@extends('_layouts.home.app')
+@section('title',__('寄送重設密碼連結'))
 @section('content')
 <div class="container">
     <div class="row justify-content-center">

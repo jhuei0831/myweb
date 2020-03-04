@@ -28,7 +28,9 @@
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     @foreach ($menus as $menu)
-                                        @if ($menu->navbar_id == $navbar->id && $menu->is_open == '1')                                          
+                                        @if ($menu->navbar_id == $navbar->id && $menu->is_open == '1' && $menu->link)                                          
+                                            <a class="dropdown-item" target="_blank" href="{{ $menu->link }}">{{ $menu->name }}</a>
+                                        @elseif($menu->navbar_id == $navbar->id && $menu->is_open == '1' )
                                             <a class="dropdown-item" href="/article/{{ $navbar->name }}/{{ $menu->name }}">{{ $menu->name }}</a>                                           
                                         @endif                                       
                                     @endforeach  
@@ -58,9 +60,11 @@
                         </li>
                     @endif
                 @else
+                @if (Auth::user()->permission != 0)
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('manage') }}" style="color: #{{ $config->navbar_wcolor }}">{{ __('Backstage') }}</a>
                     </li>
+                @endif                   
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" style="color: #{{ $config->navbar_wcolor }}" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre >
                             {{ Auth::user()->name }} <span class="caret"></span>

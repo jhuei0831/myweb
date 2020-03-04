@@ -13,9 +13,9 @@
                         </ul>                 
                         @csrf
                         <div class="form-group row">
-                            <label for="title" class="col-sm-2 col-form-label">{{ __('Name') }}</label>
+                            <label for="name" class="col-sm-2 col-form-label">{{ __('Name') }}</label>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ old('email') }}" placeholder="{{ __('Name') }}">
+                                <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ old('name') }}" placeholder="{{ __('Name') }}">
                                 @error('name')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>

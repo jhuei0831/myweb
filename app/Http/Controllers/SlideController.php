@@ -45,6 +45,7 @@ class SlideController extends Controller
         if (Auth::check() && Auth::user()->permission < '2') {
             return back()->with('warning', '權限不足以訪問該頁面 !');
         }
+        $error = 0;
         $slide = new Slide;
 
         $data = $request->validate([
@@ -53,14 +54,26 @@ class SlideController extends Controller
             'image' => ['required'],
             'is_open' => ['required'],          
         ]);
+        // 逐筆進行htmlpurufier 並去掉<p></p>
+        foreach ($request->except('_token', '_method') as $key => $value) {
+            if ($request->filled($key) && $request->filled($key) != NULL) {
+                $slide->$key = strip_tags(clean($data[$key]));
+                if ($slide->$key == '') {
+                    $error += 1;
+                }
+            }
+            else{
+                $slide->$key = NULL;
+            }
+        }
 
-        $slide->name = $request->name;
-        $slide->link = $request->link;
-        $slide->image = $request->image;
-        $slide->is_open = $request->is_open;
-
-        if ($data) {
-           $slide->save();
+        if ($error == 0) {
+            // 寫入log
+            Log::write_log('slides',$request->all());
+            $slide->save();
+        }
+        else{
+            return back()->withInput()->with('warning', '請確認輸入 !');
         }
         // 寫入log
         Log::write_log('slides',$request->all());
@@ -106,7 +119,7 @@ class SlideController extends Controller
         if (Auth::check() && Auth::user()->permission < '3') {
             return back()->with('warning', '權限不足以訪問該頁面 !');
         }
-
+        $error = 0;
         $slide = Slide::where('id',$id)->first();
         
         $data = $request->validate([
@@ -116,9 +129,16 @@ class SlideController extends Controller
             'is_open' => ['required'],
         ]);
 
+        // 逐筆進行htmlpurufier 並去掉<p></p>
         foreach ($request->except('_token', '_method') as $key => $value) {
             if ($request->filled($key) && $request->filled($key) != NULL) {
                 $slide->$key = strip_tags(clean($data[$key]));
+                if ($slide->$key == '') {
+                    $error += 1;
+                }
+            }
+            else{
+                $slide->$key = NULL;
             }
             else{
                 $slide->$key = NULL;
@@ -127,7 +147,14 @@ class SlideController extends Controller
         // 寫入log
         Log::write_log('slides',$request->all());
 
-        $slide->save();
+        if ($error == 0) {
+            // 寫入log
+            Log::write_log('slides',$request->all());
+            $slide->save();
+        }
+        else{
+            return back()->withInput()->with('warning', '請確認輸入 !');
+        }
         return back()->with('success','修改輪播成功 !');
     }
 

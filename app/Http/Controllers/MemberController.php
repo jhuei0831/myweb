@@ -50,6 +50,10 @@ class MemberController extends Controller
         if (Auth::check() && Auth::user()->permission < '5') {
             return back()->with('warning', '權限不足以訪問該頁面 !');
         }
+<<<<<<< HEAD
+=======
+        $error = 0;
+>>>>>>> 0225b91b39442b86e84d94a2599a077a1bc820d8
         $user = new User;
 
         $data = $request->validate([
@@ -65,12 +69,30 @@ class MemberController extends Controller
             }
             elseif ($request->filled($key)) {
                 $user->$key = strip_tags(clean($data[$key]));
+<<<<<<< HEAD
             }
         } 
 
         // 寫入log
         Log::write_log('users',$request->except('password','password_confirmation'));
         $user->save();
+=======
+                if ($user->$key == '') {
+                    $error += 1;
+                }
+            }
+        } 
+
+        if ($error == 0) {
+            // 寫入log
+            Log::write_log('users',$request->all());
+            $user->save();
+        }
+        else{
+            return back()->withInput()->with('warning', '請確認輸入 !');
+        }
+
+>>>>>>> 0225b91b39442b86e84d94a2599a077a1bc820d8
         return back()->with('success','會員新增成功 !');
     }
 
@@ -117,7 +139,7 @@ class MemberController extends Controller
         if (Auth::check() && Auth::user()->permission < '5') {
             return back()->with('warning', '權限不足以訪問該頁面 !');
         }
-
+        $error = 0;
         $user = User::where('id',$id)->first();        
 
         // 如果有輸入密碼
@@ -135,13 +157,27 @@ class MemberController extends Controller
                 }
                 elseif ($request->filled($key)) {
                     $user->$key = strip_tags(clean($data[$key]));
+                    if ($user->$key == '') {
+                        $error += 1;
+                    }
                 }
             }
 
+<<<<<<< HEAD
             // 寫入log
             Log::write_log('users',$request->except('password','password_confirmation'));
             // 儲存資料
             $user->save();
+=======
+            if ($error == 0) {
+                // 寫入log
+                Log::write_log('users',$request->all());
+                $user->save();
+            }
+            else{
+                return back()->withInput()->with('warning', '請確認輸入 !');
+            }
+>>>>>>> 0225b91b39442b86e84d94a2599a077a1bc820d8
         }
         else{
 
@@ -155,13 +191,27 @@ class MemberController extends Controller
             foreach ($request->except('_token','_method') as $key => $value) {
                 if ($request->filled($key)) {
                     $user->$key = strip_tags(clean($data[$key]));
+                    if ($user->$key == '') {
+                        $error += 1;
+                    }
                 }
             }
 
+<<<<<<< HEAD
             // 寫入log
             Log::write_log('users',$request->all());
             // 儲存資料
             $user->save();
+=======
+            if ($error == 0) {
+                // 寫入log
+                Log::write_log('users',$request->all());
+                $user->save();
+            }
+            else{
+                return back()->withInput()->with('warning', '請確認輸入 !');
+            }
+>>>>>>> 0225b91b39442b86e84d94a2599a077a1bc820d8
         }       
 
         return back()->with('success', '會員更新成功 !');

@@ -48,7 +48,10 @@ class MenuController extends Controller
         if (Auth::check() && Auth::user()->permission < '2') {
             return back()->with('warning', '權限不足以訪問該頁面 !');
         }
-        $menu = $request->validate([
+        $error = 0;
+        $menu = new Menu;
+
+        $data = $request->validate([
             'name' => ['required', 'string', 'max:255','unique:menus,name'],
             'navbar_id' => ['required','integer'],
             'link' => ['nullable'],
@@ -56,9 +59,29 @@ class MenuController extends Controller
             'is_list' => ['required'],
         ]);
 
-        if ($menu) {
-            Menu::create($request->all());
+        foreach ($request->except('_token', '_method') as $key => $value) {
+            if ($request->filled($key) && $request->filled($key) != NULL) {
+                $menu->$key = strip_tags(clean($data[$key]));
+                if ($menu->$key == '') {
+                    $error += 1;
+                }
+            }
+            else{
+                $menu->$key = NULL;
+            }
         }
+
+        if ($error == 0) {
+            // 寫入log
+            Log::write_log('menus',$request->all());
+            $menu->save();
+        }
+        else{
+            return back()->withInput()->with('warning', '請確認輸入 !');
+        }
+        // 寫入log
+        Log::write_log('menus',$request->all());
+
         // 寫入log
         Log::write_log('menus',$request->all());
 
@@ -105,7 +128,7 @@ class MenuController extends Controller
         if (Auth::check() && Auth::user()->permission < '3') {
             return back()->with('warning', '權限不足以訪問該頁面 !');
         }
-
+        $error = 0;
         $menu = Menu::where('id', $id)->first();
 
         $data = $this->validate($request, [
@@ -118,14 +141,32 @@ class MenuController extends Controller
 
         // 逐筆進行htmlpurufier 並去掉<p></p>
         foreach ($request->except('_token', '_method') as $key => $value) {
-            if ($request->filled($key)) {
+            if ($request->filled($key) && $request->filled($key) != NULL) {
                 $menu->$key = strip_tags(clean($data[$key]));
+                if ($menu->$key == '') {
+                    $error += 1;
+                }
+            }
+            else{
+                $menu->$key = NULL;
             }
         }
 
+<<<<<<< HEAD
         $menu->save();
         // 寫入log
         Log::write_log('menus',$request->all());
+=======
+        if ($error == 0) {
+            // 寫入log
+            Log::write_log('menus',$request->all());
+            $menu->save();
+        }
+        else{
+            return back()->withInput()->with('warning', '請確認輸入 !');
+        }
+
+>>>>>>> 0225b91b39442b86e84d94a2599a077a1bc820d8
         return back()->with('success', '修改選單成功 !');
     }
 

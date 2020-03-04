@@ -46,18 +46,45 @@ class NoticeController extends Controller
         if (Auth::check() && Auth::user()->permission < '2') {
             return back()->with('warning', '權限不足以訪問該頁面 !');
         }
-        $notice = $request->validate([
+        $error = 0;
+        $notice = new Notice;
+        $data = $request->validate([
             'menu_id' => ['required'],
             'title' => ['required', 'string', 'max:255'],
             'content' => ['required'],
             'is_open' => ['required'],
         ]);
+        // 逐筆進行htmlpurufier 並去掉<p></p>
+        foreach ($request->except('_token', '_method') as $key => $value) {
+            if ($request->filled($key) && $request->filled($key) != NULL && $key != 'content') {
+                $notice->$key = strip_tags(clean($data[$key]));
+                if ($notice->$key == '') {
+                    $error += 1;
+                }
+            }
+            else{
+                $notice->$key = NULL;
+            }
+        }
 
+<<<<<<< HEAD
         if ($notice) {
             Notice::create($request->all());
         } 
         // 寫入log
         Log::write_log('notices',$request->all());
+=======
+        $notice->content = clean($request->input('content'));
+
+        if ($error == 0) {
+            // 寫入log
+            Log::write_log('notices',$request->all());
+            $notice->save();
+        }
+        else{
+            return back()->withInput()->with('warning', '請確認輸入 !');
+        }
+>>>>>>> 0225b91b39442b86e84d94a2599a077a1bc820d8
 
         return back()->with('success','通知新增成功 !');
     }
@@ -100,7 +127,7 @@ class NoticeController extends Controller
         if (Auth::check() && Auth::user()->permission < '3') {
             return back()->with('warning', '權限不足以訪問該頁面 !');
         }
-
+        $error = 0;
         $notice = Notice::where('id',$id)->first();
 
         $data = $this->validate($request, [
@@ -114,12 +141,26 @@ class NoticeController extends Controller
         foreach ($request->except('_token','_method') as $key => $value) {
             if ($request->filled($key) && $key != 'content') {
                 $notice->$key = strip_tags(clean($data[$key]));
-            }
-            $notice->content = clean($request->input('content'));
+                if ($notice->$key == '') {
+                    $error += 1;
+                }
+            } 
         }
+        $notice->content = clean($request->input('content'));
+        if ($error == 0) {
+            // 寫入log
+            Log::write_log('notices',$request->all());
+            $notice->save();
+        }
+        else{
+            return back()->withInput()->with('warning', '請確認輸入 !');
+        }
+<<<<<<< HEAD
         // 寫入log
         Log::write_log('notices',$request->all());
         $notice->save();
+=======
+>>>>>>> 0225b91b39442b86e84d94a2599a077a1bc820d8
         return back()->with('success','修改通知成功 !');
     }
 

@@ -18,16 +18,22 @@ Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']
 });
 //非IE瀏覽器
 Route::middleware('browser')->group(function() {
+<<<<<<< HEAD
 	Auth::routes();
 	Route::get('/', function () {return view('home');})->middleware('browser');
 	Route::get('/manage', function () {return view('manage.index');})->middleware('auth')->name('manage');
+=======
+	Auth::routes(['verify' => true]);
+	Route::get('/', function () {return view('index');});
+	Route::get('/manage', function () {return view('manage.index');})->middleware('auth','admin','verified')->name('manage');
+>>>>>>> 0225b91b39442b86e84d94a2599a077a1bc820d8
     Route::get('/home', 'HomeController@index')->middleware('browser')->name('home');
-	Route::get('/article/{nav}/{menu}?{page}', 'PageController@pages')->middleware('browser')->name('page');
-	Route::get('/article/{nav}/{menu}', 'MenuController@menus')->middleware('browser')->name('menu');
+	Route::get('/article/{nav}/{menu}?{page}', 'PageController@pages')->name('page');
+	Route::get('/article/{nav}/{menu}', 'MenuController@menus')->name('menu');
 });
 
 //要登入和非IE瀏覽器
-Route::middleware('auth','browser')->group(function() {
+Route::middleware('auth','browser','admin','verified')->group(function() {
 	//排序
     Route::post('navbar-sortable','NavbarController@sort')->name('navbar.sort');
 	Route::post('slide-sortable','SlideController@sort')->name('slide.sort');
@@ -40,7 +46,11 @@ Route::middleware('auth','browser')->group(function() {
 });
 
 //Resource
+<<<<<<< HEAD
 Route::prefix('manage')->middleware('auth')->group(function(){
+=======
+Route::prefix('manage')->middleware('auth','browser','admin','verified')->group(function(){
+>>>>>>> 0225b91b39442b86e84d94a2599a077a1bc820d8
     Route::resource('member', 'MemberController');
     Route::resource('page', 'PageController');
     Route::resource('navbar', 'NavbarController');
@@ -57,7 +67,11 @@ View::composer(['*'], function ($view) {
         $current_page = App\Page::where('url', $_SERVER['QUERY_STRING'])->first();
         $view->with('current_page', $current_page);
     }
+<<<<<<< HEAD
     $config = DB::table('configs')->where('id', '1')->first();
+=======
+    $config = DB::table('configs')->where('id','1')->first();
+>>>>>>> 0225b91b39442b86e84d94a2599a077a1bc820d8
     Config::set('app.name', $config->app_name);
     $navbars = App\Navbar::orderby('sort')->paginate(10);
     $slides = App\Slide::orderby('sort')->paginate(10);

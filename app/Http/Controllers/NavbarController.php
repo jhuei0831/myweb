@@ -44,15 +44,39 @@ class NavbarController extends Controller
         if (Auth::check() && Auth::user()->permission < '5') {
             return back()->with('warning', '權限不足以訪問該頁面 !');
         }
+<<<<<<< HEAD
         $navbar = $request->validate([
+=======
+        $error = 0;
+        $navbar = new Navbar;
+
+        $data = $request->validate([
+>>>>>>> 0225b91b39442b86e84d94a2599a077a1bc820d8
             'name' => ['required', 'string', 'max:255','unique:navbars,name'],
             'type' => ['required'],
             'link' => ['nullable'],
             'is_open' => ['required'],          
         ]);
 
-        if ($navbar) {
-            Navbar::create($request->all());
+        foreach ($request->except('_token', '_method') as $key => $value) {
+            if ($request->filled($key) && $request->filled($key) != NULL) {
+                $navbar->$key = strip_tags(clean($data[$key]));
+                if ($navbar->$key == '') {
+                    $error += 1;
+                }
+            }
+            else{
+                $navbar->$key = NULL;
+            }
+        }
+
+        if ($error == 0) {
+            // 寫入log
+            Log::write_log('navbars',$request->all());
+            $navbar->save();
+        }
+        else{
+            return back()->withInput()->with('warning', '請確認輸入 !');
         }
         // 寫入log
         Log::write_log('navbars',$request->all());
@@ -98,7 +122,7 @@ class NavbarController extends Controller
         if (Auth::check() && Auth::user()->permission < '3') {
             return back()->with('warning', '權限不足以訪問該頁面 !');
         }
-
+        $error = 0;
         $navbar = Navbar::where('id', $id)->first();
 
         $data = $this->validate($request, [
@@ -110,8 +134,14 @@ class NavbarController extends Controller
 
         // 逐筆進行htmlpurufier 並去掉<p></p>
         foreach ($request->except('_token', '_method') as $key => $value) {
-            if ($request->filled($key)) {
+            if ($request->filled($key) && $request->filled($key) != NULL) {
                 $navbar->$key = strip_tags(clean($data[$key]));
+                if ($navbar->$key == '') {
+                    $error += 1;
+                }
+            }
+            else{
+                $navbar->$key = NULL;
             }
         }
         if ($request->filled('link') == null) {
@@ -120,7 +150,15 @@ class NavbarController extends Controller
         // 寫入log
         Log::write_log('navbars',$request->all());
 
-        $navbar->save();
+        if ($error == 0) {
+            // 寫入log
+            Log::write_log('navbars',$request->all());
+            $navbar->save();
+        }
+        else{
+            return back()->withInput()->with('warning', '請確認輸入 !');
+        }
+        
         return back()->with('success', '修改導覽列成功 !');
     }
 
