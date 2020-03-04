@@ -57,13 +57,6 @@ class PageController extends Controller
             'is_open' => ['required'],
             'is_slide' => ['required'],
         ]);
-<<<<<<< HEAD
-        if ($page) {
-            Page::create($request->all());
-        } 
-        // 寫入log
-        Log::write_log('pages',$request->all());
-=======
         
         // 逐筆進行htmlpurufier 並去掉<p></p>
         foreach ($request->except('_token', '_method') as $key => $value) {
@@ -88,7 +81,6 @@ class PageController extends Controller
         else{
             return back()->withInput()->with('warning', '請確認輸入 !');
         }
->>>>>>> 0225b91b39442b86e84d94a2599a077a1bc820d8
 
         return back()->with('success','頁面新增成功 !');
     }
@@ -156,12 +148,7 @@ class PageController extends Controller
                 $page->$key = NULL;
             }
         }
-<<<<<<< HEAD
-        // 寫入log
-        Log::write_log('pages',$request->all());
-=======
         $page->content = clean($request->input('content'));
->>>>>>> 0225b91b39442b86e84d94a2599a077a1bc820d8
 
         if ($error == 0) {
             // 寫入log

@@ -44,14 +44,10 @@ class NavbarController extends Controller
         if (Auth::check() && Auth::user()->permission < '5') {
             return back()->with('warning', '權限不足以訪問該頁面 !');
         }
-<<<<<<< HEAD
-        $navbar = $request->validate([
-=======
         $error = 0;
         $navbar = new Navbar;
 
         $data = $request->validate([
->>>>>>> 0225b91b39442b86e84d94a2599a077a1bc820d8
             'name' => ['required', 'string', 'max:255','unique:navbars,name'],
             'type' => ['required'],
             'link' => ['nullable'],

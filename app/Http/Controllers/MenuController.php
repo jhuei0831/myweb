@@ -152,11 +152,6 @@ class MenuController extends Controller
             }
         }
 
-<<<<<<< HEAD
-        $menu->save();
-        // 寫入log
-        Log::write_log('menus',$request->all());
-=======
         if ($error == 0) {
             // 寫入log
             Log::write_log('menus',$request->all());
@@ -166,7 +161,6 @@ class MenuController extends Controller
             return back()->withInput()->with('warning', '請確認輸入 !');
         }
 
->>>>>>> 0225b91b39442b86e84d94a2599a077a1bc820d8
         return back()->with('success', '修改選單成功 !');
     }
 

@@ -140,9 +140,6 @@ class SlideController extends Controller
             else{
                 $slide->$key = NULL;
             }
-            else{
-                $slide->$key = NULL;
-            }
         }
         // 寫入log
         Log::write_log('slides',$request->all());

@@ -67,13 +67,6 @@ class NoticeController extends Controller
             }
         }
 
-<<<<<<< HEAD
-        if ($notice) {
-            Notice::create($request->all());
-        } 
-        // 寫入log
-        Log::write_log('notices',$request->all());
-=======
         $notice->content = clean($request->input('content'));
 
         if ($error == 0) {
@@ -84,7 +77,6 @@ class NoticeController extends Controller
         else{
             return back()->withInput()->with('warning', '請確認輸入 !');
         }
->>>>>>> 0225b91b39442b86e84d94a2599a077a1bc820d8
 
         return back()->with('success','通知新增成功 !');
     }
@@ -155,12 +147,6 @@ class NoticeController extends Controller
         else{
             return back()->withInput()->with('warning', '請確認輸入 !');
         }
-<<<<<<< HEAD
-        // 寫入log
-        Log::write_log('notices',$request->all());
-        $notice->save();
-=======
->>>>>>> 0225b91b39442b86e84d94a2599a077a1bc820d8
         return back()->with('success','修改通知成功 !');
     }
 
