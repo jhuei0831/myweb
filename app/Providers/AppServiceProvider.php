@@ -25,7 +25,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $config = DB::table('configs')->where('id','1')->first();
-        Config::set('app.name', $config->app_name);
+        
     }
 }

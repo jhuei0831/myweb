@@ -47,19 +47,40 @@ class PageController extends Controller
         if (Auth::check() && Auth::user()->permission < '2') {
             return back()->with('warning', '權限不足以訪問該頁面 !');
         }
-        $page = $request->validate([
+        $error = 0;
+        $page = new Page;
+        $data = $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'menu_id' => ['nullable','integer'],
+            'menu_id' => ['nullable'],
             'title' => ['required', 'string', 'max:255'],
             'url' => ['required', 'string', 'max:255','unique:pages,url'],
             'is_open' => ['required'],
             'is_slide' => ['required'],
         ]);
-        if ($page) {
-            Page::create($request->all());
-        } 
-        // 寫入log
-        Log::write_log('pages',$request->all());
+        
+        // 逐筆進行htmlpurufier 並去掉<p></p>
+        foreach ($request->except('_token', '_method') as $key => $value) {
+            if ($request->filled($key) && $request->filled($key) != NULL && $key != 'content') {
+                $page->$key = strip_tags(clean($data[$key]));
+                if ($page->$key == '') {
+                    $error += 1;
+                }
+            }
+            else{
+                $page->$key = NULL;
+            }
+        }
+
+        $page->content = clean($request->input('content'));
+
+        if ($error == 0) {
+            // 寫入log
+            Log::write_log('pages',$request->all());
+            $page->save();
+        }
+        else{
+            return back()->withInput()->with('warning', '請確認輸入 !');
+        }
 
         return back()->with('success','頁面新增成功 !');
     }
@@ -103,7 +124,7 @@ class PageController extends Controller
         if (Auth::check() && Auth::user()->permission < '3') {
             return back()->with('warning', '權限不足以訪問該頁面 !');
         }
-
+        $error = 0;
         $page = Page::where('id',$id)->first();
 
         $data = $this->validate($request, [
@@ -117,18 +138,26 @@ class PageController extends Controller
 
         // 逐筆進行htmlpurufier 並去掉<p></p>
         foreach ($request->except('_token','_method') as $key => $value) {
-            if ($request->filled($key) && $key != 'content') {
+            if ($request->filled($key) && $request->filled($key) != NULL && $key != 'content') {
                 $page->$key = strip_tags(clean($data[$key]));
+                if ($page->$key == '') {
+                    $error += 1;
+                }
             }
-            $page->content = $request->input('content');
+            else{
+                $page->$key = NULL;
+            }
         }
-        if (!$request->filled('menu_id')) {
-            $page->menu_id = NULL;
-        }
-        // 寫入log
-        Log::write_log('pages',$request->all());
+        $page->content = clean($request->input('content'));
 
-        $page->save();
+        if ($error == 0) {
+            // 寫入log
+            Log::write_log('pages',$request->all());
+            $page->save();
+        }
+        else{
+            return back()->withInput()->with('warning', '請確認輸入 !');
+        }
         return back()->with('success','修改頁面成功 !');
     }
 

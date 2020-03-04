@@ -55,7 +55,6 @@
 			                    <span id="typeHelp" class="help-block">
 			                        導覽目錄：顯示選單目錄；</br>
 			                        一般頁面：不顯示選單目錄，直接列出底下的頁面；</br>
-			                        例如：點選[XXX中心]，底下還有簡介和各實驗室等選單細項，或是直接呈現介紹的頁面內容或頁面清單。
 			                    </span>
                                 @error('type')
                                     <span class="invalid-feedback" role="alert">
