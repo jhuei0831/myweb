@@ -186,11 +186,12 @@ a {
     text-decoration: none;
     background-color: transparent;
     -webkit-text-decoration-skip: objects
+
 }
 
 a:hover {
     color: #1d68a7;
-    text-decoration: underline
+    text-decoration: none;
 }
 
 a:not([href]):not([tabindex]),
@@ -9509,6 +9510,8 @@ body {
     padding-right: 5px;
     width: 100%; 
     text-align: center;
+    border-radius: 25px;
+    
 }
   
 .navbar-vertical .navbar-brand {
@@ -9548,8 +9551,8 @@ body {
 .navbar-vertical .navbar-nav > .active > a, .navbar-vertical .navbar-nav > .active > a:hover, .navbar-vertical .navbar-nav > .active > a:focus {
     color: #7F0015;
     background-color: transparent;
-    background-image: url("/images/icon/focus.png");
-    /* border-left: 5px #7F0015 solid; */
+    /*background-image: url("/images/icon/focus.png");*/
+     border-left: 5px #7F0015 solid; 
 }
 .navbar-vertical .navbar-nav > .disabled > a, .navbar-vertical .navbar-nav > .disabled > a:hover, .navbar-vertical .navbar-nav > .disabled > a:focus {
     color: #444;
@@ -9638,5 +9641,5 @@ body {
 }
 
 .text-list{
-    font-family:'Noto Sans TC', 'Microsoft JhengHei', sans-serif;word-break:break-all
+    font-family:'Noto Sans TC', sans-serif;word-break:break-all
 }

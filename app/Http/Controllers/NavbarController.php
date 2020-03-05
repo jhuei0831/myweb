@@ -16,8 +16,8 @@ class NavbarController extends Controller
      */
     public function index()
     {
-        $navbars = Navbar::paginate(10);
-        return view('manage.navbar.index',compact('navbars'));
+        $all_navbars = Navbar::paginate(10);
+        return view('manage.navbar.index',compact('all_navbars'));
     }
 
     /**
@@ -41,7 +41,7 @@ class NavbarController extends Controller
      */
     public function store(Request $request)
     {
-        if (Auth::check() && Auth::user()->permission < '5') {
+        if (Auth::check() && Auth::user()->permission < '2') {
             return back()->with('warning', '權限不足以訪問該頁面 !');
         }
         $error = 0;

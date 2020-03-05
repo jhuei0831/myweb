@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Info;
+use App\log;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Input;
-use App\Slide;
-use App\Log;
-class SlideController extends Controller
+
+class InfoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,8 +17,8 @@ class SlideController extends Controller
      */
     public function index()
     {
-        $all_slides = Slide::paginate(10);
-        return view('manage.slide.index',compact('all_slides'));
+        $all_infos = Info::paginate(10);
+        return view('manage.info.index',compact('all_infos'));
     }
 
     /**
@@ -31,7 +31,7 @@ class SlideController extends Controller
         if (Auth::check() && Auth::user()->permission < '2') {
             return back()->with('warning', '權限不足以訪問該頁面 !');
         }
-        return view('manage.slide.create');
+        return view('manage.info.create');
     }
 
     /**
@@ -46,48 +46,48 @@ class SlideController extends Controller
             return back()->with('warning', '權限不足以訪問該頁面 !');
         }
         $error = 0;
-        $slide = new Slide;
+        $info = new Info;
 
         $data = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'link' => ['max:255'],
-            'image' => ['required'],
+            'title' => ['required', 'string', 'max:255'],
+            'content' => ['required'],
             'is_open' => ['required'],          
+            'is_sticky' => ['required'],          
         ]);
-        // 逐筆進行htmlpurufier 並去掉<p></p>
+
         foreach ($request->except('_token', '_method') as $key => $value) {
-            if ($request->filled($key) && $request->filled($key) != NULL) {
-                $slide->$key = strip_tags(clean($data[$key]));
-                if ($slide->$key == '') {
+            if ($request->filled($key) && $key != 'content') {
+                $info->$key = strip_tags(clean($data[$key]));
+                if ($info->$key == '') {
                     $error += 1;
                 }
             }
-            else{
-                $slide->$key = NULL;
-            }
         }
+
+        $info->editor = Auth::user()->name;
+        $info->content = clean($request->input('content'));
 
         if ($error == 0) {
             // 寫入log
-            Log::write_log('slides',$request->all());
-            $slide->save();
+            Log::write_log('infos',$request->all());
+            $info->save();
         }
         else{
             return back()->withInput()->with('warning', '請確認輸入 !');
         }
         // 寫入log
-        Log::write_log('slides',$request->all());
+        Log::write_log('infos',$request->all());
 
-        return back()->with('success', '輪播新增成功 !');
+        return back()->with('success', '消息新增成功 !');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Info  $info
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Info $info)
     {
         //
     }
@@ -95,7 +95,7 @@ class SlideController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Info  $info
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -103,15 +103,15 @@ class SlideController extends Controller
         if (Auth::check() && Auth::user()->permission < '3') {
             return back()->with('warning', '權限不足以訪問該頁面 !');
         }
-        $slide = Slide::where('id',$id)->first();
-        return view('manage.slide.edit',compact('slide'));
+        $info = Info::where('id',$id)->first();
+        return view('manage.info.edit',compact('info'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Info  $info
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -120,45 +120,45 @@ class SlideController extends Controller
             return back()->with('warning', '權限不足以訪問該頁面 !');
         }
         $error = 0;
-        $slide = Slide::where('id',$id)->first();
-        
+        $info = Info::where('id',$id)->first();
+
         $data = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'link' => ['nullable','string', 'max:255'],
-            'image' => ['required'],
-            'is_open' => ['required'],
+            'title' => ['required', 'string', 'max:255'],
+            'content' => ['required'],
+            'is_open' => ['required'],          
+            'is_sticky' => ['required'],          
         ]);
 
-        // 逐筆進行htmlpurufier 並去掉<p></p>
         foreach ($request->except('_token', '_method') as $key => $value) {
-            if ($request->filled($key) && $request->filled($key) != NULL) {
-                $slide->$key = strip_tags(clean($data[$key]));
-                if ($slide->$key == '') {
+            if ($request->filled($key) && $key != 'content') {
+                $info->$key = strip_tags(clean($data[$key]));
+                if ($info->$key == '') {
                     $error += 1;
                 }
             }
-            else{
-                $slide->$key = NULL;
-            }
         }
-        // 寫入log
-        Log::write_log('slides',$request->all());
+
+        $info->editor = Auth::user()->name;
+        $info->content = clean($request->input('content'));
 
         if ($error == 0) {
             // 寫入log
-            Log::write_log('slides',$request->all());
-            $slide->save();
+            Log::write_log('infos',$request->all());
+            $info->save();
         }
         else{
             return back()->withInput()->with('warning', '請確認輸入 !');
         }
-        return back()->with('success','修改輪播成功 !');
+        // 寫入log
+        Log::write_log('infos',$request->all());
+
+        return back()->with('success', '消息修改成功 !');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Info  $info
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
@@ -167,10 +167,19 @@ class SlideController extends Controller
             return back()->with('warning', '權限不足以訪問該頁面 !');
         }
         // 寫入log
-        Log::write_log('slides',Slide::where('id', $id)->first());
-
-        Slide::destroy($id);
-        return back()->with('success', '刪除輪播成功 !');
+        Log::write_log('infos',Info::where('id', $id)->first());
+        Info::destroy($id);
+        return back()->with('success','刪除消息成功 !');
+    }
+    /**
+     * [info_detail 顯示消息內容]
+     * @param  [type] $id [description]
+     * @return [type]     [description]
+     */
+    public function infodetail($id)
+    {
+        $info_detail = Info::where('id',$id)->first();
+        return view('info.detail',compact('info_detail'));
     }
 
     //拖曳排序
@@ -179,18 +188,18 @@ class SlideController extends Controller
         if (Auth::check() && Auth::user()->permission < '3') {
             return back()->with('warning', '權限不足以訪問該頁面 !');
         }
-        $slides = Slide::all();
+        
+        $info_stickys = Info::where('is_sticky',1)->where('is_open',1)->orderby('sort')->get();
 
-        foreach ($slides as $slide) {
+        foreach ($info_stickys as $info) {
             foreach ($request->order as $order) {
-                if ($order['id'] == $slide->id) {
-                    $slide->update(['sort' => $order['position']]);
+                if ($order['id'] == $info->id) {
+                    $info->update(['sort' => $order['position']]);
                 }
             }
         }
-        // 寫入log
-        $sort = DB::table('slides')->select('name','sort')->orderby('sort')->get();
-        Log::write_log('slides',$sort,'排序');
+        $sort = DB::table('infos')->where('is_sticky',1)->where('is_open',1)->select('title','sort')->orderby('sort')->get();
+        Log::write_log('infos',$sort,'排序');
         
         return response('Update Successfully.', 200);
     }

@@ -68,18 +68,23 @@
                 <h1><b>{{$select_menu->name}}</b></h1>
             </div>
             <div class="card-body">
-                @foreach($menu_pages as $page)
-                    @if($page->menu_id == $select_menu->id && $page->is_open == '1')
-                        <div class="card-body">               
-                            <div class="col-md-3 text-list"><p>{{ $page->created_at }}</p></div>                                                                  
-                            <div class="col-md-9 text-list"><p><a href="{{ route('page', [$navbar->name,$select_menu->name,$page->url]) }}">{{ $page->title }}</a></p></div>                                                                  
-                        </div>
-                    @endif
-                @endforeach
+                <div class="table-responsive">
+                    <table class="table table-hover table-borderless">
+                        <tbody>
+                        @foreach($menu_pages as $page)
+                            @if($page->menu_id == $select_menu->id)
+                            <tr>
+                                <td width=10%>{{ $page->updated_at->format('Y/m/d') }}</td>
+                                <td><a href="{{ route('page', [$navbar->name,$select_menu->name,$page->url]) }}">{{ $page->title }}</a></td>
+                            </tr>
+                            @endif
+                        @endforeach
+                        </tbody>  
+                    </table>
+                </div>               
             </div>
         </div>
-    </div>
-    
+    </div>  
 @else
     <div id="content" class="col-md-10">
         <div class="card border-light" style="border: none;">

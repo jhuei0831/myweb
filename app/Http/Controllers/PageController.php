@@ -18,8 +18,8 @@ class PageController extends Controller
      */
     public function index()
     {
-        $pages = DB::table('pages')->paginate(10);
-        return view('manage.page.index',compact('pages'));
+        $all_pages = DB::table('pages')->paginate(10);
+        return view('manage.page.index',compact('all_pages'));
     }
 
     /**

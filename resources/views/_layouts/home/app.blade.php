@@ -29,7 +29,7 @@
             @include('_partials.home.nav')
             @include('_partials.home.slide')
 
-            <main class="py-4" >
+            <main class="py-2" >
                 <div class="container-fluid">
                     <div class="row justify-content-center" >
                     @yield('menu')
@@ -37,6 +37,7 @@
                     </div>
                 </div>
             </main>
+           
         </div>
         @section('script')
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -45,4 +46,5 @@
         <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.12/datatables.min.js"></script>
         @show
     </body>
+     @include('_partials.home.footer')
 </html>

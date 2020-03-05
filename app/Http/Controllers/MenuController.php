@@ -20,8 +20,8 @@ class MenuController extends Controller
      */
     public function index()
     {
-        $menus = Menu::paginate(10);
-        return view('manage.menu.index',compact('menus'));
+        $all_menus = Menu::paginate(10);
+        return view('manage.menu.index',compact('all_menus'));
     }
 
     /**
@@ -218,7 +218,7 @@ class MenuController extends Controller
     public function menus($nav,$menu)
     {
         $navbar = Navbar::where('name',$nav)->first();
-        $menus_nav = Menu::where('navbar_id',$navbar->id)->orderby('sort')->get();
+        $menus_nav = Menu::where('navbar_id',$navbar->id)->where('is_open',1)->orderby('sort')->get();
         $select_menu = Menu::where('name',$menu)->first();
         if (empty($select_menu)) {
             abort(404);
@@ -226,10 +226,10 @@ class MenuController extends Controller
         $notice = Notice::where('menu_id',$select_menu->id)->where('is_open',1)->first();
 
         if ($select_menu->is_list == '1') {
-            $menu_pages = Page::orderby('created_at','desc')->get();
+            $menu_pages = Page::where('is_open',1)->orderby('updated_at','desc')->get();
         }
         else {
-            $menu_pages = Page::where('menu_id',$select_menu->id)->orderby('created_at','desc')->first();
+            $menu_pages = Page::where('menu_id',$select_menu->id)->where('is_open',1)->orderby('updated_at','desc')->first();
         }
         
         return view('menu',compact('menus_nav','select_menu','navbar','menu_pages','notice'));

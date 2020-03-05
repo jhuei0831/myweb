@@ -14,27 +14,31 @@
 Route::get('/errors/change_browser', function () {return view('errors.change_browser');});
 // File manager
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
- \UniSharp\LaravelFilemanager\Lfm::routes();
+	\UniSharp\LaravelFilemanager\Lfm::routes();
 });
-//非IE瀏覽器
+//非IE瀏覽器，註冊帳號後要信箱驗證
 Route::middleware('browser')->group(function() {
 	Auth::routes(['verify' => true]);
-	Route::get('/', function () {return view('index');});
+	Route::get('/', function () {return view('index');})->name('index');
 	Route::get('/manage', function () {return view('manage.index');})->middleware('auth','admin','verified')->name('manage');
-    Route::get('/home', 'HomeController@index')->middleware('browser')->name('home');
+    Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/info/detail/{id}', 'InfoController@infodetail')->name('info.detail');
+    Route::get('/info/index', function () {return view('info.index');})->name('info');
 	Route::get('/article/{nav}/{menu}?{page}', 'PageController@pages')->name('page');
 	Route::get('/article/{nav}/{menu}', 'MenuController@menus')->name('menu');
 });
 
-//要登入和非IE瀏覽器
+//中介層:登入/非IE瀏覽器/信箱驗證/管理員
 Route::middleware('auth','browser','admin','verified')->group(function() {
 	//排序
     Route::post('navbar-sortable','NavbarController@sort')->name('navbar.sort');
 	Route::post('slide-sortable','SlideController@sort')->name('slide.sort');
 	Route::post('menu-sortable','MenuController@sort')->name('menu.sort');
+	Route::post('info-sortable','InfoController@sort')->name('info.sort');
 	Route::get('/manage/navbar/sort', function () {return view('manage.navbar.sort');});
 	Route::get('/manage/slide/sort', function () {return view('manage.slide.sort');});
 	Route::get('/manage/menu/sort', function () {return view('manage.menu.sort');});
+	Route::get('/manage/info/sort', function () {return view('manage.info.sort');});
 	//刪除背景
 	Route::get('/manage/config/delete_background/{id}', 'ConfigController@delete_background')->name('config.delete_background');
 });
@@ -49,9 +53,10 @@ Route::prefix('manage')->middleware('auth','browser','admin','verified')->group(
     Route::resource('menu', 'MenuController');
     Route::resource('notice', 'NoticeController');
     Route::resource('log', 'LogController');
+    Route::resource('info', 'InfoController');
 });
 
-
+//在各視圖中可直接使用以下參數
 View::composer(['*'], function ($view) {
     if (Request::getQueryString()) {
         $current_page = App\Page::where('url', $_SERVER['QUERY_STRING'])->first();
@@ -59,12 +64,13 @@ View::composer(['*'], function ($view) {
     }
     $config = DB::table('configs')->where('id','1')->first();
     Config::set('app.name', $config->app_name);
-    $navbars = App\Navbar::orderby('sort')->paginate(10);
-    $slides = App\Slide::orderby('sort')->paginate(10);
-    $menus = App\Menu::orderby('sort')->paginate(10);
-    $config = App\Config::where('id','1')->first();
-    $pages = App\Page::paginate(10);   
-    $users = App\User::paginate(10);
+    $navbars = App\Navbar::where('is_open',1)->orderby('sort')->get();
+    $slides = App\Slide::where('is_open',1)->orderby('sort')->get();
+    $menus = App\Menu::where('is_open',1)->orderby('sort')->get();
+    $pages = App\Page::where('is_open',1)->orderby('updated_at')->get();   
+    $users = App\User::all();
+    $infos = App\Info::where('is_sticky',0)->where('is_open',1)->orderby('updated_at')->paginate(10);
+    $info_stickys = App\Info::where('is_sticky',1)->where('is_open',1)->orderby('sort')->paginate(10);
        
     $view->with('navbars',$navbars);
     $view->with('pages',$pages);
@@ -72,6 +78,8 @@ View::composer(['*'], function ($view) {
     $view->with('menus',$menus);
     $view->with('slides',$slides);
     $view->with('config',$config);
+    $view->with('infos',$infos);
+    $view->with('info_stickys',$info_stickys);
 });
 
 // Route::get('/manage/member', 'MemberController@show')->name('member');

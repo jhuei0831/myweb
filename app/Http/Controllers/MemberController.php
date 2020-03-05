@@ -22,8 +22,8 @@ class MemberController extends Controller
             return back()->with('warning', '權限不足以訪問該頁面 !');
         }
 
-        $users = DB::table('users')->paginate(10);
-        return view('manage.member.index',compact('users'));
+        $all_users = DB::table('users')->paginate(10);
+        return view('manage.member.index',compact('all_users'));
     }
 
     /**

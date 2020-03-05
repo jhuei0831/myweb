@@ -11,38 +11,41 @@
 					<ul class="list-unstyled">
 						<li>{{ App\Button::Create() }}</li>
 					</ul>
-                	<table class="table table-hover table-bordered text-center">
-	                	<thead>
-	                		<tr class="table-info active">
-								<th class="text-nowrap text-center">{{ __('Title') }}</th>
-	                			<th class="text-nowrap text-center">{{ __('Menu') }}</th>	                			
-	                			<th class="text-nowrap text-center">{{ __('Is_open') }}</th>
-	                			<th class="text-nowrap text-center">{{ __('Action') }}</th>	                			
-	                		</tr>
-	                	</thead>
-	                	<tbody>
-							@foreach ($notices as $notice)
-								<tr>
-									<td>{{ $notice->title }}</td>
-									<td>{{ App\Menu::where('id','=',$notice->menu_id)->first('name')['name'] }}</td>
-									<td>
-										<font color="{{App\Enum::is_open['color'][$notice->is_open]}}"><i class="fas fa-{{App\Enum::is_open['label'][$notice->is_open]}}"></i></font>
-									</td>
-									<td>
-										<form action="{{ route('notice.destroy',$notice->id) }}" method="POST">
-										@method('DELETE')
-										@csrf
-										{{ App\Button::edit($notice->id) }}
-										{{ App\Button::deleting($notice->id) }}
-										</form>
-									</td>
-								</tr>
-	                		@endforeach
-	                	</tbody>
-                    </table>
+					<div class="table-responsive">
+						<table class="table table-hover table-bordered text-center">
+		                	<thead>
+		                		<tr class="table-info active">
+									<th class="text-nowrap text-center">{{ __('Title') }}</th>
+		                			<th class="text-nowrap text-center">{{ __('Menu') }}</th>	                			
+		                			<th class="text-nowrap text-center">{{ __('Is_open') }}</th>
+		                			<th class="text-nowrap text-center">{{ __('Action') }}</th>	                			
+		                		</tr>
+		                	</thead>
+		                	<tbody>
+								@foreach ($all_notices as $notice)
+									<tr>
+										<td>{{ $notice->title }}</td>
+										<td>{{ App\Menu::where('id','=',$notice->menu_id)->first('name')['name'] }}</td>
+										<td>
+											<font color="{{App\Enum::is_open['color'][$notice->is_open]}}"><i class="fas fa-{{App\Enum::is_open['label'][$notice->is_open]}}"></i></font>
+										</td>
+										<td>
+											<form action="{{ route('notice.destroy',$notice->id) }}" method="POST">
+											@method('DELETE')
+											@csrf
+											{{ App\Button::edit($notice->id) }}
+											{{ App\Button::deleting($notice->id) }}
+											</form>
+										</td>
+									</tr>
+		                		@endforeach
+		                	</tbody>
+	                    </table>
+					</div>
+                	
                 </div>
                 <div class="card-footer pagination justify-content-center">
-					{!! $notices->links("pagination::bootstrap-4") !!}
+					{!! $all_notices->links("pagination::bootstrap-4") !!}
 				</div>
             </div>
         </div>

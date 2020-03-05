@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm fixed-top" style="background-color: #e3f2fd;">
+<nav class="navbar navbar-expand-xl navbar-dark bg-dark shadow-sm fixed-top" style="background-color: #e3f2fd;">
     <div class="container-fluid">
         <div class="navbar-header">
             <a class="navbar-brand" href="{{ url('/manage') }}">
@@ -27,6 +27,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('notice.index') }}">{{ __('Notice').__('Manage') }}</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('info.index') }}">{{ __('Information').__('Manage') }}</a>
+                </li>
                 @if (Auth::check() && Auth::user()->permission > '4')
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('member.index') }}">{{ __('Member').__('Manage') }}</a>
@@ -54,7 +57,7 @@
                     @endif
                 @else
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('home') }}">{{ __('Fontstage') }}</a>
+                        <a class="nav-link" href="{{ route('index') }}">{{ __('Fontstage') }}</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
