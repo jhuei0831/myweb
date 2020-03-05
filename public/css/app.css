@@ -9482,10 +9482,17 @@ html,body {
 
 body {
     font-family: 'Microsoft JhengHei',Arial;
-    font-weight:bold;
-    font-size: 14px;
+    /* font-weight:bold;
+    font-size: 14px; */
     margin-top: 60px;
     margin-bottom: 50px
+}
+
+table {
+    font-size: 100%;
+    font-weight: bold;
+    border-collapse: collapse;
+    border-spacing: 0;
 }
 
 .navbar {

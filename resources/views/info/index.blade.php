@@ -2,7 +2,7 @@
 @section('title',__('Information').__('List'))
 @section('menu')
 <div class="col-md-2">
-    <nav class="navbar-vertical">
+    <nav class="navbar navbar-vertical">
         <ul class="navbar-nav">
             <li class="active">
                 <a class="nav-link" href="{{ route('info') }}">{{ __('Information').__('List') }}</a>

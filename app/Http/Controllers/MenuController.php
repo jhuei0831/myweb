@@ -226,7 +226,7 @@ class MenuController extends Controller
         $notice = Notice::where('menu_id',$select_menu->id)->where('is_open',1)->first();
 
         if ($select_menu->is_list == '1') {
-            $menu_pages = Page::where('is_open',1)->orderby('updated_at','desc')->get();
+            $menu_pages = Page::where('is_open',1)->orderby('updated_at','desc')->paginate(10);
         }
         else {
             $menu_pages = Page::where('menu_id',$select_menu->id)->where('is_open',1)->orderby('updated_at','desc')->first();

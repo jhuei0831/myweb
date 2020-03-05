@@ -2,7 +2,7 @@
 
 @section('menu')
 <div class="col-md-2">
-    <nav class="navbar-vertical">
+    <nav class="navbar navbar-vertical">
         <ul class="navbar-nav">
             <li class="">
                 <a class="nav-link" href="{{ route('info') }}">{{ __('Information').__('List') }}</a>

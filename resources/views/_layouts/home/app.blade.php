@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
@@ -25,11 +25,11 @@
     @else
     <body style="background:linear-gradient(#{{ $config->background_color }}, #FFFFFF); background-size:cover; background-attachment: fixed; background-repeat: no-repeat;">
     @endif
-        <div id="app" style="font-size:{{ $config->font_size }};font-weight:{{ $config->font_weight }};font-family: {{ $config->font_family }};">
+        <div style="font-size:{{ $config->font_size }};font-weight:{{ $config->font_weight }};font-family: {{ $config->font_family }};">
             @include('_partials.home.nav')
             @include('_partials.home.slide')
 
-            <main class="py-2" >
+            <main class="py-4" >
                 <div class="container-fluid">
                     <div class="row justify-content-center" >
                     @yield('menu')

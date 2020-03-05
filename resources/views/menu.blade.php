@@ -4,26 +4,24 @@
 {{-- 選單顯示 --}}
 <div id="menu" class="col-md-2">
     <nav class="navbar navbar-vertical">
-        <div class="container-fluid">
-            <div class="navbar-collapse collapse show" id="pnlSubNavbar">
-                <ul class="nav navbar-nav">
-                    @foreach($menus_nav as $menu)
-                        @if($menu->name == $select_menu->name)
-                            <li class="active">
-                                <a class="nav-link" href="/article/{{ $navbar->name }}/{{ $menu->name }}">{{ $menu->name }}</a>
-                            </li>
-                        @elseif($menu->link)
-                            <li class="">
-                                <a class="nav-link" href="{{ $menu->link }}">{{ $menu->name }}</a>
-                            </li>
-                        @else
-                            <li class="">
-                                <a class="nav-link" href="/article/{{ $navbar->name }}/{{ $menu->name }}">{{ $menu->name }}</a>
-                            </li>
-                        @endif
-                    @endforeach
-                </ul>
-            </div>
+        <div class="navbar-collapse collapse show" id="pnlSubNavbar">
+            <ul class="nav navbar-nav">
+                @foreach($menus_nav as $menu)
+                    @if($menu->name == $select_menu->name)
+                        <li class="active">
+                            <a class="nav-link" href="/article/{{ $navbar->name }}/{{ $menu->name }}">{{ $menu->name }}</a>
+                        </li>
+                    @elseif($menu->link)
+                        <li class="">
+                            <a class="nav-link" href="{{ $menu->link }}">{{ $menu->name }}</a>
+                        </li>
+                    @else
+                        <li class="">
+                            <a class="nav-link" href="/article/{{ $navbar->name }}/{{ $menu->name }}">{{ $menu->name }}</a>
+                        </li>
+                    @endif
+                @endforeach
+            </ul>
         </div>
     </nav>
 </div>
@@ -75,13 +73,16 @@
                             @if($page->menu_id == $select_menu->id)
                             <tr>
                                 <td width=10%>{{ $page->updated_at->format('Y/m/d') }}</td>
-                                <td><a href="{{ route('page', [$navbar->name,$select_menu->name,$page->url]) }}">{{ $page->title }}</a></td>
+                                <td class="text-list"><a href="{{ route('page', [$navbar->name,$select_menu->name,$page->url]) }}">{{ $page->title }}</a></td>
                             </tr>
                             @endif
                         @endforeach
                         </tbody>  
                     </table>
                 </div>               
+            </div>
+            <div class="card-footer pagination justify-content-center bg-transparent">
+                {!! $menu_pages->links("pagination::bootstrap-4") !!}
             </div>
         </div>
     </div>  
