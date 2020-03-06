@@ -27,6 +27,11 @@
                     echo clean($info_detail->content);
                 @endphp                                                                   
             </div>
+            <div class="card-footer bg-transparent">
+                <p><span class="badge badge-pill badge-primary">{{ __('Editor').' : '.$info_detail->editor }}</span></p>
+                <p><span class="badge badge-pill badge-primary">{{ __('Created_at').' : '.$info_detail->created_at }}</span></p>
+                <p><span class="badge badge-pill badge-primary">{{ __('Updated_at').' : '.$info_detail->updated_at }}</span></p>
+            </div>
         </div>
     </div>
 @endsection

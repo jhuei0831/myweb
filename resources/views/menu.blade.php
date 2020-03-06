@@ -56,6 +56,11 @@
             <div class="card-body">               
                 {!! clean($current_page->content) !!}                                                                
             </div>
+            <div class="card-footer bg-transparent">
+                <p><span class="badge badge-pill badge-primary">{{ __('Editor').' : '.$current_page->editor }}</span></p>
+                <p><span class="badge badge-pill badge-primary">{{ __('Created_at').' : '.$current_page->created_at }}</span></p>
+                <p><span class="badge badge-pill badge-primary">{{ __('Updated_at').' : '.$current_page->updated_at }}</span></p>
+            </div>
         </div>
     </div>
 {{-- 是否清單顯示 --}}

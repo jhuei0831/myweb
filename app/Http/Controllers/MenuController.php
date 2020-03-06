@@ -21,7 +21,8 @@ class MenuController extends Controller
     public function index()
     {
         $all_menus = Menu::paginate(10);
-        return view('manage.menu.index',compact('all_menus'));
+        $all_navbars = Navbar::all();
+        return view('manage.menu.index',compact('all_menus','all_navbars'));
     }
 
     /**
@@ -223,7 +224,7 @@ class MenuController extends Controller
         if (empty($select_menu)) {
             abort(404);
         }
-        $notice = Notice::where('menu_id',$select_menu->id)->where('is_open',1)->first();
+        $notice = Notice::where('menu_id',$select_menu->id)->where('is_open',1)->orderby('updated_at','desc')->first();
 
         if ($select_menu->is_list == '1') {
             $menu_pages = Page::where('is_open',1)->orderby('updated_at','desc')->paginate(10);

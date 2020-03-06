@@ -11,19 +11,54 @@
 					<ul class="list-inline">
 						<li class="list-inline-item">{{ App\Button::Create() }}</li>
 						<li class="list-inline-item">{{ App\Button::To('sort',__('Sort'),'','btn-primary') }}</li>
+						<li class="list-inline-item"><a class="btn btn-sm btn-primary" data-toggle="collapse" href="#search" role="button" aria-expanded="false" aria-controls="search"><i class="fas fa-filter"></i> {{ __('Filter') }}</a></li>
 					</ul>
 					<div class="alert alert-warning" role="alert">
-                        只有置頂消息可以進行排序
+                        只有置頂消息可以進行手動排序，其他消息以更新時間自動排序。
                     </div>
+                    {{-- 篩選器設定 --}}
+                    <div class="collapse" id="search">
+	                    <div class="form-inline form-group">
+							<label class='control-label col-md-1'>{{ __('Title') }}</label>
+							<div id="filter_col1" data-column="0" class='col-md-2'>
+								<input type="text" class="form-control column_filter" id="col0_filter">
+							</div>
+							<label class='control-label col-md-1'>{{ __('Editor') }}</label>
+							<div id="filter_col2" data-column="1" class='col-md-2'>
+								<input type="text" class="form-control column_filter" id="col1_filter">
+							</div>
+							{{-- 選擇隱藏爛位 --}}							
+							<label class='control-label col-md-1'>{{ __('Is_open') }}</label>
+							<div id="filter_col3" data-column="2" class='col-md-2'>
+								<select class="form-control column_filter" id="col2_filter">
+									<option value="">{{ __('All') }}</option>
+									<option value="1">{{ __('Yes') }}</option>
+									<option value="0">{{ __('No') }}</option>
+								</select>
+							</div>	
+							<label class='control-label col-md-1'>{{ __('Is_sticky') }}</label>
+							<div id="filter_col4" data-column="3" class='col-md-2'>
+								<select class="form-control column_filter" id="col3_filter">
+									<option value="">{{ __('All') }}</option>
+									<option value="1">{{ __('Yes') }}</option>
+									<option value="0">{{ __('No') }}</option>
+								</select>
+							</div>						
+						</div>
+					</div>
 					<div class="table-responsive">
-						<table class="table table-hover table-bordered text-center">
+						<table id="data" class="table table-hover table-bordered text-center">
 		                	<thead>
 		                		<tr class="table-info active">
 									<th class="text-nowrap text-center">{{ __('Title') }}</th>
-		                			<th class="text-nowrap text-center">{{ __('Editor') }}</th>	                			
+		                			<th class="text-nowrap text-center">{{ __('Editor') }}</th>	 
+		                			{{-- 設置隱藏爛位提供篩選 --}}
+		                			<th class="text-nowrap text-center" style="display:none">{{ __('Is_open') }}</th>   			
+		                			<th class="text-nowrap text-center" style="display:none">{{ __('Is_sticky') }}</th>   			
 		                			<th class="text-nowrap text-center">{{ __('Is_open') }}</th>
 		                			<th class="text-nowrap text-center">{{ __('Is_sticky') }}</th>	                			
 		                			<th class="text-nowrap text-center">{{ __('Created_at') }}</th>	                			
+		                			<th class="text-nowrap text-center">{{ __('Updated_at') }}</th>	                			
 		                			<th class="text-nowrap text-center">{{ __('Action') }}</th>	                			
 		                		</tr>
 		                	</thead>
@@ -32,6 +67,9 @@
 									<tr>
 										<td>{{ $info->title }}</td>
 										<td>{{ $info->editor }}</td>
+										{{-- 設置隱藏爛位提供篩選 --}}
+										<td style="display:none">{{ $info->is_open }}</td>
+										<td style="display:none">{{ $info->is_sticky }}</td>
 										<td>
 											<font color="{{App\Enum::is_open['color'][$info->is_open]}}"><i class="fas fa-{{App\Enum::is_open['label'][$info->is_open]}}"></i></font>
 										</td>
@@ -39,6 +77,7 @@
 											<font color="{{App\Enum::is_open['color'][$info->is_sticky]}}"><i class="fas fa-{{App\Enum::is_open['label'][$info->is_sticky]}}"></i></font>
 										</td>
 										<td>{{ $info->created_at }}</td>
+										<td>{{ $info->updated_at }}</td>
 										<td>
 											<form action="{{ route('info.destroy',$info->id) }}" method="POST">
 											@method('DELETE')

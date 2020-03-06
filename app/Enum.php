@@ -15,6 +15,24 @@ class Enum extends Model
         '5' => '所有權限',
     ];
 
+    const browser = [
+        '0' => 'Internet Explorer',
+        '1' => 'Mozilla Firefox',
+        '2' => 'Google Chrome',
+        '3' => 'Apple Safari',
+        '4' => 'Opera',
+        '5' => 'Netscape',
+    ];
+
+    const action = [
+        '0' => 'PUT',
+        '1' => 'POST',
+        '2' => 'GET',
+        '3' => 'DELETE',
+        '4' => '排序',
+        '5' => '刪除背景',
+    ];
+
     const is_open = [
         'color' =>[
             '0' => 'red',

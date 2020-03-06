@@ -14,18 +14,6 @@
                 	<form method="POST" action="{{ route('page.update' , $page->id) }}">
                 		@csrf
 						@method('PUT')
-						<div class="form-group row">
-                            <label for="name" class="col-sm-1 col-form-label">{{ __('Page').__('Name') }}</label>
-                            <div class="col-sm-4">
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ $page->name }}" required autocomplete="{{ __('Page name') }}" autofocus>
-                                @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
                         <div class="form-group row">
                             <label for="menu_id" class="col-sm-1 col-form-label">{{ __('Menu') }}</label>
                             <div class="col-sm-4">

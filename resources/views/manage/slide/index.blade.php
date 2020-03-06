@@ -11,12 +11,31 @@
 					<ul class="list-inline">
 						<li class="list-inline-item">{{ App\Button::Create() }}</li>
 						<li class="list-inline-item">{{ App\Button::To('sort',__('Sort'),'','btn-primary') }}</li>
+						<li class="list-inline-item"><a class="btn btn-sm btn-primary" data-toggle="collapse" href="#search" role="button" aria-expanded="false" aria-controls="search"><i class="fas fa-filter"></i> {{ __('Filter') }}</a></li>
 					</ul>
 					<div class="alert alert-warning" role="alert">
                         1. 輪播圖片尺寸大小請裁剪成統一大小。<br>
                     </div>
+                    {{-- 篩選器設定 --}}
+                    <div class="collapse" id="search">
+	                    <div class="form-inline form-group">
+							<label class='control-label col-md-1'>{{ __('Slide').__('Name') }}</label>
+							<div id="filter_col1" data-column="0" class='col-md-2'>
+								<input type="text" class="form-control column_filter" id="col0_filter">
+							</div>
+							<label class='control-label col-md-1'>{{ __('Sort') }}</label>
+							<div id="filter_col2" data-column="3" class='col-md-2'>
+								<input type="text" class="form-control column_filter" id="col3_filter">
+							</div>
+							{{-- 選擇隱藏爛位 --}}
+							<label class='control-label col-md-1'>{{ __('Is_open') }}</label>
+							<div id="filter_col3" data-column="5" class='col-md-2'>
+								<input type="text" class="form-control column_filter" id="col5_filter">
+							</div>
+						</div>
+					</div>
                     <div class="table-responsive">
-	                    <table class="table table-hover table-bordered text-center">
+	                    <table id="data" class="table table-hover table-bordered text-center">
 		                	<thead>
 		                		<tr class="table-info active">
 		                			<th class="text-nowrap text-center">{{ __('Slide').__('Name') }}</th>
@@ -24,6 +43,8 @@
 		                			<th class="text-nowrap text-center">{{ __('Link') }}</th>
 		                			<th class="text-nowrap text-center">{{ __('Sort') }}</th>
 		                			<th class="text-nowrap text-center">{{ __('Is_open') }}</th>
+		                			{{-- 設一個隱藏爛位提供篩選 --}}
+		                			<th class="text-nowrap text-center" style="display:none">{{ __('Is_open') }}</th>
 		                			<th class="text-nowrap text-center">{{ __('Action') }}</th>	                			
 		                		</tr>
 		                	</thead>
@@ -33,12 +54,16 @@
 										<td>{{ $slide->name }}</td>
 										<td><a target='_blank' href="{{ $slide->image }}"><i class="far fa-images"></i></a></td>
 										<td>
-											<a href="{{ $slide->link }}" target="_blank" rel = "noopener noreferrer"><i class="fas fa-link"></i></a>
+											@isset ($slide->link)
+											    <a href="{{ $slide->link }}" target="_blank" rel = "noopener noreferrer"><i class="fas fa-link"></i></a>
+											@endisset											
 										</td>
 										<td>{{ $slide->sort }}</td>
 										<td>
 											<font color="{{App\Enum::is_open['color'][$slide->is_open]}}"><i class="fas fa-{{App\Enum::is_open['label'][$slide->is_open]}}"></i></font>
 										</td>
+										{{-- 設一個隱藏爛位提供篩選 --}}
+										<td style="display:none">{{ $slide->is_open }}</td>
 										<td>
 											<form action="{{ route('slide.destroy',$slide->id) }}" method="POST">
 											@method('DELETE')
@@ -61,3 +86,4 @@
     </div>
 </div>
 @endsection
+

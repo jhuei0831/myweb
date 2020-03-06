@@ -50,7 +50,6 @@ class PageController extends Controller
         $error = 0;
         $page = new Page;
         $data = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
             'menu_id' => ['nullable'],
             'title' => ['required', 'string', 'max:255'],
             'url' => ['required', 'string', 'max:255','unique:pages,url'],
@@ -72,7 +71,7 @@ class PageController extends Controller
         }
 
         $page->content = clean($request->input('content'));
-
+        $page->editor = Auth::user()->name;
         if ($error == 0) {
             // 寫入log
             Log::write_log('pages',$request->all());
@@ -128,7 +127,6 @@ class PageController extends Controller
         $page = Page::where('id',$id)->first();
 
         $data = $this->validate($request, [
-            'name' => ['required', 'string', 'max:255'],
             'menu_id' => ['nullable'],
             'title' => ['required', 'string', 'max:255'],
             'url' => ['required', 'string', 'max:255'],
@@ -149,7 +147,8 @@ class PageController extends Controller
             }
         }
         $page->content = clean($request->input('content'));
-
+        $page->editor = Auth::user()->name;
+        
         if ($error == 0) {
             // 寫入log
             Log::write_log('pages',$request->all());

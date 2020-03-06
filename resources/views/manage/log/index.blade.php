@@ -7,7 +7,42 @@
             <div class="card">
                 <div class="card-header">{{ __('Log').__('Manage') }}</div>               
                 <div class="card-body">
-                	<table class="table table-hover table-bordered text-center">
+                	<ul class="list-inline">
+						<li class="list-inline-item"><a class="btn btn-sm btn-primary" data-toggle="collapse" href="#search" role="button" aria-expanded="false" aria-controls="search"><i class="fas fa-filter"></i> {{ __('Filter') }}</a></li>
+					</ul>
+					{{-- 篩選器設定 --}}
+                    <div class="collapse" id="search">
+	                    <div class="form-inline form-group">
+							<label class='control-label col-md-1'>{{ __('Member') }}</label>
+							<div id="filter_col1" data-column="0" class='col-md-2'>
+								<input type="text" class="form-control column_filter" id="col0_filter">
+							</div>
+							<label class='control-label col-md-1'>{{ __('IP') }}</label>
+							<div id="filter_col2" data-column="1" class='col-md-2'>
+								<input type="text" class="form-control column_filter" id="col1_filter">
+							</div>
+							{{-- 選擇隱藏爛位 --}}							
+							<label class='control-label col-md-1'>{{ __('Browser') }}</label>
+							<div id="filter_col3" data-column="2" class='col-md-2'>
+								<select class="form-control column_filter" id="col2_filter">
+									<option value="">{{ __('All') }}</option>
+									@foreach (App\Enum::browser as $key => $value)
+										<option value="{{ $value }}">{{ $value }}</option>
+									@endforeach
+								</select>
+							</div>	
+							<label class='control-label col-md-1'>{{ __('Action') }}</label>
+							<div id="filter_col4" data-column="3" class='col-md-2'>
+								<select class="form-control column_filter" id="col3_filter">
+									<option value="">{{ __('All') }}</option>
+									@foreach (App\Enum::action as $key => $value)
+										<option value="{{ $value }}">{{ $value }}</option>
+									@endforeach
+								</select>
+							</div>						
+						</div>
+					</div>
+                	<table id="data" class="table table-hover table-bordered text-center">
 	                	<thead>
 	                		<tr class="table-info active">
 	                			<th class="text-nowrap text-center">{{ __('Member') }}</th>
