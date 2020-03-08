@@ -9509,6 +9509,25 @@ table {
 .img-full {
   width: 100%;
 }
+/* 滑動列 */
+.swiper-container {
+    width: 100%;
+    height: auto;
+}
+
+.swiper-slide {
+    text-align: center;
+    background: transparent;
+}
+
+/* 滑鼠進入導覽列選項，自動下拉選單 */
+.dropdown-menu li:hover .sub-menu {
+    visibility: visible;
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
 
 .navbar-vertical {
     background-color: #F0F0F0;

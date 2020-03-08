@@ -1,7 +1,7 @@
 @extends('_layouts.manage.app')
 @section('title', __('Navbar').__('Edit'))
 @section('content')
-<div class="container-fluid">
+<div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
@@ -15,8 +15,8 @@
                 		@csrf
 						@method('PUT')
 						<div class="form-group row">
-                            <label for="name" class="col-sm-1 col-form-label">{{ __('Navbar').__('Name') }}</label>
-                            <div class="col-sm-8">
+                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Navbar').__('Name') }}</label>
+                            <div class="col-md-6">
                                 <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ $navbar->name }}" required autocomplete="{{ __('Page name') }}" autofocus>
                                 @error('name')
                                     <span class="invalid-feedback" role="alert">
@@ -27,9 +27,9 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="link" class="col-sm-1 col-form-label">{{ __('Link') }}</label>
+                            <label for="link" class="col-md-4 col-form-label text-md-right">{{ __('Link') }}</label>
 
-                            <div class="col-md-8">
+                            <div class="col-md-6">
                                 <input id="link" type="text" class="form-control @error('link') is-invalid @enderror" name="link" value="{{ $navbar->link }}" autocomplete="{{ __('Link') }}" autofocus>
 
                                 @error('link')
@@ -41,8 +41,8 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="type" class="col-sm-1 col-form-label">{{ __('Type') }}</label>
-                            <div class="col-sm-8">
+                            <label for="type" class="col-md-4 col-form-label text-md-right">{{ __('Type') }}</label>
+                            <div class="col-md-6">
                                 <select class="form-control @error('type') is-invalid @enderror" name='type' required aria-describedby="typeHelp">
 									@foreach(App\Enum::type['navbar'] as $key => $value)
                                         @if ($key == $navbar->type)
@@ -52,7 +52,7 @@
                                         @endif
 									@endforeach
 								</select>
-			                    <span id="typeHelp" class="help-block">
+			                    <span id="typeHelp" class="form-text text-muted">
 			                        導覽目錄：顯示選單目錄；</br>
 			                        一般頁面：不顯示選單目錄，直接列出底下的頁面；</br>
 			                    </span>
@@ -65,15 +65,15 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="is_open" class="col-sm-1 col-form-label">{{ __('Is_open') }}</label>
-                            <div class="col-md-4">
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="is_open" id="is_open" value="1" {{ ($navbar->is_open=="1")? "checked" : "" }}>
-                                    <label class="form-check-label" for="inlineRadio1">{{ __('Yes') }}</label>
+                            <label for="is_open" class="col-md-4 col-form-label text-md-right">{{ __('Is_open') }}</label>
+                            <div class="col-md-6">
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    <input class="custom-control-input" type="radio" name="is_open" id="is_open1" value="1" {{ ($navbar->is_open=="1")? "checked" : "" }}>
+                                    <label class="custom-control-label" for="is_open1">{{ __('Yes') }}</label>
                                 </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="is_open" id="is_open" value="0" {{ ($navbar->is_open=="0")? "checked" : "" }}>
-                                    <label class="form-check-label" for="inlineRadio2">{{ __('No') }}</label>
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    <input class="custom-control-input" type="radio" name="is_open" id="is_open2" value="0" {{ ($navbar->is_open=="0")? "checked" : "" }}>
+                                    <label class="custom-control-label" for="is_open2">{{ __('No') }}</label>
                                 </div>
                             </div>
                         </div>

@@ -13,8 +13,8 @@
                         </ul>                 
                         @csrf
                         <div class="form-group row">
-                            <label for="menu_id" class="col-sm-1 col-form-label">{{ __('Menu') }}</label>
-                            <div class="col-sm-4">
+                            <label for="menu_id" class="col-md-4 col-form-label text-md-right">{{ __('Menu') }}</label>
+                            <div class="col-md-6">
                                 <select class='form-control' name='menu_id' aria-describedby="menuHelp">
                                     <option value=''>{{ __('Please choose').__('Menu') }}</option>
 									@foreach($menus as $key => $value)
@@ -27,8 +27,8 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="title" class="col-sm-1 col-form-label">{{ __('Title') }}</label>
-                            <div class="col-sm-4">
+                            <label for="title" class="col-md-4 col-form-label text-md-right">{{ __('Title') }}</label>
+                            <div class="col-md-6">
                                 <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title" value="{{ old('title') }}" placeholder="{{ __('Title') }}">
                                 @error('title')
                                     <span class="invalid-feedback" role="alert">
@@ -38,8 +38,8 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="url" class="col-sm-1 col-form-label">{{ __('Page').__('Url') }}</label>
-                            <div class="col-sm-4">
+                            <label for="url" class="col-md-4 col-form-label text-md-right">{{ __('Page').__('Url') }}</label>
+                            <div class="col-md-6">
                                 <input type="text" class="form-control @error('url') is-invalid @enderror" id="url" name="url" value="{{ old('url') }}" placeholder="{{ __('Page').__('Url') }}">
                                 @error('url')
                                     <span class="invalid-feedback" role="alert">
@@ -49,31 +49,35 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="content" class="col-sm-1 col-form-label">{{ __('Content') }}</label>
-                            <div class="col-sm-12">
+                            <label for="content" class="col-md-4 col-form-label text-md-right">{{ __('Content') }}</label>
+                            <div class="col-md-12">
                                 <textarea id="content" name="content" class="form-control ckeditor" >{!! old('content') !!}</textarea>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="is_open" class="col-sm-1 col-form-label">{{ __('Is_open') }}</label>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="is_open" id="is_open" value="1">
-                                <label class="form-check-label" for="inlineRadio1">{{ __('Yes') }}</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="is_open" id="is_open" value="0">
-                                <label class="form-check-label" for="inlineRadio2">{{ __('No') }}</label>
+                            <label for="is_open" class="col-md-4 col-form-label text-md-right">{{ __('Is_open') }}</label>
+                            <div class="col-md-6">
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    <input class="custom-control-input" type="radio" name="is_open" id="is_open1" value="1">
+                                    <label class="custom-control-label" for="is_open1">{{ __('Yes') }}</label>
+                                </div>
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    <input class="custom-control-input" type="radio" name="is_open" id="is_open2" value="0">
+                                    <label class="custom-control-label" for="is_open2">{{ __('No') }}</label>
+                                </div>
                             </div>
                         </div>  
                         <div class="form-group row">
-                            <label for="is_slide" class="col-sm-1 col-form-label">{{ __('Is_slide') }}</label>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="is_slide" id="is_slide" value="1">
-                                <label class="form-check-label" for="inlineRadio1">{{ __('Yes') }}</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="is_slide" id="is_slide" value="0">
-                                <label class="form-check-label" for="inlineRadio2">{{ __('No') }}</label>
+                            <label for="is_slide" class="col-md-4 col-form-label text-md-right">{{ __('Is_slide') }}</label>
+                            <div class="col-md-6">
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    <input class="custom-control-input" type="radio" name="is_slide" id="is_slide1" value="1">
+                                    <label class="custom-control-label" for="is_slide1">{{ __('Yes') }}</label>
+                                </div>
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    <input class="custom-control-input" type="radio" name="is_slide" id="is_slide2" value="0">
+                                    <label class="custom-control-label" for="is_slide2">{{ __('No') }}</label>
+                                </div>
                             </div>
                         </div>     
                     </div>

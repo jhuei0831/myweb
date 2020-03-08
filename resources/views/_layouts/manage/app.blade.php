@@ -19,7 +19,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.20/datatables.min.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.20/datatables.min.css"/>  
 </head>
 <body>
     <div id="app" style="font-size:16px;font-weight:bold;font-family: 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;">
@@ -35,6 +35,7 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jscolor/2.0.4/jscolor.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.20/datatables.min.js"></script>
+    <script src="{{ asset('js/touch-punch.js') }}"></script>
     <script src="/vendor/ckeditor/ckeditor/ckeditor.js"></script>
     <script src="/vendor/laravel-filemanager/js/stand-alone-button.js"></script>
     {{-- file manager --}}
@@ -55,7 +56,7 @@
         }
         $(document).ready(function() {
             $("#data").DataTable({
-                'sDom': 't' ,       
+                sDom: 'lrtip'       
             });
             $('input.column_filter').on( 'keyup click', function () {
                 filterColumn( $(this).parents('div').attr('data-column') );

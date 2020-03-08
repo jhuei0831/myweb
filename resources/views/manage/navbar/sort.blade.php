@@ -30,7 +30,7 @@
 									<td class="pl-3">{{ $navbar->name }}</td>
 									<td>{{App\Enum::type['navbar'][$navbar->type]}}</td>
 									<td>{{ $navbar->sort }}</td>
-									<td><font color="{{App\Enum::is_open['color'][$navbar->is_open]}}"><i class="fas fa-{{App\Enum::is_open['label'][$navbar->is_open]}}"></i></font></td>								
+									<td><font color="{{App\Enum::is_open['color'][$navbar->is_open]}}"><i class="fas fa-{{App\Enum::is_open['label'][$navbar->is_open]}}"></i></font></td>
 								</tr>
 	                		@endforeach
 	                	</tbody>

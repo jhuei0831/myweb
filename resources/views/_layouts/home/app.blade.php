@@ -19,6 +19,9 @@
 
         <!-- Styles -->
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+        {{-- swiper cdn --}}
+        <link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.css">
+        <link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.min.css">
     </head>
     @if($config->background == 'background.jpg')
     <body style="background-image: url('{{ asset('images/background.jpg')}}');background-size:cover; background-attachment: fixed; background-repeat: no-repeat;">
@@ -44,6 +47,26 @@
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jscolor/2.0.4/jscolor.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
         <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.12/datatables.min.js"></script>
+        <script src="https://unpkg.com/swiper/js/swiper.js"></script>
+        <script src="https://unpkg.com/swiper/js/swiper.min.js"></script>
+        <script>
+            var mySwiper = new Swiper ('.swiper-container', {
+                // Optional parameters
+                loop: true,
+                autoHeight: true, //enable auto height
+
+                // If we need pagination
+                pagination: {
+                el: '.swiper-pagination',
+                },
+
+                // Navigation arrows
+                navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+                },
+            })
+        </script>
         @show
     </body>
      @include('_partials.home.footer')
