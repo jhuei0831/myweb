@@ -17,7 +17,7 @@ class NoticeController extends Controller
      */
     public function index()
     {
-        $all_notices = DB::table('notices')->paginate(10);
+        $all_notices = DB::table('notices')->get();
         return view('manage.notice.index',compact('all_notices'));
     }
 

@@ -16,7 +16,7 @@ class NavbarController extends Controller
      */
     public function index()
     {
-        $all_navbars = Navbar::paginate(10);
+        $all_navbars = Navbar::all();
         return view('manage.navbar.index',compact('all_navbars'));
     }
 

@@ -13,8 +13,8 @@
                         </ul>                 
                         @csrf
                         <div class="form-group row">
-                            <label for="name" class="col-sm-2 col-form-label">{{ __('Name') }}</label>
-                            <div class="col-sm-4">
+                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
+                            <div class="col-md-6">
                                 <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ old('name') }}" placeholder="{{ __('Name') }}">
                                 @error('name')
                                     <span class="invalid-feedback" role="alert">
@@ -24,8 +24,8 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="content" class="col-sm-2 col-form-label">{{ __('E-Mail Address') }}</label>
-                            <div class="col-sm-4">
+                            <label for="content" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+                            <div class="col-md-6">
                                 <input type="text" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email') }}" placeholder="{{ __('E-Mail Address') }}">
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
@@ -35,8 +35,8 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="permission" class="col-sm-2 col-form-label">{{ __('Permission') }}</label>
-                            <div class="col-sm-4">
+                            <label for="permission" class="col-md-4 col-form-label text-md-right">{{ __('Permission') }}</label>
+                            <div class="col-md-6">
                                 <select class="form-control @error('permission') is-invalid @enderror" id="permission" name='permission' required aria-describedby="typeHelp" value="{{ old('permission') }}" placeholder="{{ __('Permission') }}">
                                     <option value=''>{{ __('Please choose')}}{{ __('Permission')}}</option>
                                     @foreach(App\Enum::permission as $key => $value)
@@ -51,8 +51,8 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="content" class="col-sm-2 col-form-label">{{ __('Password') }}</label>
-                            <div class="col-sm-4">
+                            <label for="content" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
+                            <div class="col-md-6">
                                 <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password" placeholder="{{ __('Password') }}">
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">
@@ -62,8 +62,8 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="content" class="col-sm-2 col-form-label">{{ __('Confirm Password') }}</label>
-                            <div class="col-sm-4">
+                            <label for="content" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
+                            <div class="col-md-6">
                                 <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="{{ __('Confirm Password') }}">
                             </div>
                         </div>            

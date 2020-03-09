@@ -20,7 +20,7 @@ class MenuController extends Controller
      */
     public function index()
     {
-        $all_menus = Menu::paginate(10);
+        $all_menus = Menu::all();
         $all_navbars = Navbar::all();
         return view('manage.menu.index',compact('all_menus','all_navbars'));
     }

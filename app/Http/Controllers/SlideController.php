@@ -17,7 +17,7 @@ class SlideController extends Controller
      */
     public function index()
     {
-        $all_slides = Slide::paginate(10);
+        $all_slides = Slide::all();
         return view('manage.slide.index',compact('all_slides'));
     }
 

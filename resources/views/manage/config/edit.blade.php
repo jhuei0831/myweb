@@ -16,8 +16,8 @@
                 		@csrf
 						@method('PUT')
 						<div class="form-group row">
-                            <label for="app_name" class="col-md-1 control-label">{{ __('App name')}}</label>
-                            <div class="col-sm-4">
+                            <label for="app_name" class="col-md-2 col-form-label text-md-right">{{ __('App name')}}</label>
+                            <div class="col-md-3">
                                 <input id="app_name" type="text" class="form-control @error('app_name') is-invalid @enderror" name="app_name" value="{{ $config->app_name }}" required autocomplete="{{ __('App name')}}" autofocus>
                                 @error('app_name')
                                     <span class="invalid-feedback" role="alert">
@@ -25,8 +25,8 @@
                                     </span>
                                 @enderror
                             </div>
-                            <label for="is_open" class="col-md-1 col-form-label">{{ __('Is_open') }}</label>
-                            <div class="col-md-4">
+                            <label for="is_open" class="col-md-2 col-form-label text-md-right">{{ __('Is_open') }}</label>
+                            <div class="col-md-3">
                                 <select class="form-control @error('is_open') is-invalid @enderror" name="is_open" required>
                                         <option value="1" {{ ($config->is_open=="1")? "selected" : "" }}>{{ __('Yes') }}</option>
                                         <option value="0" {{ ($config->is_open=="0")? "selected" : "" }}>{{ __('No') }}</option>
@@ -35,8 +35,8 @@
                         </div><br><hr>
 
                         <div class="form-group row">
-                            <label for="font_family" class="col-sm-1 control-label">{{ __('Font family') }}</label>
-                            <div class="col-sm-4">
+                            <label for="font_family" class="col-md-2 col-form-label text-md-right">{{ __('Font family') }}</label>
+                            <div class="col-md-3">
                                 <select class="form-control @error('font_family') is-invalid @enderror" name="font_family" required>
                                     @foreach(App\Enum::config['font_family'] as $key => $value)
                                         @if($key == $config->font_family)
@@ -52,8 +52,8 @@
                                     </span>
                                 @enderror
                             </div>
-                            <label for="font_size" class="col-sm-1 control-label">{{ __('Font size') }}</label>
-                            <div class="col-sm-4">
+                            <label for="font_size" class="col-md-2 col-form-label text-md-right">{{ __('Font size') }}</label>
+                            <div class="col-md-3">
                                 <select class="form-control @error('font_size') is-invalid @enderror" name="font_size" required>
                                     @foreach(App\Enum::config['font_size'] as $key => $value)
                                         @if($key == $config->font_size)
@@ -72,8 +72,8 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="font_weight" class="col-sm-1 control-label">{{ __('Font weight') }}</label>
-                            <div class="col-sm-4">
+                            <label for="font_weight" class="col-md-2 col-form-label text-md-right">{{ __('Font weight') }}</label>
+                            <div class="col-md-3">
                                 <select class="form-control @error('font_weight') is-invalid @enderror" name="font_weight" required>
                                     @foreach(App\Enum::config['font_weight'] as $key => $value)
                                         @if($key == $config->font_weight)
@@ -92,8 +92,8 @@
                         </div><br><hr>
                         
                         <div class="form-group row">
-                            <label for="background" class="col-sm-1 control-label">{{ __('Background') }}</label>                          
-                            <div class="col-md-4">
+                            <label for="background" class="col-md-2 col-form-label text-md-right">{{ __('Background') }}</label>                          
+                            <div class="col-md-3">
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <a id="lfm" data-input="background" data-preview="holder" class="btn btn-secondary">
@@ -116,10 +116,10 @@
                                     @enderror
                                 </div>
                             </div>
-                            <label for="background_color" class="col-sm-1 control-label">{{ __('Background color')}}</label>
-                            <div class="col-sm-4">
+                            <label for="background_color" class="col-md-2 col-form-label text-md-right">{{ __('Background color')}}</label>
+                            <div class="col-md-3">
                                 <input id="background_color" class="form-control @error('background_color') is-invalid @enderror jscolor {required:false}" name="background_color" value="{{ $config->background_color }}"aria-describedby="bgcolorHelp">
-                                <span id="bgcolorHelp" class="help-block">可輸入色碼或點選顏色。色碼HEX(如#4E070B)和RGB(如78,7,11，會轉成HEX)都能使用。主背景色有和白色做垂直線性漸層。</span>
+                                <span id="bgcolorHelp" class="help-block">可輸入色碼或點選顏色。色碼HEX(如#2E070B)和RGB(如78,7,11，會轉成HEX)都能使用。主背景色有和白色做垂直線性漸層。</span>
                                 @error('background_color')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -129,8 +129,8 @@
                         </div><br><hr>
 
                         <div class="form-group row">
-                            <label for="navbar_bcolor" class="col-sm-1 control-label">{{ __('Navbar background color')}}</label>
-                            <div class="col-sm-4">
+                            <label for="navbar_bcolor" class="col-md-2 col-form-label text-md-right">{{ __('Navbar background color')}}</label>
+                            <div class="col-md-3">
                                 <input id="navbar_bcolor" class="form-control @error('navbar_bcolor') is-invalid @enderror jscolor {required:false}" name="navbar_bcolor" value="{{ $config->navbar_bcolor }}" required>
                                 @error('navbar_bcolor')
                                     <span class="invalid-feedback" role="alert">
@@ -138,8 +138,8 @@
                                     </span>
                                 @enderror
                             </div>
-                            <label for="navbar_wcolor" class="col-sm-1 control-label">{{ __('Navbar text color')}}</label>
-                            <div class="col-sm-4">
+                            <label for="navbar_wcolor" class="col-md-2 col-form-label text-md-right">{{ __('Navbar text color')}}</label>
+                            <div class="col-md-3">
                                 <input id="navbar_wcolor" class="form-control @error('navbar_wcolor') is-invalid @enderror jscolor {required:false}" name="navbar_wcolor" value="{{ $config->navbar_wcolor }}" required>
                                 @error('navbar_wcolor')
                                     <span class="invalid-feedback" role="alert">
@@ -150,8 +150,8 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="navbar_size" class="col-sm-1 control-label">{{ __('Navbar text size') }}</label>
-                            <div class="col-sm-4">
+                            <label for="navbar_size" class="col-md-2 col-form-label text-md-right">{{ __('Navbar text size') }}</label>
+                            <div class="col-md-3">
                                 <select class="form-control @error('navbar_size') is-invalid @enderror" name="navbar_size" required>
                                     @foreach(App\Enum::config['navbar_size'] as $key => $value)
                                         @if($key == $config->navbar_size)

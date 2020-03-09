@@ -102,9 +102,9 @@
 	                    </table>	
                     </div>      	
                 </div>
-                <div class="card-footer pagination justify-content-center">
+                {{-- <div class="card-footer pagination justify-content-center">
 					{!! $all_pages->links("pagination::bootstrap-4") !!}
-				</div>
+				</div> --}}
             </div>
         </div>
     </div>

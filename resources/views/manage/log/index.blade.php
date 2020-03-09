@@ -12,35 +12,52 @@
 					</ul>
 					{{-- 篩選器設定 --}}
                     <div class="collapse" id="search">
-	                    <div class="form-inline form-group">
-							<label class='control-label col-md-1'>{{ __('Member') }}</label>
-							<div id="filter_col1" data-column="0" class='col-md-2'>
-								<input type="text" class="form-control column_filter" id="col0_filter">
+	                    <div class="form-group row">
+							<label class='col-md-2 col-form-label text-md-right'>{{ __('Member') }}</label>
+							<div id="filter_col1" data-column="0" class='col-md-3'>
+								<input type="text" class="form-control column_filter" name="user" id="col0_filter">
 							</div>
-							<label class='control-label col-md-1'>{{ __('IP') }}</label>
-							<div id="filter_col2" data-column="1" class='col-md-2'>
-								<input type="text" class="form-control column_filter" id="col1_filter">
+							<label class='col-md-2 col-form-label text-md-right'>{{ __('IP') }}</label>
+							<div id="filter_col2" data-column="1" class='col-md-3'>
+								<input type="text" class="form-control column_filter" name="ip" id="col1_filter">
 							</div>
+						</div>
+						<div class="form-group row">
 							{{-- 選擇隱藏爛位 --}}							
-							<label class='control-label col-md-1'>{{ __('Browser') }}</label>
-							<div id="filter_col3" data-column="2" class='col-md-2'>
-								<select class="form-control column_filter" id="col2_filter">
+							<label class='col-md-2 col-form-label text-md-right'>{{ __('Browser') }}</label>
+							<div id="filter_col3" data-column="2" class='col-md-3'>
+								<select class="form-control column_filter" name="browser" id="col2_filter">
 									<option value="">{{ __('All') }}</option>
 									@foreach (App\Enum::browser as $key => $value)
 										<option value="{{ $value }}">{{ $value }}</option>
 									@endforeach
 								</select>
 							</div>	
-							<label class='control-label col-md-1'>{{ __('Action') }}</label>
-							<div id="filter_col4" data-column="3" class='col-md-2'>
-								<select class="form-control column_filter" id="col3_filter">
+							<label class='col-md-2 col-form-label text-md-right'>{{ __('Action') }}</label>
+							<div id="filter_col4" data-column="3" class='col-md-3'>
+								<select class="form-control column_filter" name="action" id="col3_filter">
 									<option value="">{{ __('All') }}</option>
 									@foreach (App\Enum::action as $key => $value)
 										<option value="{{ $value }}">{{ $value }}</option>
 									@endforeach
 								</select>
-							</div>						
+							</div>
 						</div>
+						<div class="form-group row">
+							<label class='col-md-2 col-form-label text-md-right'>{{ __('Table') }}</label>
+							<div id="filter_col5" data-column="4" class='col-md-3'>
+								<select class="form-control column_filter" name="action" id="col4_filter">
+									<option value="">{{ __('All') }}</option>
+									@foreach (App\Enum::table as $key => $value)
+										<option value="{{ $value }}">{{ $value }}</option>
+									@endforeach
+								</select>
+							</div>
+							<label class='col-md-2 col-form-label text-md-right'>{{ __('Created_at') }}</label>
+							<div id="filter_col6" data-column="5" class="col-md-3">
+								<input id="col5_filter" width="276" />					      
+					        </div>
+						</div>							
 					</div>
 					<div class="table-responsive">
 						<table id="data" class="table table-hover table-bordered text-center">
@@ -76,9 +93,9 @@
 						</table>
 					</div>
                 </div>
-                <div class="card-footer pagination justify-content-center">
+                {{-- <div class="card-footer pagination justify-content-center table-responsive">
 					{!! $logs->links("pagination::bootstrap-4") !!}
-				</div>
+				</div> --}}
             </div>
         </div>
     </div>

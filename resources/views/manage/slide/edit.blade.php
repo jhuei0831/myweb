@@ -15,8 +15,8 @@
                 		@csrf
 						@method('PUT')
 						<div class="form-group row">
-                            <label for="name" class="col-sm-1 col-form-label">{{ __('Slide').__('Name') }}</label>
-                            <div class="col-sm-4">
+                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Slide').__('Name') }}</label>
+                            <div class="col-md-6">
                                 <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ $slide->name }}" required autocomplete="{{ __('Slide') }}{{ __('Name') }}" autofocus>
                                 @error('name')
                                     <span class="invalid-feedback" role="alert">
@@ -27,8 +27,8 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="link" class="col-sm-1 col-form-label">{{ __('Link') }}</label>
-                            <div class="col-sm-4">
+                            <label for="link" class="col-md-4 col-form-label text-md-right">{{ __('Link') }}</label>
+                            <div class="col-md-6">
                                 <input id="link" type="text" class="form-control @error('link') is-invalid @enderror" name="link" value="{{ $slide->link }}" autocomplete="{{ __('Link') }}">
                                 @error('link')
                                     <span class="invalid-feedback" role="alert">
@@ -39,8 +39,8 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="image" class="col-sm-1 col-form-label">{{ __('Image') }}</label>
-                            <div class="input-group col-sm-4">
+                            <label for="image" class="col-md-4 col-form-label text-md-right">{{ __('Image') }}</label>
+                            <div class="input-group col-md-6">
                                 <div class="input-group-prepend">
                                     <a id="lfm" data-input="image" data-preview="holder" class="btn btn-secondary">
                                         <i class="far fa-folder-open"></i>
@@ -57,15 +57,15 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="is_open" class="col-sm-1 col-form-label">{{ __('Is_open') }}</label>
-                            <div class="col-md-4">
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="is_open" id="is_open" value="1" {{ ($slide->is_open=="1")? "checked" : "" }}>
-                                    <label class="form-check-label" for="inlineRadio1">{{ __('Yes') }}</label>
+                            <label for="is_open" class="col-md-4 col-form-label text-md-right">{{ __('Is_open') }}</label>
+                            <div class="col-md-6">
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    <input class="custom-control-input" type="radio" name="is_open" id="is_open1" value="1" {{ ($slide->is_open=="1")? "checked" : "" }}>
+                                    <label class="custom-control-label" for="is_open1">{{ __('Yes') }}</label>
                                 </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="is_open" id="is_open" value="0" {{ ($slide->is_open=="0")? "checked" : "" }}>
-                                    <label class="form-check-label" for="inlineRadio2">{{ __('No') }}</label>
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    <input class="custom-control-input" type="radio" name="is_open" id="is_open2" value="0" {{ ($slide->is_open=="0")? "checked" : "" }}>
+                                    <label class="custom-control-label" for="is_open2">{{ __('No') }}</label>
                                 </div>
                             </div>
                         </div>

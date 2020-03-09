@@ -14,18 +14,20 @@
 					</ul>
 					{{-- 篩選器設定 --}}
                     <div class="collapse" id="search">
-	                    <div class="form-inline form-group">
-							<label class='control-label col-md-1'>{{ __('Title') }}</label>
-							<div id="filter_col1" data-column="0" class='col-md-2'>
+	                    <div class="form-group row">
+							<label class='col-md-2 col-form-label text-md-right'>{{ __('Title') }}</label>
+							<div id="filter_col1" data-column="0" class='col-md-3'>
 								<input type="text" class="form-control column_filter" id="col0_filter">
 							</div>
-							<label class='control-label col-md-1'>{{ __('Menu') }}</label>
-							<div id="filter_col2" data-column="1" class='col-md-2'>
+							<label class='col-md-2 col-form-label text-md-right'>{{ __('Menu') }}</label>
+							<div id="filter_col2" data-column="1" class='col-md-3'>
 								<input type="text" class="form-control column_filter" id="col1_filter">
 							</div>
+						</div>
+						<div class="form-group row">
 							{{-- 選擇隱藏爛位 --}}							
-							<label class='control-label col-md-1'>{{ __('Is_open') }}</label>
-							<div id="filter_col3" data-column="2" class='col-md-2'>
+							<label class='col-md-2 col-form-label text-md-right'>{{ __('Is_open') }}</label>
+							<div id="filter_col3" data-column="2" class='col-md-3'>
 								<select class="form-control column_filter" id="col2_filter">
 									<option value="">{{ __('All') }}</option>
 									<option value="1">{{ __('Yes') }}</option>
@@ -71,9 +73,9 @@
 					</div>
                 	
                 </div>
-                <div class="card-footer pagination justify-content-center">
+                {{-- <div class="card-footer pagination justify-content-center">
 					{!! $all_notices->links("pagination::bootstrap-4") !!}
-				</div>
+				</div> --}}
             </div>
         </div>
     </div>

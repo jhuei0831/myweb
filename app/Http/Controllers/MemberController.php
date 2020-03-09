@@ -22,7 +22,7 @@ class MemberController extends Controller
             return back()->with('warning', '權限不足以訪問該頁面 !');
         }
 
-        $all_users = DB::table('users')->paginate(10);
+        $all_users = DB::table('users')->get();
         return view('manage.member.index',compact('all_users'));
     }
 

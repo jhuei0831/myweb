@@ -18,19 +18,25 @@
                     </div>
                     {{-- 篩選器設定 --}}
                     <div class="collapse" id="search">
-	                    <div class="form-inline form-group">
-							<label class='control-label col-md-1'>{{ __('Slide').__('Name') }}</label>
-							<div id="filter_col1" data-column="0" class='col-md-2'>
+	                    <div class="form-group row">
+							<label class='col-md-2 col-form-label text-md-right'>{{ __('Slide').__('Name') }}</label>
+							<div id="filter_col1" data-column="0" class='col-md-3'>
 								<input type="text" class="form-control column_filter" id="col0_filter">
 							</div>
-							<label class='control-label col-md-1'>{{ __('Sort') }}</label>
-							<div id="filter_col2" data-column="3" class='col-md-2'>
+							<label class='col-md-2 col-form-label text-md-right'>{{ __('Sort') }}</label>
+							<div id="filter_col2" data-column="3" class='col-md-3'>
 								<input type="text" class="form-control column_filter" id="col3_filter">
 							</div>
+						</div>
+						<div class="form-group row">
 							{{-- 選擇隱藏爛位 --}}
-							<label class='control-label col-md-1'>{{ __('Is_open') }}</label>
-							<div id="filter_col3" data-column="5" class='col-md-2'>
-								<input type="text" class="form-control column_filter" id="col5_filter">
+							<label class='col-md-2 col-form-label text-md-right'>{{ __('Is_open') }}</label>
+							<div id="filter_col3" data-column="5" class='col-md-3'>
+								<select class="form-control column_filter" id="col5_filter">
+									<option value="">{{ __('All') }}</option>
+									<option value="1">{{ __('Yes') }}</option>
+									<option value="0">{{ __('No') }}</option>
+								</select>
 							</div>
 						</div>
 					</div>
@@ -78,9 +84,9 @@
 	                    </table>	
                     </div>
                 </div>
-                <div class="card-footer pagination justify-content-center">
+                {{-- <div class="card-footer pagination justify-content-center">
 					{!! $all_slides->links("pagination::bootstrap-4") !!}
-				</div>
+				</div> --}}
             </div>
         </div>
     </div>

@@ -17,7 +17,7 @@ class InfoController extends Controller
      */
     public function index()
     {
-        $all_infos = Info::paginate(10);
+        $all_infos = Info::all();
         return view('manage.info.index',compact('all_infos'));
     }
 
