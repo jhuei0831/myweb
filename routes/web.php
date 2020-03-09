@@ -16,6 +16,7 @@ Route::get('/errors/change_browser', function () {return view('errors.change_bro
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
 	\UniSharp\LaravelFilemanager\Lfm::routes();
 });
+Route::any('log/search', 'LogController@search')->name('log.search');
 //非IE瀏覽器，註冊帳號後要信箱驗證
 Route::middleware('browser')->group(function() {
 	Auth::routes(['verify' => true]);

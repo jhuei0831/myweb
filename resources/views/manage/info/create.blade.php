@@ -33,12 +33,12 @@
                             <label for="is_open" class="col-md-4 col-form-label text-md-right">{{ __('Is_open') }}</label>
                             <div class="col-md-6">
                                 <div class="custom-control custom-radio custom-control-inline">
-                                    <input class="custom-control-input" type="radio" name="is_open" id="is_open" value="1">
-                                    <label class="custom-control-label" for="inlineRadio1">{{ __('Yes') }}</label>
+                                    <input class="custom-control-input" type="radio" name="is_open" id="is_open1" value="1">
+                                    <label class="custom-control-label" for="is_open1">{{ __('Yes') }}</label>
                                 </div>
                                 <div class="custom-control custom-radio custom-control-inline">
-                                    <input class="custom-control-input" type="radio" name="is_open" id="is_open" value="0">
-                                    <label class="custom-control-label" for="inlineRadio2">{{ __('No') }}</label>
+                                    <input class="custom-control-input" type="radio" name="is_open" id="is_open2" value="0">
+                                    <label class="custom-control-label" for="is_open2">{{ __('No') }}</label>
                                 </div>
                             </div>
                         </div> 
@@ -46,12 +46,12 @@
                             <label for="is_sticky" class="col-md-4 col-form-label text-md-right">{{ __('Is_sticky') }}</label>
                             <div class="col-md-6">
                                 <div class="custom-control custom-radio custom-control-inline">
-                                    <input class="custom-control-input" type="radio" name="is_sticky" id="is_sticky" value="1">
-                                    <label class="custom-control-label" for="inlineRadio1">{{ __('Yes') }}</label>
+                                    <input class="custom-control-input" type="radio" name="is_sticky" id="is_sticky1" value="1">
+                                    <label class="custom-control-label" for="is_sticky1">{{ __('Yes') }}</label>
                                 </div>
                                 <div class="custom-control custom-radio custom-control-inline">
-                                    <input class="custom-control-input" type="radio" name="is_sticky" id="is_sticky" value="0">
-                                    <label class="custom-control-label" for="inlineRadio2">{{ __('No') }}</label>
+                                    <input class="custom-control-input" type="radio" name="is_sticky" id="is_sticky2" value="0">
+                                    <label class="custom-control-label" for="is_sticky2">{{ __('No') }}</label>
                                 </div>
                             </div>
                         </div>  

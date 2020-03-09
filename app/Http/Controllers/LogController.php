@@ -14,8 +14,36 @@ class LogController extends Controller
      */
     public function index()
     {
-        $logs = Log::orderby('created_at','desc')->get();
+        $logs = Log::orderby('created_at','desc')->paginate(10);
         return view('manage.log.index',compact('logs'));
+    }
+
+    public function search(Request $request)
+    {
+        $user = $request->user;
+        $ip = $request->ip;
+        $browser = $request->browser;
+        $action = $request->action;
+        $table = $request->table;
+
+        $logs_search = Log::when($user, function ($q) use ($user) {
+            return $q->where('user', 'like', '%' . $user . '%');
+        })
+        ->when($ip, function ($q) use ($ip) {
+            return $q->where('ip', 'like', '%' . $ip . '%');
+        })
+        ->when($browser, function ($q) use ($browser) {
+            return $q->where('browser', $browser);
+        })
+        ->when($action, function ($q) use ($action) {
+            return $q->where('action', $action);
+        })
+        ->when($table, function ($q) use ($table) {
+            return $q->where('table', $table);
+        })
+        ->paginate();
+
+        return view('manage.log.search', compact('logs_search'));
     }
 
     /**

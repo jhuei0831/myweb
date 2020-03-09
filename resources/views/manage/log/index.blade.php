@@ -11,6 +11,8 @@
 						<li class="list-inline-item"><a class="btn btn-sm btn-primary" data-toggle="collapse" href="#search" role="button" aria-expanded="false" aria-controls="search"><i class="fas fa-filter"></i> {{ __('Filter') }}</a></li>
 					</ul>
 					{{-- 篩選器設定 --}}
+					<form action="{{ route('log.search') }}" method="post">
+					@csrf
                     <div class="collapse" id="search">
 	                    <div class="form-group row">
 							<label class='col-md-2 col-form-label text-md-right'>{{ __('Member') }}</label>
@@ -46,7 +48,7 @@
 						<div class="form-group row">
 							<label class='col-md-2 col-form-label text-md-right'>{{ __('Table') }}</label>
 							<div id="filter_col5" data-column="4" class='col-md-3'>
-								<select class="form-control column_filter" name="action" id="col4_filter">
+								<select class="form-control column_filter" name="table" id="col4_filter">
 									<option value="">{{ __('All') }}</option>
 									@foreach (App\Enum::table as $key => $value)
 										<option value="{{ $value }}">{{ $value }}</option>
@@ -57,8 +59,10 @@
 							<div id="filter_col6" data-column="5" class="col-md-3">
 								<input id="col5_filter" width="276" />					      
 					        </div>
-						</div>							
+						</div>
+						<button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>							
 					</div>
+					</form>
 					<div class="table-responsive">
 						<table id="data" class="table table-hover table-bordered text-center">
 							<thead>
@@ -93,9 +97,9 @@
 						</table>
 					</div>
                 </div>
-                {{-- <div class="card-footer pagination justify-content-center table-responsive">
+                <div class="card-footer pagination justify-content-center table-responsive">
 					{!! $logs->links("pagination::bootstrap-4") !!}
-				</div> --}}
+				</div>
             </div>
         </div>
     </div>
