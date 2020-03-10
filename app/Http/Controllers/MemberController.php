@@ -22,8 +22,29 @@ class MemberController extends Controller
             return back()->with('warning', '權限不足以訪問該頁面 !');
         }
 
-        $all_users = DB::table('users')->get();
+        $all_users = DB::table('users')->paginate();
         return view('manage.member.index',compact('all_users'));
+    }
+
+    public function search(Request $request)
+    {
+        $name = $request->name;
+        $email = $request->email;
+        $permission = $request->permission;
+
+        $users_search = User::when($name, function ($q) use ($name) {
+            return $q->where('name', 'like', '%' . $name . '%');
+        })
+        ->when($email, function ($q) use ($email) {
+            return $q->where('email', 'like', '%' . $email . '%');
+        })
+        ->when($permission, function ($q) use ($permission) {
+            return $q->where('permission', $permission);
+        })
+        ->paginate()
+        ->appends($request->all());
+
+        return view('manage.member.search', compact('users_search'));
     }
 
     /**

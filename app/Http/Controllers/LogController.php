@@ -14,7 +14,7 @@ class LogController extends Controller
      */
     public function index()
     {
-        $logs = Log::orderby('created_at','desc')->paginate(10);
+        $logs = Log::orderby('created_at','desc')->paginate();
         return view('manage.log.index',compact('logs'));
     }
 
@@ -25,6 +25,9 @@ class LogController extends Controller
         $browser = $request->browser;
         $action = $request->action;
         $table = $request->table;
+        $start = date($request->start);
+        $end = date($request->end);
+        $date = [$start,$end];
 
         $logs_search = Log::when($user, function ($q) use ($user) {
             return $q->where('user', 'like', '%' . $user . '%');
@@ -41,7 +44,11 @@ class LogController extends Controller
         ->when($table, function ($q) use ($table) {
             return $q->where('table', $table);
         })
-        ->paginate();
+        ->when($start, function ($q) use ($date) {
+            return $q->whereBetween('created_at', $date);
+        })
+        ->paginate()
+        ->appends($request->all());
 
         return view('manage.log.search', compact('logs_search'));
     }

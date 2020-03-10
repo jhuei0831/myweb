@@ -11,9 +11,10 @@
 					@csrf
                 	<ul class="list-inline">
 						<li class="list-inline-item"><a class="btn btn-sm btn-primary" data-toggle="collapse" href="#search" role="button" aria-expanded="false" aria-controls="search"><i class="fas fa-filter"></i> {{ __('Filter') }}</a></li>
+						<li class="list-inline-item">{{ App\Button::To(false,route('log.index'),__('Reset'),null,'btn-secondary','undo') }}</li>
 						<li class="list-inline-item collapse" id="search"><button type="submit" class="btn btn-sm btn-secondary"><i class="fas fa-search"></i> {{ __('Search') }}</button></li>
 					</ul>
-					{{-- 篩選器設定 --}}
+					{{-- 篩選器設定 --}}					
                     <div class="collapse" id="search">
 	                    <div class="form-group row">
 							<label class='col-md-2 col-form-label text-md-right'>{{ __('Member') }}</label>
@@ -21,7 +22,7 @@
 								<input type="text" class="form-control" name="user">
 							</div>
 							<label class='col-md-2 col-form-label text-md-right'>{{ __('IP') }}</label>
-							<div class='col-md-3'>
+							<div id="filter_col2" data-column="1" class='col-md-3'>
 								<input type="text" class="form-control" name="ip">
 							</div>
 						</div>
@@ -81,7 +82,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								@foreach ($logs as $log)
+								@foreach ($logs_search as $log)
 									<tr>
 										<td>{{ $log->user }}</td>
 										<td>{{ $log->ip }}</td>
@@ -102,7 +103,7 @@
 					</div>
                 </div>
                 <div class="card-footer pagination justify-content-center table-responsive">
-					{!! $logs->links("pagination::bootstrap-4") !!}
+					{!! $logs_search->links("pagination::bootstrap-4") !!}
 				</div>
             </div>
         </div>

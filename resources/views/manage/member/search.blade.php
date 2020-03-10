@@ -13,6 +13,7 @@
 					<ul class="list-inline">
 						<li class="list-inline-item">{{ App\Button::Create() }}</li>
 						<li class="list-inline-item"><a class="btn btn-sm btn-primary" data-toggle="collapse" href="#search" role="button" aria-expanded="false" aria-controls="search"><i class="fas fa-filter"></i> {{ __('Filter') }}</a></li>
+						<li class="list-inline-item">{{ App\Button::To(false,route('member.index'),__('Reset'),null,'btn-secondary','undo') }}</li>
 						<li class="list-inline-item collapse" id="search"><button type="submit" class="btn btn-sm btn-secondary"><i class="fas fa-search"></i> {{ __('Search') }}</button></li>
 					</ul>
 					{{-- 篩選器設定 --}}
@@ -20,11 +21,11 @@
 	                    <div class="form-group row">
 							<label class='col-md-2 col-form-label text-md-right'>{{ __('Name') }}</label>
 							<div class='col-md-3'>
-								<input type="text" class="form-control" name="name">
+								<input type="text" name="name" class="form-control">
 							</div>
 							<label class='col-md-2 col-form-label text-md-right'>{{ __('E-Mail Address') }}</label>
 							<div class='col-md-3'>
-								<input type="text" class="form-control" name="email">
+								<input type="text" name="email" class="form-control">
 							</div>
 						</div>
 						<div class="form-group row">
@@ -37,7 +38,7 @@
 										<option value="{{ $key }}">{{ $value }}</option>
 									@endforeach
 								</select>
-							</div>									
+							</div>							
 						</div>
 					</div>
 					</form>
@@ -53,7 +54,7 @@
 		                		</tr>
 		                	</thead>
 		                	<tbody>
-								@foreach ($all_users as $user)
+								@foreach ($users_search as $user)
 									<tr>
 										<td>{{ $user->name }}</td>
 										<td>{{ $user->email }}</td>
@@ -74,7 +75,7 @@
 					</div>                	
                 </div>
                 <div class="card-footer pagination justify-content-center">
-					{!! $all_users->links("pagination::bootstrap-4") !!}
+					{!! $users_search->links("pagination::bootstrap-4") !!}
 				</div>
             </div>
         </div>

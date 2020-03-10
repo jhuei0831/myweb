@@ -4,7 +4,7 @@
 {{-- 選單顯示 --}}
 <div id="menu" class="col-md-2">
     <nav class="navbar navbar-vertical">
-        <div class="navbar-collapse collapse show" id="pnlSubNavbar">
+        <div class="collapse navbar-collapse show" id="pnlSubNavbar">
             <ul class="nav navbar-nav">
                 @foreach($menus_nav as $menu)
                     @if($menu->name == $select_menu->name)

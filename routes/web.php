@@ -16,7 +16,7 @@ Route::get('/errors/change_browser', function () {return view('errors.change_bro
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
 	\UniSharp\LaravelFilemanager\Lfm::routes();
 });
-Route::any('log/search', 'LogController@search')->name('log.search');
+
 //非IE瀏覽器，註冊帳號後要信箱驗證
 Route::middleware('browser')->group(function() {
 	Auth::routes(['verify' => true]);
@@ -42,6 +42,9 @@ Route::middleware('auth','browser','admin','verified')->group(function() {
 	Route::get('/manage/info/sort', function () {return view('manage.info.sort');});
 	//刪除背景
 	Route::get('/manage/config/delete_background/{id}', 'ConfigController@delete_background')->name('config.delete_background');
+	//搜尋
+	Route::any('manage/log/search', 'LogController@search')->name('log.search');
+	Route::any('manage/member/search', 'MemberController@search')->name('member.search');
 });
 
 //Resource

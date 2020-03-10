@@ -18,8 +18,10 @@
     
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/bootstrap-datepicker3.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/bootstrap-datepicker3.standalone.min.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.20/datatables.min.css"/>   
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.20/datatables.min.css"/>  
 </head>
 <body>
     <div id="app" style="font-size:16px;font-weight:bold;font-family: 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;">
@@ -37,8 +39,8 @@
     <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.20/datatables.min.js"></script>
     <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
     <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
-    
     <script src="{{ asset('js/touch-punch.js') }}"></script>
+    <script src="{{ asset('js/_bootstrap-datepicker.min.js') }}"></script>
     <script src="/vendor/ckeditor/ckeditor/ckeditor.js"></script>
     <script src="/vendor/laravel-filemanager/js/stand-alone-button.js"></script>
     {{-- file manager --}}
@@ -59,8 +61,8 @@
         }
         $(document).ready(function() {
             $("#data").DataTable({
-                sDom: 'lrtip',       
-                // sDom: 't' ,
+                // sDom: 'lrtip',       
+                sDom: 't' ,
                 "language": {
                 "processing":   "處理中...",
                 "loadingRecords": "載入中...",
@@ -90,10 +92,12 @@
                 filterColumn( $(this).parents('div').attr('data-column') );
             } );
         });
-        $(function () {
-            $('#col5_filter').datetimepicker({
-                uiLibrary: 'bootstrap4'
-            });
+        $('.input-daterange').datepicker({
+            format: "yyyy-mm-dd",
+            clearBtn: true,
+            language: "zh-TW",
+            daysOfWeekHighlighted: "0,6",
+            todayHighlight: true
         });
     </script>
     @show
