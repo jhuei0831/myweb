@@ -77,10 +77,13 @@
 										<td style="display:none">{{ $navbar->type }}</td>										
 										<td style="display:none">{{ $navbar->is_open }}</td>
 										<td>
+											<form action="{{ route('navbar.edit',$navbar->id) }}" method="GET">
+											@csrf
+											{{ App\Button::edit($navbar->id) }}
+											</form>
 											<form action="{{ route('navbar.destroy',$navbar->id) }}" method="POST">
 											@method('DELETE')
 											@csrf
-											{{ App\Button::edit($navbar->id) }}
 											{{ App\Button::deleting($navbar->id) }}
 											</form>
 										</td>									

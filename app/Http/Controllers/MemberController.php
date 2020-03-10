@@ -38,7 +38,7 @@ class MemberController extends Controller
         ->when($email, function ($q) use ($email) {
             return $q->where('email', 'like', '%' . $email . '%');
         })
-        ->when($permission, function ($q) use ($permission) {
+        ->when(isset($permission), function ($q) use ($permission) {
             return $q->where('permission', $permission);
         })
         ->paginate()

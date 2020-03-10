@@ -89,10 +89,13 @@
 											<font color="{{App\Enum::is_open['color'][$page->is_slide]}}"><i class="fas fa-{{App\Enum::is_open['label'][$page->is_slide]}}"></i></font>
 										</td>
 										<td>
+											<form action="{{ route('page.edit',$page->id) }}" method="GET">
+											@csrf
+											{{ App\Button::edit($page->id) }}
+											</form>
 											<form action="{{ route('page.destroy',$page->id) }}" method="POST">
 											@method('DELETE')
 											@csrf
-											{{ App\Button::edit($page->id) }}
 											{{ App\Button::deleting($page->id) }}
 											</form>
 										</td>

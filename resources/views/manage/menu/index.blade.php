@@ -89,10 +89,13 @@
 										<td><font color="{{App\Enum::is_open['color'][$menu->is_list]}}"><i class="fas fa-{{App\Enum::is_open['label'][$menu->is_list]}}"></i></font></td>
 										<td><font color="{{App\Enum::is_open['color'][$menu->is_open]}}"><i class="fas fa-{{App\Enum::is_open['label'][$menu->is_open]}}"></i></font></td>
 										<td>
+											<form action="{{ route('menu.edit',$menu->id) }}" method="GET">
+											@csrf
+											{{ App\Button::edit($menu->id) }}
+											</form>
 											<form action="{{ route('menu.destroy',$menu->id) }}" method="POST">
 											@method('DELETE')
 											@csrf
-											{{ App\Button::edit($menu->id) }}
 											{{ App\Button::deleting($menu->id) }}
 											</form>
 										</td>									

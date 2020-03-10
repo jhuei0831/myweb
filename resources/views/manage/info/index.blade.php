@@ -81,10 +81,13 @@
 										<td>{{ $info->created_at }}</td>
 										<td>{{ $info->updated_at }}</td>
 										<td>
+											<form action="{{ route('info.edit',$info->id) }}" method="GET">
+											@csrf
+											{{ App\Button::edit($info->id) }}
+											</form>
 											<form action="{{ route('info.destroy',$info->id) }}" method="POST">
 											@method('DELETE')
 											@csrf
-											{{ App\Button::edit($info->id) }}
 											{{ App\Button::deleting($info->id) }}
 											</form>
 										</td>

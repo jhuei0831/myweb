@@ -24,10 +24,9 @@ class Button extends Model
 
 		public static function Edit($id)
 		{
-			$url = URL::full();
-			echo "<a class='btn btn-sm btn-success' href='{$url}/{$id}/edit'>";
-			echo 	"<i class='fas fa-pencil-alt'></i> ".__('Edit');
-			echo "</a>";
+			echo "<button type=\"submmit\" class='btn btn-sm btn-success' formtarget='_blank'>";
+			echo "<i class='fas fa-pencil-alt'></i> " . __('Edit');
+			echo "</button>";
 		}
 
 		public static function Create()

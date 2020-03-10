@@ -71,10 +71,13 @@
 										{{-- 設一個隱藏爛位提供篩選 --}}
 										<td style="display:none">{{ $slide->is_open }}</td>
 										<td>
+											<form action="{{ route('slide.edit',$slide->id) }}" method="GET">
+											@csrf
+											{{ App\Button::edit($slide->id) }}
+											</form>
 											<form action="{{ route('slide.destroy',$slide->id) }}" method="POST">
 											@method('DELETE')
 											@csrf
-											{{ App\Button::edit($slide->id) }}
 											{{ App\Button::deleting($slide->id) }}
 											</form>
 										</td>

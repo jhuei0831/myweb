@@ -61,10 +61,13 @@
 										<td style="display:none">{{ $user->permission }}</td>
 										<td>{{App\Enum::permission[$user->permission]}}</td>
 										<td>
+											<form action="{{ route('member.edit',$user->id) }}" method="GET">
+											@csrf
+											{{ App\Button::edit($user->id) }}
+											</form>
 											<form action="{{ route('member.destroy',$user->id) }}" method="POST">
 											@method('DELETE')
 											@csrf
-											{{ App\Button::edit($user->id) }}
 											{{ App\Button::deleting($user->id) }}
 											</form>
 										</td>

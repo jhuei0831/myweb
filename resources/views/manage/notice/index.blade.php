@@ -59,10 +59,13 @@
 											<font color="{{App\Enum::is_open['color'][$notice->is_open]}}"><i class="fas fa-{{App\Enum::is_open['label'][$notice->is_open]}}"></i></font>
 										</td>
 										<td>
+											<form action="{{ route('notice.edit',$notice->id) }}" method="GET">
+											@csrf
+											{{ App\Button::edit($notice->id) }}
+											</form>
 											<form action="{{ route('notice.destroy',$notice->id) }}" method="POST">
 											@method('DELETE')
 											@csrf
-											{{ App\Button::edit($notice->id) }}
 											{{ App\Button::deleting($notice->id) }}
 											</form>
 										</td>
