@@ -9670,6 +9670,6 @@ table {
 .text-list{
     font-family:'Noto Sans TC', sans-serif;word-break:break-all
 }
-.fixed-top-2 {
-    margin-top: 60px;
+form{
+    display: inline;
 }
