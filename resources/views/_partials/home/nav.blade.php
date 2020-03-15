@@ -6,9 +6,6 @@
             <a class="navbar-brand navbar-toggle collapsed" style="color: #{{ $config->navbar_wcolor }};" data-toggle="collapse" data-target="#pnlSubNavbar">
                 <span id="toggle" class="fas fa-eye-slash" onclick="changeClass()"></span>
             </a>
-            {{-- <a href class="navbar-toggler" data-toggle="collapse" data-target=".sidebar">
-               <span class="navbar-toggler-icon"></span>
-            </a> --}}
             @endisset
             <a class="navbar-brand" href="{{ url('/') }}" style="color: #{{ $config->navbar_wcolor }};font-size: {{ $config->navbar_size }}">
                 {{ config('app.name') }}
@@ -16,11 +13,11 @@
         </div>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
             <span class="navbar-toggler-icon"></span>
-        </button>      
+        </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <!-- Left Side Of Navbar -->
             <ul class="navbar-nav mr-auto">
-                @foreach ($navbars as $navbar)                    
+                @foreach ($navbars as $navbar)
                     @switch($navbar->type)
                         @case(1)
                             <li class="nav-item dropdown">
@@ -29,21 +26,21 @@
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 @foreach ($menus as $menu)
-                                    @if ($menu->navbar_id == $navbar->id && $menu->link)                                          
+                                    @if ($menu->navbar_id == $navbar->id && $menu->link)
                                         <a class="dropdown-item" target="_blank" href="{{ $menu->link }}">{{ $menu->name }}</a>
                                     @elseif($menu->navbar_id == $navbar->id)
-                                        <a class="dropdown-item" href="/article/{{ $navbar->name }}/{{ $menu->name }}">{{ $menu->name }}</a>                                           
-                                    @endif                                       
-                                @endforeach  
-                                </div>                                
+                                        <a class="dropdown-item" href="/article/{{ $navbar->name }}/{{ $menu->name }}">{{ $menu->name }}</a>
+                                    @endif
+                                @endforeach
+                                </div>
                             </li>
                             @break
                         @case(2)
                             <li class="nav-item" >
                                 <a class="nav-link" href="{{ $navbar->link }}" style="color: #{{ $config->navbar_wcolor }}">{{ $navbar->name }}</a>
                             </li>
-                            @break                              
-                    @endswitch                  
+                            @break
+                    @endswitch
                 @endforeach
             </ul>
 
@@ -64,7 +61,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('manage') }}" style="color: #{{ $config->navbar_wcolor }}">{{ __('Backstage') }}</a>
                     </li>
-                @endif                   
+                @endif
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" style="color: #{{ $config->navbar_wcolor }}" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre >
                             {{ Auth::user()->name }} <span class="caret"></span>

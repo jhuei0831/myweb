@@ -11,6 +11,7 @@
 
         <!-- Scripts -->
         <script src="{{ asset('js/app.js') }}" defer></script>
+        <script src="{{ asset('js/owl.carousel.min.js') }}" defer></script>
 
         <!-- Fonts -->
         <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -19,6 +20,9 @@
 
         <!-- Styles -->
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/owl.carousel.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/owl.theme.default.min.css') }}" rel="stylesheet">
+
         {{-- swiper cdn --}}
         <link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.css">
         <link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.min.css">
@@ -28,6 +32,8 @@
     @else
     <body style="background:linear-gradient(#{{ $config->background_color }}, #FFFFFF); background-size:cover; background-attachment: fixed; background-repeat: no-repeat;">
     @endif
+        {{-- loading --}}
+        <div class="se-pre-con"></div>
         <div style="font-size:{{ $config->font_size }};font-weight:{{ $config->font_weight }};font-family: {{ $config->font_family }};">
             @include('_partials.home.nav')
             @include('_partials.home.slide')
@@ -35,12 +41,12 @@
             <main class="py-4" >
                 <div class="container-fluid">
                     <div class="row justify-content-center" >
+                    @include('_partials.home.notice')
                     @yield('menu')
                     @yield('content')
                     </div>
                 </div>
             </main>
-           
         </div>
         @section('script')
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -49,12 +55,57 @@
         <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.12/datatables.min.js"></script>
         <script src="https://unpkg.com/swiper/js/swiper.js"></script>
         <script src="https://unpkg.com/swiper/js/swiper.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
         <script>
+            $(document).ready(function(){
+              $('.owl-carousel').owlCarousel({
+                    items:1,
+                    margin:10,
+                    loop:true,
+                    // autoHeight:true,
+                    autoplay:true,
+                    autoplayTimeout:3000,
+                    autoplayHoverPause:true
+                });
+            });
+            $(window).load(function() {
+                // Animate loader off screen
+                $(".se-pre-con").fadeOut("slow");;
+            });
+            $(document).ready(function() {
+                var toggleAffix = function(affixElement, scrollElement, wrapper) {
+                var height = affixElement.outerHeight(),
+                    top = wrapper.offset().top;
+                    if (scrollElement.scrollTop() >= top){
+                        wrapper.height(height);
+                        affixElement.addClass("affix");
+                    }
+                    else {
+                        affixElement.removeClass("affix");
+                        wrapper.height('auto');
+                    }
+                };
+                $('[data-toggle="affix"]').each(function() {
+                    var ele = $(this),
+                    wrapper = $('<div></div>');
+                    ele.before(wrapper);
+                    $(window).on('scroll resize', function() {
+                        toggleAffix(ele, $(this), wrapper);
+                    });
+                    // init
+                    toggleAffix(ele, $(window), wrapper);
+                });
+
+            });
             var mySwiper = new Swiper ('.swiper-container', {
                 // Optional parameters
                 loop: true,
                 autoHeight: true, //enable auto height
-
+                autoplay: {
+                    delay: 2500,
+                    disableOnInteraction: false,
+                },
                 // If we need pagination
                 pagination: {
                 el: '.swiper-pagination',

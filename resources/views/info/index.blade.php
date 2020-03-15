@@ -21,7 +21,7 @@
             <div class="card-header bg-transparent">
                 <h1><b>{{ __('Information').__('List') }}</b></h1>
             </div>
-            <div class="card-body">            
+            <div class="card-body">
                 <table class="table table-hover table-borderless">
                     <tbody>
                         @foreach ($info_stickys as $info_sticky)
@@ -39,7 +39,7 @@
                         </tr>
                         @endforeach
                     </tbody>
-                </table>                                                                 
+                </table>
             </div>
             <div class="card-footer pagination justify-content-center bg-transparent">
                 {!! $infos->links("pagination::bootstrap-4") !!}

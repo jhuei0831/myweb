@@ -71,11 +71,11 @@ View::composer(['*'], function ($view) {
     $navbars = App\Navbar::where('is_open',1)->orderby('sort')->get();
     $slides = App\Slide::where('is_open',1)->orderby('sort')->get();
     $menus = App\Menu::where('is_open',1)->orderby('sort')->get();
-    $pages = App\Page::where('is_open',1)->orderby('updated_at')->get();   
+    $pages = App\Page::where('is_open',1)->orderby('updated_at')->get();
     $users = App\User::all();
     $infos = App\Info::where('is_sticky',0)->where('is_open',1)->orderby('updated_at')->paginate(10);
     $info_stickys = App\Info::where('is_sticky',1)->where('is_open',1)->orderby('sort')->get();
-       
+
     $view->with('navbars',$navbars);
     $view->with('pages',$pages);
     $view->with('users',$users);

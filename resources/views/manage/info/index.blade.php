@@ -6,7 +6,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">{{ __('Information').__('Manage') }}</div>
-                    
+
                 <div class="card-body">
 					<ul class="list-inline">
 						<li class="list-inline-item">{{ App\Button::Create() }}</li>
@@ -29,7 +29,7 @@
 							</div>
 						</div>
 						<div class="form-group row">
-							{{-- 選擇隱藏爛位 --}}							
+							{{-- 選擇隱藏爛位 --}}
 							<label class='col-md-2 col-form-label text-md-right'>{{ __('Is_open') }}</label>
 							<div id="filter_col3" data-column="2" class='col-md-3'>
 								<select class="form-control column_filter" id="col2_filter">
@@ -37,7 +37,7 @@
 									<option value="1">{{ __('Yes') }}</option>
 									<option value="0">{{ __('No') }}</option>
 								</select>
-							</div>	
+							</div>
 							<label class='col-md-2 col-form-label text-md-right'>{{ __('Is_sticky') }}</label>
 							<div id="filter_col4" data-column="3" class='col-md-3'>
 								<select class="form-control column_filter" id="col3_filter">
@@ -45,7 +45,7 @@
 									<option value="1">{{ __('Yes') }}</option>
 									<option value="0">{{ __('No') }}</option>
 								</select>
-							</div>						
+							</div>
 						</div>
 					</div>
 					<div class="table-responsive">
@@ -53,15 +53,15 @@
 		                	<thead>
 		                		<tr class="table-info active">
 									<th class="text-nowrap text-center">{{ __('Title') }}</th>
-		                			<th class="text-nowrap text-center">{{ __('Editor') }}</th>	 
+		                			<th class="text-nowrap text-center">{{ __('Editor') }}</th>
 		                			{{-- 設置隱藏爛位提供篩選 --}}
-		                			<th class="text-nowrap text-center" style="display:none">{{ __('Is_open') }}</th>   			
-		                			<th class="text-nowrap text-center" style="display:none">{{ __('Is_sticky') }}</th>   			
+		                			<th class="text-nowrap text-center" style="display:none">{{ __('Is_open') }}</th>
+		                			<th class="text-nowrap text-center" style="display:none">{{ __('Is_sticky') }}</th>
 		                			<th class="text-nowrap text-center">{{ __('Is_open') }}</th>
-		                			<th class="text-nowrap text-center">{{ __('Is_sticky') }}</th>	                			
-		                			<th class="text-nowrap text-center">{{ __('Created_at') }}</th>	                			
-		                			<th class="text-nowrap text-center">{{ __('Updated_at') }}</th>	                			
-		                			<th class="text-nowrap text-center">{{ __('Action') }}</th>	                			
+		                			<th class="text-nowrap text-center">{{ __('Is_sticky') }}</th>
+		                			<th class="text-nowrap text-center">{{ __('Created_at') }}</th>
+		                			<th class="text-nowrap text-center">{{ __('Updated_at') }}</th>
+		                			<th class="text-nowrap text-center">{{ __('Action') }}</th>
 		                		</tr>
 		                	</thead>
 		                	<tbody>
@@ -94,8 +94,8 @@
 									</tr>
 		                		@endforeach
 		                	</tbody>
-	                    </table>	
-					</div>                	
+	                    </table>
+					</div>
                 </div>
                 {{-- <div class="card-footer pagination justify-content-center">
 					{!! $all_infos->links("pagination::bootstrap-4") !!}

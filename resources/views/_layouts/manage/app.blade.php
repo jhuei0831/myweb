@@ -15,18 +15,18 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-    
+
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/bootstrap-datepicker3.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/bootstrap-datepicker3.standalone.min.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.20/datatables.min.css"/>  
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.20/datatables.min.css"/>
 </head>
 <body>
     <div id="app" style="font-size:16px;font-weight:bold;font-family: 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;">
         @include('_partials.manage.nav')
-        
+
         <main class="py-4">
             @include('_partials.message')
             @yield('content')
@@ -53,7 +53,7 @@
         };
         CKEDITOR.replace('content',options)
         $('#lfm').filemanager('image');
-        // 表格內搜尋 
+        // 表格內搜尋
         function filterColumn (i) {
         $('#data').DataTable().column(i).search(
             $('#col'+i+'_filter').val()
@@ -61,7 +61,7 @@
         }
         $(document).ready(function() {
             $("#data").DataTable({
-                // sDom: 'lrtip',       
+                // sDom: 'lrtip',
                 sDom: 't' ,
                 "language": {
                 "processing":   "處理中...",
@@ -83,7 +83,7 @@
                     "sortAscending":  ": 升冪排列",
                     "sortDescending": ": 降冪排列"
                 }
-            }      
+            }
             });
             $('input.column_filter').on( 'keyup click', function () {
                 filterColumn( $(this).parents('div').attr('data-column') );

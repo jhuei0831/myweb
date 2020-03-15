@@ -2,9 +2,9 @@
 @section('title',$select_menu->name)
 @section('menu')
 {{-- 選單顯示 --}}
-<div id="menu" class="col-md-2">
-    <nav class="navbar navbar-vertical">
-        <div class="collapse navbar-collapse show" id="pnlSubNavbar">
+<div id="menu" class="col-md-2 invisible">
+    <nav class="navbar navbar-vertical" data-toggle="affix">
+        <div class="collapse navbar-collapse" id="pnlSubNavbar">
             <ul class="nav navbar-nav">
                 @foreach($menus_nav as $menu)
                     @if($menu->name == $select_menu->name)
@@ -25,36 +25,18 @@
         </div>
     </nav>
 </div>
-{{-- 通知顯示 --}}
-@isset($notice)
-<div class="modal fade" id="my_modal" tabindex="-1" role="dialog" aria-labelledby="savePageLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="savePageLabel">{{$notice->title}}</h5>
-            </div>
-            <div class="modal-body">
-                {!! clean($notice->content) !!}
-            </div>
-            <div class="modal-footer">
-               <button type="button" class="btn btn-primary" data-dismiss="modal">{{ __('Close') }}</button>
-            </div>
-        </div>
-    </div>
-</div>
-@endisset
 @endsection
 
 @section('content')
 {{-- 頁面顯示 --}}
 @if(Request::getQueryString())
-    <div id="content" class="col-md-10">
+    <div id="content" class="col-md-12">
         <div class="card border-light" style="border: none;">
             <div class="card-header bg-transparent">
                 <h1><b>{{$current_page->title}}</b></h1>
             </div>
-            <div class="card-body">               
-                {!! clean($current_page->content) !!}                                                                
+            <div class="card-body">
+                {!! clean($current_page->content) !!}
             </div>
             <div class="card-footer bg-transparent">
                 <p><span class="badge badge-pill badge-primary">{{ __('Editor').' : '.$current_page->editor }}</span></p>
@@ -65,7 +47,7 @@
     </div>
 {{-- 是否清單顯示 --}}
 @elseif($select_menu->is_list)
-    <div id="content" class="col-md-10">
+    <div id="content" class="col-md-12">
         <div class="card border-light" style="border: none;">
             <div class="card-header bg-transparent">
                 <h1><b>{{$select_menu->name}}</b></h1>
@@ -82,24 +64,24 @@
                             </tr>
                             @endif
                         @endforeach
-                        </tbody>  
+                        </tbody>
                     </table>
-                </div>               
+                </div>
             </div>
             <div class="card-footer pagination justify-content-center bg-transparent">
                 {!! $menu_pages->links("pagination::bootstrap-4") !!}
             </div>
         </div>
-    </div>  
+    </div>
 @else
-    <div id="content" class="col-md-10">
+    <div id="content" class="col-md-12">
         <div class="card border-light" style="border: none;">
 
             <div class="card-header bg-transparent">
                 <h1><b>{{$menu_pages->title}}</b></h1>
             </div>
-            <div class="card-body">  
-                {!! clean($menu_pages->content) !!}                                                                            
+            <div class="card-body">
+                {!! clean($menu_pages->content) !!}
             </div>
         </div>
     </div>
@@ -108,22 +90,23 @@
 @section('script')
 @parent
 <script>
- 
+
 $(document).ready(function() {
     $(window).on('load',function(){
         $('#my_modal').modal('show');
     });
     $('#toggle').on('click', function() {
-        if ($('#toggle').hasClass('fa-eye')) {             
-            $('#toggle').removeClass("fa-eye").addClass("fa-eye-slash"); 
-            $('#menu').removeClass("invisible").addClass("visible"); 
-            $('#content').removeClass("col-md-12").addClass("col-md-10"); 
-        }else {
+        if ($('#pnlSubNavbar').hasClass('show')) {
             $('#toggle').removeClass("fa-eye-slash").addClass("fa-eye");
             $('#menu').removeClass("visible").addClass("invisible");
             $('#content').removeClass("col-md-10").addClass("col-md-12");
-        }        
-    });  
+        }else {
+
+            $('#toggle').removeClass("fa-eye").addClass("fa-eye-slash");
+            $('#menu').removeClass("invisible").addClass("visible");
+            $('#content').removeClass("col-md-12").addClass("col-md-10");
+        }
+    });
 });
 
 </script>

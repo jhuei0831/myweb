@@ -6,7 +6,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">{{ __('Config') }}</div>
-                    
+
                 <div class="card-body">
                     <div class="alert alert-warning" role="alert">
                         1. 此設定只針對前台。<br>
@@ -19,14 +19,14 @@
                                     <th class="text-nowrap text-center">{{ __('App name') }}</th>
                                     <th class="text-nowrap text-center">{{ __('Font family') }}</th>
                                     <th class="text-nowrap text-center">{{ __('Font size') }}</th>
-                                    <th class="text-nowrap text-center">{{ __('Font weight') }}</th>                             
-                                    <th class="text-nowrap text-center">{{ __('Background') }}</th>                             
-                                    <th class="text-nowrap text-center">{{ __('Background color') }}</th>                             
-                                    <th class="text-nowrap text-center">{{ __('Navbar background color') }}</th>                             
-                                    <th class="text-nowrap text-center">{{ __('Navbar text color') }}</th>                             
-                                    <th class="text-nowrap text-center">{{ __('Navbar text size') }}</th>                             
-                                    <th class="text-nowrap text-center">{{ __('Is_open') }}</th>                             
-                                    <th class="text-nowrap text-center">{{ __('Action') }}</th>                             
+                                    <th class="text-nowrap text-center">{{ __('Font weight') }}</th>
+                                    <th class="text-nowrap text-center">{{ __('Background') }}</th>
+                                    <th class="text-nowrap text-center">{{ __('Background color') }}</th>
+                                    <th class="text-nowrap text-center">{{ __('Navbar background color') }}</th>
+                                    <th class="text-nowrap text-center">{{ __('Navbar text color') }}</th>
+                                    <th class="text-nowrap text-center">{{ __('Navbar text size') }}</th>
+                                    <th class="text-nowrap text-center">{{ __('Is_open') }}</th>
+                                    <th class="text-nowrap text-center">{{ __('Action') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -50,15 +50,18 @@
                                         <font color="{{App\Enum::is_open['color'][$config->is_open]}}"><i class="fas fa-{{App\Enum::is_open['label'][$config->is_open]}}"></i></font>
                                         </td>
                                     <td>
+                                        <form action="{{ route('config.edit',$config->id) }}" method="GET">
+                                        @csrf
                                         {{ App\Button::edit($config->id) }}
+                                        </form>
                                         @isset ($config->background)
                                             {{ App\Button::to('delete_background',__('Delete').__('Background'),$config->id,'btn-danger','trash-alt',true) }}
                                         @endisset
                                     </td>
                                 </tr>
                             </tbody>
-                        </table>    
-                    </div>  
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

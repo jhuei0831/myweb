@@ -4,11 +4,11 @@
 <div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-md-6">
-            <div class="card">
+            <div class="card" style="border: none;">
                 <div class="card-header bg-transparent">
-                    <h3><b>{{ __('Information') }}</b></h3> 
+                    <h3 class="home-title"><b>{{ __('Information') }}</b></h3>
                 </div>
-                <div class="card-body">         
+                <div class="card-body">
                     <table class="table table-hover table-borderless">
                         <tbody>
                             @foreach ($info_stickys as $info_sticky)
@@ -28,10 +28,9 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="card-footer pagination justify-content-center bg-transparent">
-                    {!! $infos->links("pagination::bootstrap-4") !!}
+                <div class="card-footer bg-transparent text-right">
+                    <a href="{{ route('info') }}" class="btn btn-link"><i class="fas fa-search"></i> 所有消息...</a>
                 </div>
-                <a href="{{ route('info') }}" class="btn btn-success">所有消息</a>
             </div>
         </div>
     </div>

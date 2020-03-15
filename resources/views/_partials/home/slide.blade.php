@@ -6,13 +6,13 @@
             <li data-target="#carouselExampleControls" data-slide-to="$i"></li>
         @endfor
     </ol>
-    <div class="carousel-inner" role="listbox">           
+    <div class="carousel-inner" role="listbox">
         @foreach( $slides as $slide )
             <div class="carousel-item {{ $loop->first ? 'active' : '' }}" align="center">
                 <a href="{{ $slide->link ?? '#' }}"><img class="img-fluid" src="{{ $slide->image }}" alt="{{ $slide->name }}"></a>
                 <div class="carousel-caption d-none d-md-block"></div>
             </div>
-        @endforeach           
+        @endforeach
     </div>
     <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -24,7 +24,7 @@
     </a>
 </div>
 @endif --}}
-@if(count($slides) > 0 && (isset($current_page) && $current_page->is_slide == '1' || Request::path() == '/'))
+{{-- @if(count($slides) > 0 && (isset($current_page) && $current_page->is_slide == '1' || Request::path() == '/'))
 <div class="swiper-container">
     <!-- Additional required wrapper -->
     <div class="swiper-wrapper">
@@ -42,4 +42,18 @@
     <div class="swiper-button-prev"></div>
     <div class="swiper-button-next"></div>
 </div>
-@endif
+@endif --}}
+<div class="container-fluid">
+    <div class="row">
+        <div class="owl-carousel owl-theme owl-dots-inner col-md-8">
+            @foreach ($slides as $slide)
+                <div>
+                    <a href="{{ $slide->link ?? '#' }}"><img class="img-fluid" src="{{ $slide->image }}" alt="{{ $slide->name }}"></a>
+                </div>
+            @endforeach
+        </div>
+        <div class="col-md-4">
+            <div> col-md-4 </div>
+        </div>
+    </div>
+</div>
