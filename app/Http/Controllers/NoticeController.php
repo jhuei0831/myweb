@@ -134,14 +134,18 @@ class NoticeController extends Controller
         ]);
 
         // 逐筆進行htmlpurufier 並去掉<p></p>
-        foreach ($request->except('_token','_method') as $key => $value) {
-            if ($request->filled($key) && $key != 'content') {
+        foreach ($request->except('_token', '_method') as $key => $value) {
+            if ($request->filled($key) && $request->filled($key) != NULL && $key != 'content') {
                 $notice->$key = strip_tags(clean($data[$key]));
                 if ($notice->$key == '') {
                     $error += 1;
                 }
-            } 
+            }
+            else{
+                $notice->$key = NULL;
+            }
         }
+
         $notice->content = clean($request->input('content'));
         if ($error == 0) {
             // 寫入log
