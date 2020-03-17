@@ -11,7 +11,7 @@ class Notice extends Model
     protected $primaryKey = 'id';
 
     protected $fillable = [
-        "title", "menu_id" , "content", "is_open",
+        "title", "menu_id" ,"icon", "width", "content", "is_open",
     ];
 
     public function menus()

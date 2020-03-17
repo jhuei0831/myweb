@@ -48,6 +48,34 @@
                         </div>
 
                         <div class="form-group row">
+                            <label for="icon" class="col-md-4 col-form-label text-md-right">{{ __('Icon') }}</label>
+                            <div class="col-md-6">
+                                <select class='form-control' name='icon' aria-describedby="menuHelp">
+                                    <option value=''>{{ __('Please choose').__('Menu') }}</option>
+                                    @foreach(App\Enum::icon as $key => $value)
+                                        @if ($value == $notice->icon)
+                                            <option value="{{ $value }}" selected>{{ $value }}</option>
+                                        @else
+                                            <option value="{{ $value }}">{{ $value }}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="width" class="col-md-4 col-form-label text-md-right">{{ __('Width') }}</label>
+                            <div class="col-md-6">
+                                <input type="number" class="form-control @error('width') is-invalid @enderror" id="width" name="width" value="{{ $notice->width }}" placeholder="{{ __('Width') }}">
+                                @error('width')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
                             <label for="content" class="col-md-4 col-form-label text-md-right">{{ __('Content') }}</label>
 
                             <div class="col-md-12">

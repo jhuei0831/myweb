@@ -6,24 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Enum extends Model
 {
-    // 帳號權限
-    const permission = [
-        '0' => '一般使用者',
-        '1' => '限閱',
-        '2' => '閱讀、新增',
-        '3' => '閱讀、新增、編輯',
-        '4' => '閱讀、新增、編輯、刪除',
-        '5' => '所有權限',
-    ];
-    // 使用者瀏覽器
-    const browser = [
-        '0' => 'Internet Explorer',
-        '1' => 'Mozilla Firefox',
-        '2' => 'Google Chrome',
-        '3' => 'Apple Safari',
-        '4' => 'Opera',
-        '5' => 'Netscape',
-    ];
     // 使用者動作
     const action = [
         '0' => 'PUT',
@@ -33,37 +15,18 @@ class Enum extends Model
         '4' => '排序',
         '5' => '刪除背景',
     ];
-    // 資料表
-    const table = [
-        '0' => 'configs',
-        '1' => 'infos',
-        '2' => 'logs',
-        '3' => 'menus',
-        '4' => 'navbars',
-        '5' => 'pages', 
-        '6' => 'slides', 
-        '7' => 'users', 
-    ];
-    // 是否開放(是=綠勾，否=紅叉)
-    const is_open = [
-        'color' =>[
-            '0' => 'red',
-            '1' => 'green',
-        ],
-        'label'=>[
-            '0' => 'times',
-    	    '1' => 'check',
-        ],
-    	
-    ];
-    // 導覽列類型
-    const type =[
-    	'navbar' => [
-    		'1' => '導覽目錄',
-    		'2' => '一般頁面',
-    	],
+
+    // 使用者瀏覽器
+    const browser = [
+        '0' => 'Internet Explorer',
+        '1' => 'Mozilla Firefox',
+        '2' => 'Google Chrome',
+        '3' => 'Apple Safari',
+        '4' => 'Opera',
+        '5' => 'Netscape',
     ];
 
+    // 前台設定
     const config =[
         'font_family' => [
             'Helvetica, Arial'=>'預設字型',
@@ -103,4 +66,59 @@ class Enum extends Model
             'xx-large' => 'xx-large',
         ],
     ];
+    // 通知icon
+    const icon = [
+        '0' => 'NULL',
+        '1' => 'success',
+        '2' => 'error',
+        '3' => 'warning',
+        '4' => 'info',
+        '5' => 'question',
+    ];
+
+    // 是否開放(是=綠勾，否=紅叉)
+    const is_open = [
+        'color' =>[
+            '0' => 'red',
+            '1' => 'green',
+        ],
+        'label'=>[
+            '0' => 'times',
+            '1' => 'check',
+        ],
+        
+    ];
+
+    // 帳號權限
+    const permission = [
+        '0' => '一般使用者',
+        '1' => '限閱',
+        '2' => '閱讀、新增',
+        '3' => '閱讀、新增、編輯',
+        '4' => '閱讀、新增、編輯、刪除',
+        '5' => '所有權限',
+    ];
+    
+    
+    // 資料表
+    const table = [
+        '0' => 'configs',
+        '1' => 'infos',
+        '2' => 'logs',
+        '3' => 'menus',
+        '4' => 'navbars',
+        '5' => 'pages', 
+        '6' => 'slides', 
+        '7' => 'users', 
+    ];
+    
+    // 導覽列類型
+    const type =[
+    	'navbar' => [
+    		'1' => '導覽目錄',
+    		'2' => '一般頁面',
+    	],
+    ];
+
+    
 }

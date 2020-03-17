@@ -51,6 +51,8 @@ class NoticeController extends Controller
         $data = $request->validate([
             'menu_id' => ['required'],
             'title' => ['required', 'string', 'max:255'],
+            'icon' => ['nullable', 'string', 'max:255'],
+            'width' => ['nullable', 'integer', 'min:0'],
             'content' => ['required'],
             'is_open' => ['required'],
         ]);
@@ -125,6 +127,8 @@ class NoticeController extends Controller
         $data = $this->validate($request, [
             'menu_id' => ['required'],
             'title' => ['required', 'string', 'max:255'],
+            'icon' => ['nullable', 'string', 'max:255'],
+            'width' => ['nullable', 'integer', 'min:0'],
             'content' => ['required'],
             'is_open' => ['required'],
         ]);

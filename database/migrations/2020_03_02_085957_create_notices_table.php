@@ -17,6 +17,8 @@ class CreateNoticesTable extends Migration
             $table->bigIncrements('id');
             $table->string('menu_id')->comment('選單id');
             $table->string('title')->comment('標題');
+            $table->string('icon')->nullable()->comment('icon');
+            $table->integer('width')->nullable()->comment('寬度');
             $table->longText('content')->comment('內容');
             $table->string('is_open')->comment('是否開放');
             $table->timestamps();

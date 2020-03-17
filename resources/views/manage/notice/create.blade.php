@@ -21,7 +21,7 @@
 										<option value="{{ $value['id'] }}">{{ $value['name'] }}</option>
 									@endforeach
 								</select>
-			                    <span id="menuHelp" class="help-block">
+			                    <span id="menuHelp" class="form-text text-muted">
 			                        選擇要加入的選單項目。
 			                    </span>
                             </div>
@@ -31,6 +31,28 @@
                             <div class="col-md-6">
                                 <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title" value="{{ old('title') }}" placeholder="{{ __('Title') }}">
                                 @error('title')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="icon" class="col-md-4 col-form-label text-md-right">{{ __('Icon') }}</label>
+                            <div class="col-md-6">
+                                <select class='form-control' name='icon' aria-describedby="menuHelp">
+                                    <option value=''>{{ __('Please choose').__('Menu') }}</option>
+                                    @foreach(App\Enum::icon as $key => $value)
+                                        <option value="{{ $value }}">{{ $value }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="width" class="col-md-4 col-form-label text-md-right">{{ __('Width') }}</label>
+                            <div class="col-md-6">
+                                <input type="number" class="form-control @error('width') is-invalid @enderror" id="width" name="width" value="{{ old('width') }}" placeholder="{{ __('Width') }}">
+                                @error('width')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

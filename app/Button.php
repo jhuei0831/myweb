@@ -9,7 +9,7 @@ class Button extends Model
     	public static function Detail($id)
 		{
 			$url = URL::full();
-			echo "<button type=\"submmit\" class='btn btn-sm btn-secondary'>";
+			echo "<button type=\"submit\" class='btn btn-sm btn-secondary'>";
 			echo 	"<i class='fas fa-info-circle'></i> ".__('Detail');
 			echo "</a>";
 		}
@@ -17,14 +17,33 @@ class Button extends Model
 		public static function Deleting($id)
 		{		
 			// $url = URL::full();				
-			echo "<button type=\"submmit\" class='btn btn-sm btn-danger btn-delete' onclick=\"return confirm('確認刪除?')\">";
+			echo "<button type=\"submit\" class='btn btn-sm btn-danger btn-delete'>";
 			echo 	"<i class='fas fa-trash-alt'></i> ".__('Delete');
 			echo "</button>";		
+			echo "<script>$(\".btn-danger\").click(function () {
+				event.preventDefault(); 
+var form = event.target.form; 
+	    Swal.fire({
+  title: 'Are you sure?',
+  text: \"You won't be able to revert this!\",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Yes, delete it!'
+}).then((result) => {
+  if (result.value) {
+    form.submit();          
+  } else {
+    Swal.fire(\"Cancelled\", \"Your imaginary file is safe\", \"error\");
+  }
+}) 
+	});</script>";
 		}
 
 		public static function Edit($id)
 		{
-			echo "<button type=\"submmit\" class='btn btn-sm btn-success' formtarget='_blank'>";
+			echo "<button type=\"submit\" class='btn btn-sm btn-success' formtarget='_blank'>";
 			echo "<i class='fas fa-pencil-alt'></i> " . __('Edit');
 			echo "</button>";
 		}

@@ -1,3 +1,4 @@
+{{-- Bootstrap --}}
 {{-- @if(count($slides) > 0 && (isset($current_page) && $current_page->is_slide == '1' || Request::path() == '/'))
 <div id="carouselExampleControls" class="carousel slide" data-ride="carousel" data-interval="3000">
     <ol class="carousel-indicators">
@@ -24,6 +25,8 @@
     </a>
 </div>
 @endif --}}
+
+{{-- Swiper --}}
 {{-- @if(count($slides) > 0 && (isset($current_page) && $current_page->is_slide == '1' || Request::path() == '/'))
 <div class="swiper-container">
     <!-- Additional required wrapper -->
@@ -43,6 +46,9 @@
     <div class="swiper-button-next"></div>
 </div>
 @endif --}}
+
+{{-- Owl --}}
+@if(count($slides) > 0 && (isset($current_page) && $current_page->is_slide == '1' || Request::path() == '/'))
 <div class="container-fluid">
     <div class="row">
         <div class="owl-carousel owl-theme owl-dots-inner col-md-8">
@@ -57,3 +63,4 @@
         </div>
     </div>
 </div>
+@endif
