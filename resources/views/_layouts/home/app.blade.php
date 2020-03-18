@@ -12,8 +12,8 @@
         <!-- Scripts -->
         <script src="{{ asset('js/app.js') }}" defer></script>
         <script src="{{ asset('js/owl.carousel.min.js') }}" defer></script>
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
-        
+        <script src="{{ asset('js/sweetalert2.min.js') }}"></script>
+
         <!-- Fonts -->
         <link rel="dns-prefetch" href="//fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
@@ -21,8 +21,11 @@
 
         <!-- Styles -->
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/home.css') }}" rel="stylesheet">
         <link href="{{ asset('css/owl.carousel.min.css') }}" rel="stylesheet">
         <link href="{{ asset('css/owl.theme.default.min.css') }}" rel="stylesheet">
+        <link rel="stylesheet" href="{{ asset('css/sweetalert2.min.css') }}">
+
 
         {{-- swiper cdn --}}
         <link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.css">
@@ -60,14 +63,15 @@
         <script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
         <script>
             $(document).ready(function(){
-              $('.owl-carousel').owlCarousel({
+                $('.owl-carousel').owlCarousel({
                     items:1,
                     margin:10,
                     loop:true,
                     // autoHeight:true,
                     autoplay:true,
                     autoplayTimeout:3000,
-                    autoplayHoverPause:true
+                    autoplayHoverPause:true,
+                    dots: true,
                 });
             });
             $(window).load(function() {

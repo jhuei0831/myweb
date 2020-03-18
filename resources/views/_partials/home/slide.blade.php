@@ -51,15 +51,12 @@
 @if(count($slides) > 0 && (isset($current_page) && $current_page->is_slide == '1' || Request::path() == '/'))
 <div class="container-fluid">
     <div class="row">
-        <div class="owl-carousel owl-theme owl-dots-inner col-md-8">
+        <div class="owl-carousel owl-theme owl-dots-inner">
             @foreach ($slides as $slide)
                 <div>
                     <a href="{{ $slide->link ?? '#' }}"><img class="img-fluid" src="{{ $slide->image }}" alt="{{ $slide->name }}"></a>
                 </div>
             @endforeach
-        </div>
-        <div class="col-md-4">
-            <div> col-md-4 </div>
         </div>
     </div>
 </div>
