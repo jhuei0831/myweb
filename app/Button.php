@@ -22,23 +22,24 @@ class Button extends Model
 			echo "</button>";		
 			echo "<script>$(\".btn-danger\").click(function () {
 				event.preventDefault(); 
-var form = event.target.form; 
-	    Swal.fire({
-  title: 'Are you sure?',
-  text: \"You won't be able to revert this!\",
-  icon: 'warning',
-  showCancelButton: true,
-  confirmButtonColor: '#3085d6',
-  cancelButtonColor: '#d33',
-  confirmButtonText: 'Yes, delete it!'
-}).then((result) => {
-  if (result.value) {
-    form.submit();          
-  } else {
-    Swal.fire(\"Cancelled\", \"Your imaginary file is safe\", \"error\");
-  }
-}) 
-	});</script>";
+				var form = event.target.form; 
+				Swal.fire({
+					title: '確定刪除?',
+					text: '若刪除資料將無法復原',
+					icon: 'question',
+					showCancelButton: true,
+					confirmButtonColor: '#3085d6',
+					cancelButtonColor: '#d33',
+					confirmButtonText: '確定',
+					cancelButtonText: '取消'
+					}).then((result) => {
+						if (result.value) {
+							form.submit();          
+							} else {
+								Swal.fire('資料保留');
+							}
+						}) 
+					});</script>";
 		}
 
 		public static function Edit($id)
