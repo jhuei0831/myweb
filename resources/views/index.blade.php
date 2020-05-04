@@ -15,14 +15,14 @@
                             <tr>
                                 <td width=2%><span class="badge badge-pill badge-danger">TOP</span></td>
                                 <td width=10%>{{ $info_sticky->updated_at->format('Y/m/d') }}</td>
-                                <td class="text-list"><a href="{{ route('info.detail',$info_sticky->id) }}">{{ str_limit($info_sticky->title,60,'…') }}</a></td>
+                                <td ><a href="{{ route('info.detail',$info_sticky->id) }}">{{ str_limit($info_sticky->title,60,'…') }}</a></td>
                             </tr>
                             @endforeach
                             @foreach ($infos as $info)
                             <tr>
                                 <td width=2%></td>
                                 <td width=10%>{{ $info->updated_at->format('Y/m/d') }}</td>
-                                <td class="text-list"><a href="{{ route('info.detail',$info->id) }}">{{ str_limit($info->title,60,'…') }}</a></td>
+                                <td ><a href="{{ route('info.detail',$info->id) }}">{{ str_limit($info->title,60,'…') }}</a></td>
                             </tr>
                             @endforeach
                         </tbody>

@@ -1,4 +1,5 @@
 /*--------------new----------------------*/
+
 html,body {
     position: relative;
     min-height: 100%
@@ -12,12 +13,12 @@ body {
     margin-bottom: 40px
 }
 
-/*table {
+table {
     font-size: 100%;
     font-weight: bold;
     border-collapse: collapse;
     border-spacing: 0;
-}*/
+}
 
 .navbar {
     font-size: larger

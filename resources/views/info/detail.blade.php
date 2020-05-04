@@ -22,10 +22,10 @@
             <div class="card-header bg-transparent">
                 <h1><b>{{ $info_detail->title }}</b></h1>
             </div>
-            <div class="card-body">               
-                @php           
+            <div class="card-body">
+                @php
                     echo clean($info_detail->content);
-                @endphp                                                                   
+                @endphp
             </div>
             <div class="card-footer bg-transparent">
                 <p><span class="badge badge-pill badge-primary">{{ __('Editor').' : '.$info_detail->editor }}</span></p>

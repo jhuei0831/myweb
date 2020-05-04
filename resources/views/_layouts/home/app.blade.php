@@ -12,7 +12,8 @@
         <!-- Scripts -->
         <script src="{{ asset('js/app.js') }}" defer></script>
         <script src="{{ asset('js/owl.carousel.min.js') }}" defer></script>
-        <script src="{{ asset('js/sweetalert2.min.js') }}"></script>
+        <script src="{{ asset('js/sweetalert2.min.js') }}" ></script>
+
 
         <!-- Fonts -->
         <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -24,9 +25,17 @@
         <link href="{{ asset('css/home.css') }}" rel="stylesheet">
         <link href="{{ asset('css/owl.carousel.min.css') }}" rel="stylesheet">
         <link href="{{ asset('css/owl.theme.default.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/animate.css') }}" rel="stylesheet">
         <link rel="stylesheet" href="{{ asset('css/sweetalert2.min.css') }}">
 
-
+        <style>
+            table {
+                font-size: {{ $config->font_size }};
+                font-weight: {{ $config->font_weight }};
+                border-collapse: collapse;
+                border-spacing: 0;
+            }
+        </style>
         {{-- swiper cdn --}}
         <link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.css">
         <link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.min.css">
@@ -37,7 +46,7 @@
     <body style="background:linear-gradient(#{{ $config->background_color }}, #FFFFFF); background-size:cover; background-attachment: fixed; background-repeat: no-repeat;">
     @endif
         {{-- loading --}}
-        <div class="se-pre-con"></div>
+        {{-- <div class="se-pre-con"></div> --}}
         <div style="font-size:{{ $config->font_size }};font-weight:{{ $config->font_weight }};font-family: {{ $config->font_family }};">
             @include('_partials.home.nav')
             @include('_partials.home.slide')
@@ -61,6 +70,7 @@
         <script src="https://unpkg.com/swiper/js/swiper.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
         <script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
+
         <script>
             $(document).ready(function(){
                 $('.owl-carousel').owlCarousel({
@@ -74,10 +84,10 @@
                     dots: true,
                 });
             });
-            $(window).load(function() {
-                // Animate loader off screen
-                $(".se-pre-con").fadeOut("slow");;
-            });
+            // $(window).load(function() {
+            //     // Animate loader off screen
+            //     $(".se-pre-con").fadeOut("3000");;
+            // });
             $(document).ready(function() {
                 var toggleAffix = function(affixElement, scrollElement, wrapper) {
                 var height = affixElement.outerHeight(),
@@ -123,6 +133,21 @@
                 },
             })
         </script>
+        <!-- GetButton.io widget -->
+        <script type="text/javascript">
+            (function () {
+                var options = {
+                    facebook: "108075740832415", // Facebook page ID
+                    call_to_action: "聯絡我", // Call to action
+                    position: "right", // Position may be 'right' or 'left'
+                };
+                var proto = document.location.protocol, host = "getbutton.io", url = proto + "//static." + host;
+                var s = document.createElement('script'); s.type = 'text/javascript'; s.async = true; s.src = url + '/widget-send-button/js/init.js';
+                s.onload = function () { WhWidgetSendButton.init(host, proto, options); };
+                var x = document.getElementsByTagName('script')[0]; x.parentNode.insertBefore(s, x);
+            })();
+        </script>
+        <!-- /GetButton.io widget -->
         @show
     </body>
      @include('_partials.home.footer')

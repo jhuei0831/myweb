@@ -39,13 +39,25 @@ class Enum extends Model
             'PMingLiU' => '新細明體字型',
             'DFKai-sb' => '標楷體字型',
             'TwKai' => '臺灣楷體',
-            'Microsoft JhengHei' => '微軟正黑體' 
+            'Microsoft JhengHei' => '微軟正黑體',
+            'Taipei Sans TC' => '台灣黑體'
         ],
+        // 'font_weight' => [
+        //     'normal' => '正常 ',
+        //     'bold' => '粗體',
+        //     'bolder' => '比粗體粗',
+        //     'lighter' => '比一般細',
+        // ],
         'font_weight' => [
-            'normal' => '正常 ',
-            'bold' => '粗體',
-            'bolder' => '比粗體粗',
-            'lighter' => '比一般細',
+            '100' => '100 ',
+            '200' => '200',
+            '300' => '300',
+            '400' => '400',
+            '500' => '500',
+            '600' => '600',
+            '700' => '700',
+            '800' => '800',
+            '900' => '900',
         ],
         'font_size' => [
             'xx-small' => 'xx-small',
@@ -86,7 +98,7 @@ class Enum extends Model
             '0' => 'times',
             '1' => 'check',
         ],
-        
+
     ];
 
     // 帳號權限
@@ -98,8 +110,8 @@ class Enum extends Model
         '4' => '閱讀、新增、編輯、刪除',
         '5' => '所有權限',
     ];
-    
-    
+
+
     // 資料表
     const table = [
         '0' => 'configs',
@@ -107,11 +119,11 @@ class Enum extends Model
         '2' => 'logs',
         '3' => 'menus',
         '4' => 'navbars',
-        '5' => 'pages', 
-        '6' => 'slides', 
-        '7' => 'users', 
+        '5' => 'pages',
+        '6' => 'slides',
+        '7' => 'users',
     ];
-    
+
     // 導覽列類型
     const type =[
     	'navbar' => [
@@ -120,5 +132,5 @@ class Enum extends Model
     	],
     ];
 
-    
+
 }
