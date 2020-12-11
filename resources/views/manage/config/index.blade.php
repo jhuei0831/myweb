@@ -55,7 +55,7 @@
                                         {{ App\Button::edit($config->id) }}
                                         </form>
                                         @isset ($config->background)
-                                            {{ App\Button::to('delete_background',__('Delete').__('Background'),$config->id,'btn-danger','trash-alt',true) }}
+                                            {{ App\Button::to(false, 'delete_background', __('Delete').__('Background'), $config->id, 'btn-danger', 'trash-alt', true) }}
                                         @endisset
                                     </td>
                                 </tr>

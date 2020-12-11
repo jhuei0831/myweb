@@ -43,8 +43,8 @@
     <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
     <script src="{{ asset('js/touch-punch.js') }}"></script>
     <script src="{{ asset('js/_bootstrap-datepicker.min.js') }}"></script>
-    <script src="/vendor/ckeditor/ckeditor/ckeditor.js"></script>
-    <script src="/vendor/laravel-filemanager/js/stand-alone-button.js"></script>
+    <script src="{{ asset('vendor/ckeditor/ckeditor/ckeditor.js') }}"></script>
+    <script src="{{ asset('vendor/laravel-filemanager/js/stand-alone-button.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     {{-- file manager --}}
     <script>
