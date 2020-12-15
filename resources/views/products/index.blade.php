@@ -46,5 +46,5 @@
         @endforeach
     </table>
     {!! $products->links() !!}
-    <p class="text-center text-primary"><small>Tutorial by rscoder.com</small></p>
+    <p class="text-center text-primary"><small>Tutorial by jhuei.com</small></p>
 @endsection
