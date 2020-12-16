@@ -18,7 +18,6 @@ use App\Http\Controllers\api\LoginController;
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
-// Route::post('login', 'LoginController@login'); //登入
 
 Route::post('/login', [LoginController::class, 'login']); //登入
 

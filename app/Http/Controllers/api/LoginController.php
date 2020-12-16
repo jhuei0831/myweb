@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\api;
 
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Hash;
-use Illuminate\Http\Request;
 use Str;
 
 class LoginController extends Controller
@@ -13,18 +13,14 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         $user = User::where('email', $request->email)->first();
-        $apiToken = Str::random(10); //隨機產生一組10個英數字組成的字串
-        if (Hash::check($request->password, $user->password)) {
+        if ($user && Hash::check($request->password, $user->password)) {
+            $apiToken = $user->createToken('api_token')->plainTextToken; //使用Sanctum自動產生token
             if ($user->update(['api_token' => $apiToken])) { //更新 api_token
-                if ($user->remember_token) {
-                    return "login as admin, your api token is $apiToken";
-                } else {
-                    return "login as user, your api token is $apiToken";
-                }
-
+                return response()->json(['token' => $apiToken], 200);
             }
-        } else {
-            return "Wrong email or password！";
+        } 
+        else {
+            return response()->json(['message' => '登入失敗'], 404);
         }
     }
 }
