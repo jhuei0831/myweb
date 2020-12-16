@@ -1939,6 +1939,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     console.log('Component mounted.');
@@ -1963,6 +1969,14 @@ __webpack_require__.r(__webpack_exports__);
       loading: false
     };
   },
+  computed: {
+    isLoggedIn: function isLoggedIn() {
+      return this.$store.getters.isLoggedIn;
+    },
+    authStatus: function authStatus() {
+      return this.$store.getters.authStatus;
+    }
+  },
   methods: {
     validate: function validate() {
       this.$refs.form.validate();
@@ -1974,8 +1988,12 @@ __webpack_require__.r(__webpack_exports__);
       this.errors = [];
       var formContents = jQuery("#createAdministrator").serialize();
       axios.post('/api/login', formContents).then(function (response) {
+        var token = response.data.token;
+        var user = response.data.user;
         _this.loading = false;
-        alert(response.data.token);
+        localStorage.setItem('token', token);
+        axios.defaults.headers.common['Authorization'] = token;
+        commit('auth_success', token, user); // alert(token);
       })["catch"](function (error) {
         _this.loading = false;
 
@@ -38317,6 +38335,27 @@ var render = function() {
   return _c(
     "v-app",
     [
+      _c(
+        "div",
+        { attrs: { id: "nav" } },
+        [
+          _c("router-link", { attrs: { to: "/" } }, [_vm._v("Home")]),
+          _vm._v(" |\n\t\t"),
+          _c("router-link", { attrs: { to: "/about" } }, [_vm._v("About")]),
+          _vm.isLoggedIn
+            ? _c("span", [
+                _vm._v(" | "),
+                _c("a", { on: { click: _vm.logout } }, [
+                  _vm._v("Logout" + _vm._s(_vm.authStatus))
+                ])
+              ])
+            : _vm._e()
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c("router-view"),
+      _vm._v(" "),
       _c(
         "v-main",
         [
@@ -96109,7 +96148,38 @@ __webpack_require__.r(__webpack_exports__);
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__["default"]); // 定義一個新的 Vue Store
 
-var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({});
+var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
+  state: {
+    status: '',
+    token: localStorage.getItem('token') || '',
+    user: {}
+  },
+  mutations: {
+    auth_request: function auth_request(state) {
+      state.status = 'loading';
+    },
+    auth_success: function auth_success(state, token, user) {
+      state.status = 'success';
+      state.token = token;
+      state.user = user;
+    },
+    auth_error: function auth_error(state) {
+      state.status = 'error';
+    },
+    logout: function logout(state) {
+      state.status = '';
+      state.token = '';
+    }
+  },
+  getters: {
+    isLoggedIn: function isLoggedIn(state) {
+      return !!state.token;
+    },
+    authStatus: function authStatus(state) {
+      return state.status;
+    }
+  }
+});
 /* harmony default export */ __webpack_exports__["default"] = (store);
 
 /***/ }),
@@ -96164,8 +96234,8 @@ var opts = {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\xampp\htdocs\myweb\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\myweb\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\kerwin\code\myweb\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\kerwin\code\myweb\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

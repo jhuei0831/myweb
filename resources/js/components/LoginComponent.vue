@@ -1,5 +1,11 @@
 <template>
+	
 	<v-app>
+		<div id="nav">
+			<router-link to="/">Home</router-link> |
+			<router-link to="/about">About</router-link><span v-if="isLoggedIn"> | <a @click="logout">Logout{{authStatus}}</a></span>
+		</div>
+		<router-view/>
 		<v-main>
 			<v-container>
 				<v-layout align-top justify-center>
@@ -52,6 +58,10 @@
         		loading: false
 			}
 		},
+		computed : {
+			isLoggedIn : function(){ return this.$store.getters.isLoggedIn},
+			authStatus : function(){ return this.$store.getters.authStatus}
+		},
 		methods:{
 			validate () {
 				this.$refs.form.validate()
@@ -64,8 +74,13 @@
 
 				axios.post('/api/login', formContents)
 				.then((response) => {
+					const token = response.data.token;
+					const user = response.data.user;
 					this.loading = false;
-                   	alert(response.data.token);
+					localStorage.setItem('token', token);
+					axios.defaults.headers.common['Authorization'] = token;
+					commit('auth_success', token, user);
+                   	// alert(token);
                 })
 				.catch((error) => {
 					this.loading = false;

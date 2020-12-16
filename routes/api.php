@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\api\LoginController;
+use App\Http\Controllers\api\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +19,10 @@ use App\Http\Controllers\api\LoginController;
 //     return $request->user();
 // });
 
-Route::post('/login', [LoginController::class, 'login']); //登入
+Route::post('login', [UserController::class, 'login']); //登入
 
+Route::middleware('auth:api')->group(function () {
 
+    Route::get("user", [UserController::class, "user"]);
+
+});

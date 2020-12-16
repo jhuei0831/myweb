@@ -5,10 +5,11 @@ namespace App\Http\Controllers\api;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Auth;
 use Hash;
 use Str;
 
-class LoginController extends Controller
+class UserController extends Controller
 {
     public function login(Request $request)
     {
@@ -20,7 +21,17 @@ class LoginController extends Controller
             }
         } 
         else {
-            return response()->json(['message' => '登入失敗'], 404);
+            return response()->json(['message' => '登入失敗'], 401);
         }
+    }
+
+    public function user() {
+        $user = Auth::user();
+        if(!is_null($user)) { 
+            return response()->json(["status" => "success", "data" => $user]);
+        }
+        else {
+            return response()->json(["status" => "failed", "message" => "Whoops! no user found"]);
+        }        
     }
 }
