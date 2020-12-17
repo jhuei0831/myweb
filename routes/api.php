@@ -21,7 +21,7 @@ use App\Http\Controllers\api\UserController;
 
 Route::post('login', [UserController::class, 'login']); //登入
 
-Route::middleware('auth:api')->group(function () {
+Route::middleware('auth:sanctum')->group(function () {
 
     Route::get("user", [UserController::class, "user"]);
 

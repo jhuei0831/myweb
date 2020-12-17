@@ -17,7 +17,7 @@ class UserController extends Controller
         if ($user && Hash::check($request->password, $user->password)) {
             $apiToken = $user->createToken('api_token')->plainTextToken; //使用Sanctum自動產生token
             if ($user->update(['api_token' => $apiToken])) { //更新 api_token
-                return response()->json(['token' => $apiToken], 200);
+                return response()->json(['token' => $apiToken, 'user' => $user], 200);
             }
         } 
         else {

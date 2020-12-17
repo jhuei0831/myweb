@@ -3,7 +3,7 @@
 	<v-app>
 		<div id="nav">
 			<router-link to="/">Home</router-link> |
-			<router-link to="/about">About</router-link><span v-if="isLoggedIn"> | <a @click="logout">Logout{{authStatus}}</a></span>
+			<router-link to="/about">About</router-link><span v-if="isLoggedIn"> | <a>Logout{{authStatus}}</a></span>
 		</div>
 		<router-view/>
 		<v-main>
@@ -76,10 +76,11 @@
 				.then((response) => {
 					const token = response.data.token;
 					const user = response.data.user;
+					console.log(response.data.user);
 					this.loading = false;
 					localStorage.setItem('token', token);
-					axios.defaults.headers.common['Authorization'] = token;
-					commit('auth_success', token, user);
+					window.axios.defaults.headers.common['Authorization'] = token;
+					this.$store.commit('auth_success', token, user);
                    	// alert(token);
                 })
 				.catch((error) => {
