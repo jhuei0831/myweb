@@ -22,6 +22,7 @@ import router from './router'
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('login-component', require('./components/LoginComponent.vue').default);
+Vue.component('app', require('./App.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

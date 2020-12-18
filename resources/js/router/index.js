@@ -1,10 +1,22 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Login from '../components/LoginComponent.vue'
+import About from '../components/AboutComponent.vue'
 
 Vue.use(VueRouter)
 
-const routes = [
+const routes = [{
+        path: '/vue',
+        name: 'Home',
+    },
+    {
+        path: '/about',
+        name: 'About',
+        meta: {
+            auth: true
+        },
+        component: About
+    },
     {
         path: '/login',
         name: 'Login',
@@ -19,9 +31,9 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-    const loggedIn = localStorage.getItem('user')
+    const isLogged = localStorage.getItem('token')
 
-    if (to.matched.some(record => record.meta.auth) && !loggedIn) {
+    if (to.matched.some(record => record.meta.auth) && !isLogged) {
         next('/login')
         return
     }

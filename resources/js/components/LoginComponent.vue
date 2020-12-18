@@ -2,14 +2,14 @@
 	
 	<v-app>
 		<div id="nav">
-			<router-link to="/">Home</router-link> |
+			<router-link to="/vue">Home</router-link> |
 			<router-link to="/about">About</router-link><span v-if="isLoggedIn"> | <a>Logout{{authStatus}}</a></span>
 		</div>
 		<router-view/>
 		<v-main>
 			<v-container>
 				<v-layout align-top justify-center>
-					<v-form v-model="isValid" @submit="checkForm" id="createAdministrator" ref="form" lazy-validation>
+					<v-form v-model="isValid" @submit.prevent="checkForm" id="createAdministrator" ref="form" lazy-validation>
 						<p v-if="errors.length">
 							<v-alert v-for="error in errors" :key="error" type="error">{{ error }}</v-alert>
 						</p>
@@ -71,24 +71,29 @@
 				this.errors = [];
 
 				var formContents = jQuery("#createAdministrator").serialize();
-
-				axios.post('/api/login', formContents)
-				.then((response) => {
-					const token = response.data.token;
-					const user = response.data.user;
-					console.log(response.data.user);
-					this.loading = false;
-					localStorage.setItem('token', token);
-					window.axios.defaults.headers.common['Authorization'] = token;
-					this.$store.commit('auth_success', token, user);
-                   	// alert(token);
-                })
-				.catch((error) => {
-					this.loading = false;
-					this.errors.push(error.response.data.message);
-                });
-
-				e.preventDefault();
+				axios.get('/sanctum/csrf-cookie').then(response => {
+					axios.post('/api/login', formContents)
+					.then((response) => {
+						const token = response.data.token;
+						const user = response.data.user;
+						// console.log(response.data.user);
+						this.loading = false;
+						localStorage.setItem('token', token);
+						window.axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
+						this.$store.commit('auth_success', token, response.data.user);
+						this.$router.push({ name: 'About' })
+						// alert(token);
+						axios.get('/api/user')
+						.then((response) => {
+							console.log(response.data);
+							this.$store.commit('auth_success', token, user);
+						})
+					})
+					.catch((error) => {
+						this.loading = false;
+						this.errors.push(error.response.data.message);
+					});
+				});
 			}
 		}
 	}
