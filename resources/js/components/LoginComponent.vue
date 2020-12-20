@@ -1,14 +1,8 @@
 <template>
-	
-	<v-app>
-		<div id="nav">
-			<router-link to="/vue">Home</router-link> |
-			<router-link to="/about">About</router-link><span v-if="isLoggedIn"> | <a>Logout{{authStatus}}</a></span>
-		</div>
-		<router-view/>
-		<v-main>
-			<v-container>
-				<v-layout align-top justify-center>
+	<!-- <v-app> -->
+		<!-- <v-main> -->
+			<!-- <v-container> -->
+				<v-layout align-start justify-center>
 					<v-form v-model="isValid" @submit.prevent="checkForm" id="createAdministrator" ref="form" lazy-validation>
 						<p v-if="errors.length">
 							<v-alert v-for="error in errors" :key="error" type="error">{{ error }}</v-alert>
@@ -17,8 +11,8 @@
 							<v-card-title class="cyan lighten-2 white--text">Login</v-card-title>
 							<v-spacer></v-spacer>
 							<v-card-text>
-								<v-text-field :append-icon="showIcon ? 'edit' : undefined" v-model="email" type="email" name="email" label="Email" :rules="emailRules" rounded outlined/>
-								<v-text-field v-model="password" type="password" name="password" label="Password" :rules="passwordRules" rounded outlined/>
+								<v-text-field :append-icon="showIcon ? 'mdi-email' : undefined" v-model="email" type="email" name="email" label="Email" :rules="emailRules" rounded outlined/>
+								<v-text-field :append-icon="showIcon ? 'mdi-security' : undefined" v-model="password" type="password" name="password" label="Password" :rules="passwordRules" rounded outlined/>
 							</v-card-text>
 
 							<v-card-actions>
@@ -30,9 +24,9 @@
 						</v-card>
 					</v-form>
 				</v-layout>
-			</v-container>
-		</v-main>	
-	</v-app>	
+			<!-- </v-container> -->
+		<!-- </v-main>	 -->
+	<!-- </v-app>	 -->
 </template>
 
 <script>
@@ -82,12 +76,8 @@
 						window.axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
 						this.$store.commit('auth_success', token, response.data.user);
 						this.$router.push({ name: 'About' })
+						location.reload();
 						// alert(token);
-						axios.get('/api/user')
-						.then((response) => {
-							console.log(response.data);
-							this.$store.commit('auth_success', token, user);
-						})
 					})
 					.catch((error) => {
 						this.loading = false;

@@ -13,13 +13,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-Route::get('/vue', function () {
+Route::get('/', function () {
     return view('vue');
 });
-Auth::routes();
+// Route::get('/vue', function () {
+//     return view('vue');
+// });
+// Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
@@ -28,3 +28,10 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('users','UserController');
     Route::resource('products','ProductController');
 });
+
+Route::get('/{vue?}', function () {
+    return view('vue');
+})->where('vue', '[\/\w\.-]*');
+
+
+

@@ -6,7 +6,7 @@ import About from '../components/AboutComponent.vue'
 Vue.use(VueRouter)
 
 const routes = [{
-        path: '/vue',
+        path: '/',
         name: 'Home',
     },
     {
