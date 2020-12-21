@@ -21,7 +21,14 @@
 <body>
     <div id="app">
         <app></app>
-        <script src="{{ asset('js/app.js') }}"></script>
     </div>   
+    <script src="{{ asset('js/app.js') }}"></script>
+    <script>
+        @auth
+            window.Permissions = {!! json_encode(Auth::user()->allPermissions, true) !!};
+        @else
+            window.Permissions = [];
+        @endauth
+    </script>
 </body>
 </html>

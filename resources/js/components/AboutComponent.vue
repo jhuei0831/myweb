@@ -16,21 +16,11 @@
 </template>
 
 <script>
+    import { mapGetters, mapActions } from "vuex";
+
     export default {
-        data () {
-            return {
-                userdata: null
-            }  
-        },
-        mounted() {
-            axios.get('/api/user')
-            .then((response) => {
-                this.userdata = response.data.data;
-                console.log(response.data.data);
-            })
-            .catch(() => {
-                this.$router.push({ name: 'Login' })
-            })
+        computed: {
+            ...mapGetters("auth", ["userdata"])
         }
     }
 </script>

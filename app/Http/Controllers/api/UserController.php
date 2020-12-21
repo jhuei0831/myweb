@@ -21,11 +21,12 @@ class UserController extends Controller
             }
         } 
         else {
-            return response()->json(['message' => '登入失敗'], 401);
+            return response()->json(['message' => '登入失敗 : 帳號或密碼錯誤'], 401);
         }
     }
 
-    public function user() {
+    public function user() 
+    {
         $user = Auth::user();
         if(!is_null($user)) { 
             return response()->json(["status" => "success", "data" => $user]);
@@ -33,5 +34,17 @@ class UserController extends Controller
         else {
             return response()->json(["status" => "failed", "message" => "Whoops! no user found"]);
         }        
+    }
+    
+    function logout()
+    {
+        $user = Auth::user();
+        if(!is_null($user)) { 
+            $user->tokens()->where('id', $user->currentAccessToken()->id)->delete();
+            return response()->json(["status" => "success", "message" => '登出成功']);
+        }
+        else {
+            return response()->json(["status" => "failed", "message" => "Whoops! no user found"]);
+        } 
     }
 }

@@ -19,7 +19,7 @@ Route::get('/', function () {
 // Route::get('/vue', function () {
 //     return view('vue');
 // });
-// Auth::routes();
+Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 

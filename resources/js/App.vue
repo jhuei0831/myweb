@@ -1,7 +1,7 @@
 <template>
 	<v-app>
 		<v-navigation-drawer v-model="drawer" app>
-			<v-list dense v-if="isLoggedIn">
+			<v-list rounded dense v-if="isLoggedIn">
 				<v-list-item class="justify-center">
 					<v-list-item-avatar>
 						<v-img src="https://cdn.vuetifyjs.com/images/john.png"></v-img>
@@ -23,24 +23,26 @@
 						<v-list-item-content><v-list-item-title>Home</v-list-item-title></v-list-item-content>
 					</v-list-item>
 					<v-list-item to="/about" class="text-decoration-none">
-						<v-list-item-icon><v-icon>mdi-account</v-icon></v-list-item-icon>
+						<v-list-item-icon><v-icon>mdi-card-account-details</v-icon></v-list-item-icon>
 						<v-list-item-content><v-list-item-title>About</v-list-item-title></v-list-item-content>
+					</v-list-item>
+					<v-list-item v-if="can('role-list')" to="/roles" class="text-decoration-none">
+						<v-list-item-icon><v-icon>mdi-account</v-icon></v-list-item-icon>
+						<v-list-item-content><v-list-item-title>Role</v-list-item-title></v-list-item-content>
 					</v-list-item>
 				</v-list-item-group>
 				<v-divider></v-divider>
 			</v-list>
 			
 			<v-list dense>
-				<v-list-item-group color="warning">
-					<v-list-item to="/login" v-if="!isLoggedIn" class="text-decoration-none">
+				<v-list-item to="/login" v-if="!isLoggedIn" class="text-decoration-none">
 						<v-list-item-icon><v-icon>mdi-login-variant</v-icon></v-list-item-icon>
 						<v-list-item-content><v-list-item-title>Login</v-list-item-title></v-list-item-content>									
-					</v-list-item>
-					<v-list-item v-if="isLoggedIn">
-						<v-list-item-icon><v-icon>mdi-logout-variant</v-icon></v-list-item-icon>
-						<v-list-item-content><v-list-item-title @click="logout()">Logout</v-list-item-title></v-list-item-content>
-					</v-list-item>
-				</v-list-item-group>
+				</v-list-item>
+				<v-list-item v-if="isLoggedIn" link>
+					<v-list-item-icon><v-icon>mdi-logout-variant</v-icon></v-list-item-icon>
+					<v-list-item-content><v-list-item-title @click="logout()">Logout</v-list-item-title></v-list-item-content>
+				</v-list-item>
 			</v-list>
 		</v-navigation-drawer>
 
@@ -62,41 +64,24 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
 	data: () => ({ 
-		userdata: null,
 		drawer: null,
 		selectedItem: 0,
 	}),
 	mounted() {
-		axios.get('/api/user')
-		.then((response) => {
-			this.userdata = response.data.data;
-			console.log(response.data.data);
-		})
-		.catch(() => {
-			this.$router.push({ name: 'Home' })
-		})
+		if (this.isLoggedIn) {
+			this.getUser()
+		}
 	},
 	computed: {
-		...mapGetters(["isLoggedIn"]),
+		...mapGetters("auth", ["isLoggedIn", "userdata"]),
 	},
-
 	methods: {
-			logout() {
-			localStorage.removeItem("token");
-			this.$store.commit("logout");
-			this.$router.push({ name: "Home" });
-			location.reload();
-		},
+		...mapActions("auth", ["getUser", "logout"]),
 	},
 };
 </script>
 
-<style>
-v-list-item {
-    text-decoration: none;
-}
-</style>

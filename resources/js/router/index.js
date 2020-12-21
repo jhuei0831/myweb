@@ -2,20 +2,26 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Login from '../components/LoginComponent.vue'
 import About from '../components/AboutComponent.vue'
+import Roles from '../components/RolesComponent.vue'
 
 Vue.use(VueRouter)
 
-const routes = [{
+const routes = [
+    {
         path: '/',
         name: 'Home',
     },
     {
         path: '/about',
         name: 'About',
-        meta: {
-            auth: true
-        },
+        meta: { auth: true },
         component: About
+    },
+    {
+        path: '/roles',
+        name: 'Roles',
+        meta: { auth: true },
+        component: Roles
     },
     {
         path: '/login',
