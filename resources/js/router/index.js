@@ -2,7 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Login from '../components/LoginComponent.vue'
 import About from '../components/AboutComponent.vue'
-import Roles from '../components/RolesComponent.vue'
+import Roles from '../components/roles/RolesComponent.vue'
+import RolesCreate from '../components/roles/CreateComponent.vue'
 
 Vue.use(VueRouter)
 
@@ -21,7 +22,13 @@ const routes = [
         path: '/roles',
         name: 'Roles',
         meta: { auth: true },
-        component: Roles
+        component: Roles,
+    },
+    {
+        path: '/roles/create',
+        name: 'RolesCreate',
+        meta: { auth: true },
+        component: RolesCreate,
     },
     {
         path: '/login',

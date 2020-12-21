@@ -1,7 +1,8 @@
 <template>
-    <v-sheet color="grey lighten-2" >
+    <v-sheet>
         <v-skeleton-loader class="mx-auto" type="table" v-if="loading"></v-skeleton-loader>
-        <v-simple-table v-if="!loading">
+        <v-btn to="/roles/create" small color="primary"><v-icon small>mdi-account-plus</v-icon> 新增</v-btn>
+        <v-simple-table v-if="!loading">    
             <thead>
                 <tr>
                     <th>No</th>
