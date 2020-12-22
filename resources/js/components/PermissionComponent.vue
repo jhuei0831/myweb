@@ -1,7 +1,7 @@
 <script>
     export default {
         methods: {
-                can(permissionName) {
+            can(permissionName) {
                 return Permissions.toString().indexOf(permissionName) !== -1;
             },
         },

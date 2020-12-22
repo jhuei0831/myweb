@@ -26,7 +26,7 @@
 						<v-list-item-icon><v-icon>mdi-card-account-details</v-icon></v-list-item-icon>
 						<v-list-item-content><v-list-item-title>About</v-list-item-title></v-list-item-content>
 					</v-list-item>
-					<v-list-item v-if="can('role-list')" to="/roles" class="text-decoration-none">
+					<v-list-item v-if="can('role-list')" to="/roles">
 						<v-list-item-icon><v-icon>mdi-account</v-icon></v-list-item-icon>
 						<v-list-item-content><v-list-item-title>Role</v-list-item-title></v-list-item-content>
 					</v-list-item>
@@ -85,3 +85,8 @@ export default {
 };
 </script>
 
+<style>
+    a {
+        text-decoration: none !important;
+    }
+</style>

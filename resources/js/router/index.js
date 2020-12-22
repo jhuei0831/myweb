@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import Swal from 'sweetalert2'
 import Login from '../components/LoginComponent.vue'
 import About from '../components/AboutComponent.vue'
 import Roles from '../components/roles/RolesComponent.vue'
@@ -22,13 +23,25 @@ const routes = [
         path: '/roles',
         name: 'Roles',
         meta: { auth: true },
-        component: Roles,
+        component: Roles
     },
     {
         path: '/roles/create',
         name: 'RolesCreate',
         meta: { auth: true },
         component: RolesCreate,
+        beforeEnter: (to, from, next) => {
+            if (!window.Permissions.includes('role-create1')) {
+                Swal.fire({
+                    title: '您無權操作!',
+                    icon: 'error',
+                    confirmButtonText: '好喔'
+                })
+                next('/roles')
+                return
+            }
+            else next()
+        }
     },
     {
         path: '/login',

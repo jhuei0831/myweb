@@ -19,12 +19,12 @@ Route::get('/', function () {
 // Route::get('/vue', function () {
 //     return view('vue');
 // });
-Auth::routes();
+// Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::group(['middleware' => ['auth']], function() {
-    Route::resource('roles','RoleController');
+    // Route::resource('roles','RoleController');
     Route::resource('users','UserController');
     Route::resource('products','ProductController');
 });

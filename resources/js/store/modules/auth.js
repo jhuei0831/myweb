@@ -1,10 +1,12 @@
 import router from "../../router/index.js"
+import Swal from 'sweetalert2'
 
 const state = {
     token: localStorage.getItem('token') || '',
     user: [],
     errors:[],
     loading: false,
+    allow: false
 }
 
 const mutations = {
@@ -31,7 +33,7 @@ const mutations = {
 const actions = {
     login({commit}, formContents) {
         commit('auth_request')
-        axios.get('/sanctum/csrf-cookie').then(response => {
+        axios.get('/sanctum/csrf-cookie').then(() => {
             axios.post('/api/login', formContents)
             .then((response) => {
                 const token = response.data.token;
@@ -49,11 +51,34 @@ const actions = {
     getUser({ commit }) {
         axios.get('/api/user')
         .then((response) => {
-            commit('auth_user', response.data.data)
+            commit('auth_user', response.data.user)
+            window.Permissions = response.data.permission
         })
         .catch(() => {
             router.push({ name: 'Home' })
         })
+    },
+    getPermission() {
+        axios.get('/sanctum/csrf-cookie').then(() => {
+            axios.post('/api/get-permission', {permission: 'role-list'})
+            .then((response) => {
+                console.log(response.data.allow)
+                if (!response.data.allow) {
+                    Swal.fire({
+                        title: '您無權操作!',
+                        icon: 'error',
+                        confirmButtonText: '好喔'
+                    })
+                    router.push({ name: 'Home' }) 
+                }
+                else{
+                    state.allow = true
+                }
+            })
+            .catch(() => {
+                router.push({ name: 'Home' })
+            })
+        });
     },
     logout({ commit }) {
         axios.get('api/logout')
@@ -74,6 +99,7 @@ const getters = {
     userdata: state => state.user,
     loading: state => state.loading,
     errors: state => state.errors,
+    allow: state => state.allow,
 }
 
 export default {

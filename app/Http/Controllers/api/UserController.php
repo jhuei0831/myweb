@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Auth;
@@ -28,12 +29,24 @@ class UserController extends Controller
     public function user() 
     {
         $user = Auth::user();
+        $permisssion = Auth::user()->allPermissions;
         if(!is_null($user)) { 
-            return response()->json(["status" => "success", "data" => $user]);
+            return response()->json(["status" => "success", "user" => $user, "permission" => $permisssion]);
         }
         else {
             return response()->json(["status" => "failed", "message" => "Whoops! no user found"]);
         }        
+    }
+
+    function user_permission(Request $request)
+    {
+        $permisssion = Auth::user()->allPermissions;
+        if (Arr::exists($permisssion, $request->permission)) {
+            return response()->json(["status" => "success", "allow" => $request->permission]);
+        }
+        else {
+            return response()->json(["status" => "failed", "allow" => $request->permission]);
+        }
     }
     
     function logout()
