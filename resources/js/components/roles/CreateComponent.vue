@@ -1,6 +1,6 @@
 <template>
-    <v-sheet>
-        <v-skeleton-loader class="mx-auto" type="card" v-if="loading"></v-skeleton-loader>
+    <v-sheet v-if="allow">
+        <v-skeleton-loader class="mx-auto" type="card" v-if="allow"></v-skeleton-loader>
         <v-btn to="/roles" small color="primary"><v-icon left small>mdi-arrow-left</v-icon>返回</v-btn>
 
         <v-form v-model="valid" @submit.prevent="submit" ref="form" lazy-validation>
@@ -25,12 +25,15 @@
         }),
         mounted() {
             this.getPermissions()
+            this.getPermission({permission: 'role-create!'})
         },
         computed: {
             ...mapGetters("roles", ["loading", "permissions"]),
+            ...mapGetters("auth", ["allow"]),
         },
         methods: {
             ...mapActions("roles", ["getPermissions"]),
+            ...mapActions("auth", ["getPermission"]),
             submit() {
                 if (this.$refs.form.validate()) {
                     // Native form submission is not yet supported

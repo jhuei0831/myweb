@@ -41,11 +41,11 @@ class UserController extends Controller
     function user_permission(Request $request)
     {
         $permisssion = Auth::user()->allPermissions;
-        if (Arr::exists($permisssion, $request->permission)) {
-            return response()->json(["status" => "success", "allow" => $request->permission]);
+        if (in_array($request->permission, $permisssion)) {
+            return response()->json(["status" => "success", "allow" => true]);
         }
         else {
-            return response()->json(["status" => "failed", "allow" => $request->permission]);
+            return response()->json(["status" => "failed", "allow" => false]);
         }
     }
     

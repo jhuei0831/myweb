@@ -58,11 +58,11 @@ const actions = {
             router.push({ name: 'Home' })
         })
     },
-    getPermission() {
+    getPermission({commit}, {permission}) {
         axios.get('/sanctum/csrf-cookie').then(() => {
-            axios.post('/api/get-permission', {permission: 'role-list'})
+            axios.post('/api/get-permission', {permission: permission})
             .then((response) => {
-                console.log(response.data.allow)
+                console.log(permission)
                 if (!response.data.allow) {
                     Swal.fire({
                         title: '您無權操作!',

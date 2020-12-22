@@ -2182,9 +2182,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   mounted: function mounted() {
     this.getPermissions();
+    this.getPermission({
+      permission: 'role-create!'
+    });
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])("roles", ["loading", "permissions"])),
-  methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])("roles", ["getPermissions"])), {}, {
+  computed: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])("roles", ["loading", "permissions"])), Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])("auth", ["allow"])),
+  methods: _objectSpread(_objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])("roles", ["getPermissions"])), Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])("auth", ["getPermission"])), {}, {
     submit: function submit() {
       if (this.$refs.form.validate()) {// Native form submission is not yet supported
       }
@@ -42619,87 +42622,89 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "v-sheet",
-    [
-      _vm.loading
-        ? _c("v-skeleton-loader", {
-            staticClass: "mx-auto",
-            attrs: { type: "card" }
-          })
-        : _vm._e(),
-      _vm._v(" "),
-      _c(
-        "v-btn",
-        { attrs: { to: "/roles", small: "", color: "primary" } },
+  return _vm.allow
+    ? _c(
+        "v-sheet",
         [
-          _c("v-icon", { attrs: { left: "", small: "" } }, [
-            _vm._v("mdi-arrow-left")
-          ]),
-          _vm._v("返回")
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "v-form",
-        {
-          ref: "form",
-          attrs: { "lazy-validation": "" },
-          on: {
-            submit: function($event) {
-              $event.preventDefault()
-              return _vm.submit($event)
-            }
-          },
-          model: {
-            value: _vm.valid,
-            callback: function($$v) {
-              _vm.valid = $$v
-            },
-            expression: "valid"
-          }
-        },
-        [
-          _c("v-text-field", {
-            attrs: {
-              name: "name",
-              label: "名稱",
-              id: "name",
-              rules: _vm.nameRules
-            }
-          }),
-          _vm._v(" "),
-          _c("v-select", {
-            attrs: {
-              items: _vm.permissions,
-              "item-text": "name",
-              label: "Select",
-              multiple: "",
-              chips: ""
-            },
-            model: {
-              value: _vm.permission,
-              callback: function($$v) {
-                _vm.permission = $$v
-              },
-              expression: "permission"
-            }
-          }),
+          _vm.allow
+            ? _c("v-skeleton-loader", {
+                staticClass: "mx-auto",
+                attrs: { type: "card" }
+              })
+            : _vm._e(),
           _vm._v(" "),
           _c(
             "v-btn",
-            { attrs: { disabled: !_vm.valid }, on: { click: _vm.submit } },
-            [_vm._v("送出")]
+            { attrs: { to: "/roles", small: "", color: "primary" } },
+            [
+              _c("v-icon", { attrs: { left: "", small: "" } }, [
+                _vm._v("mdi-arrow-left")
+              ]),
+              _vm._v("返回")
+            ],
+            1
           ),
           _vm._v(" "),
-          _c("v-btn", { on: { click: _vm.clear } }, [_vm._v("清除")])
+          _c(
+            "v-form",
+            {
+              ref: "form",
+              attrs: { "lazy-validation": "" },
+              on: {
+                submit: function($event) {
+                  $event.preventDefault()
+                  return _vm.submit($event)
+                }
+              },
+              model: {
+                value: _vm.valid,
+                callback: function($$v) {
+                  _vm.valid = $$v
+                },
+                expression: "valid"
+              }
+            },
+            [
+              _c("v-text-field", {
+                attrs: {
+                  name: "name",
+                  label: "名稱",
+                  id: "name",
+                  rules: _vm.nameRules
+                }
+              }),
+              _vm._v(" "),
+              _c("v-select", {
+                attrs: {
+                  items: _vm.permissions,
+                  "item-text": "name",
+                  label: "Select",
+                  multiple: "",
+                  chips: ""
+                },
+                model: {
+                  value: _vm.permission,
+                  callback: function($$v) {
+                    _vm.permission = $$v
+                  },
+                  expression: "permission"
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "v-btn",
+                { attrs: { disabled: !_vm.valid }, on: { click: _vm.submit } },
+                [_vm._v("送出")]
+              ),
+              _vm._v(" "),
+              _c("v-btn", { on: { click: _vm.clear } }, [_vm._v("清除")])
+            ],
+            1
+          )
         ],
         1
       )
-    ],
-    1
-  )
+    : _vm._e()
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -104061,12 +104066,14 @@ var actions = {
       });
     });
   },
-  getPermission: function getPermission() {
+  getPermission: function getPermission(_ref3, _ref4) {
+    var commit = _ref3.commit;
+    var permission = _ref4.permission;
     axios.get('/sanctum/csrf-cookie').then(function () {
       axios.post('/api/get-permission', {
-        permission: 'role-list'
+        permission: permission
       }).then(function (response) {
-        console.log(response.data.allow);
+        console.log(permission);
 
         if (!response.data.allow) {
           sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a.fire({
@@ -104087,8 +104094,8 @@ var actions = {
       });
     });
   },
-  logout: function logout(_ref3) {
-    var commit = _ref3.commit;
+  logout: function logout(_ref5) {
+    var commit = _ref5.commit;
     axios.get('api/logout').then(function () {
       localStorage.removeItem("token");
       commit("auth_logout");
@@ -104243,8 +104250,8 @@ var opts = {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\xampp\htdocs\myweb\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\myweb\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\kerwin\code\myweb\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\kerwin\code\myweb\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
