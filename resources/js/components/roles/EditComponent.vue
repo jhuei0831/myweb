@@ -7,7 +7,7 @@
 				<v-alert v-for="(error, key) in errors" :key="key" type="error">{{ error }}<br></v-alert>
 			</p>
             <v-form v-model="valid" @submit.prevent="submit" ref="form" lazy-validation id="roleedit">
-                <v-text-field name="name" v-model="name" label="名稱" id="name" :rules="nameRules"></v-text-field>
+                <v-text-field name="name" v-model="role.name" label="名稱" id="name" :rules="nameRules"></v-text-field>
                 <v-select name="permission" v-model="permission" :items="permissions" item-text="name" label="權限" multiple chips></v-select>
                 <v-btn @click="submit" :disabled="!valid">送出</v-btn>
                 <v-btn @click="clear">清除</v-btn>
@@ -24,7 +24,6 @@
             valid: true,
             name: "",
             nameRules: [v => !!v || "Name is required", v => (v && v.length <= 10) || "Name must be less than 10 characters"],
-            select: null,
             permission: []
         }),
         mounted() {
@@ -34,17 +33,19 @@
             this.getRole(filename)
             this.getPermissions()
             this.getPermission({permission: 'role-edit'})
-        },
+        },      
         computed: {
-            ...mapGetters("roles", ["loading", "permissions", "errors", "role"]),
-            ...mapGetters("auth", ["allow"]),
+            ...mapGetters("roles", ["loading", "permissions", "rolePermissions", "errors", "role"]),
+            ...mapGetters("auth", ["allow"])
         },
         methods: {
-            ...mapActions("roles", ["getPermissions", "getRole"]),
+            ...mapActions("roles", ["getPermissions", "getRole", "editRoles"]),
             ...mapActions("auth", ["getPermission"]),
             submit() {
                 if (this.$refs.form.validate()) {
-				    this.editRoles({name: this.name, permission: this.permission})
+                    let formContents = {name: this.role.name, permission: this.permission}
+                    let id = this.role.id
+				    this.editRoles({formContents, id})
                 }
             },
             clear() {

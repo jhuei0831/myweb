@@ -65,6 +65,24 @@ const actions = {
             });
         });
     },
+    editRoles({commit}, {formContents, id}) {
+        // axios.get('/sanctum/csrf-cookie').then(() => {
+            axios.put('/api/roles-edit/'+id, formContents)
+                .then((response) => {
+                    router.push({name: 'Roles'})
+                    Swal.fire({
+                        title: response.data.message,
+                        icon: 'success',
+                        confirmButtonText: '好喔',
+                    })
+                })
+                .catch((error) => {
+                    console.log(formContents)
+                    console.log(error.response.data.message)
+                    commit('action_errors', error.response.data.errors);
+                });
+        // });
+    },
     getPermissions({ commit }) {
         axios.get('/api/permissions')
         .then((response) => {

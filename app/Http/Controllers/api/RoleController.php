@@ -74,7 +74,6 @@ class RoleController extends Controller
             ->where("role_has_permissions.role_id", $id)
             ->get();
         return response()->json(["status" => "success", "role" => $role, "rolePermissions" => $rolePermissions]);
-        // return view('roles.show', compact('role', 'rolePermissions'));
     }
 
     /**
@@ -102,15 +101,21 @@ class RoleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
+        $validated = $request->validate([
             'name' => 'required',
             'permission' => 'required',
         ]);
-        $role = Role::find($id);
-        $role->name = $request->input('name');
-        $role->save();
-        $role->syncPermissions($request->input('permission'));
-        return redirect()->route('roles.index')->with('success', 'Role updated successfully');
+        if ($validated) {
+            $role = Role::find($id);
+            $role->name = $request->input('name');
+            $role->save();
+            $role->syncPermissions($request->input('permission'));
+            return response()->json(["status" => "success", "message" => '角色修改成功']);
+        }
+        else {
+            return response()->json(["status" => "failed", "message" => $request->input('permission')]);
+        }
+        // return redirect()->route('roles.index')->with('success', 'Role updated successfully');
     }
 
     /**

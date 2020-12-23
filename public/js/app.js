@@ -2253,7 +2253,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }, function (v) {
         return v && v.length <= 10 || "Name must be less than 10 characters";
       }],
-      select: null,
       permission: []
     };
   },
@@ -2267,13 +2266,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       permission: 'role-edit'
     });
   },
-  computed: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])("roles", ["loading", "permissions", "errors", "role"])), Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])("auth", ["allow"])),
-  methods: _objectSpread(_objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])("roles", ["getPermissions", "getRole"])), Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])("auth", ["getPermission"])), {}, {
+  computed: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])("roles", ["loading", "permissions", "rolePermissions", "errors", "role"])), Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])("auth", ["allow"])),
+  methods: _objectSpread(_objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])("roles", ["getPermissions", "getRole", "editRoles"])), Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])("auth", ["getPermission"])), {}, {
     submit: function submit() {
       if (this.$refs.form.validate()) {
-        this.editRoles({
-          name: this.name,
+        var formContents = {
+          name: this.role.name,
           permission: this.permission
+        };
+        var id = this.role.id;
+        this.editRoles({
+          formContents: formContents,
+          id: id
         });
       }
     },
@@ -42930,11 +42934,11 @@ var render = function() {
                       rules: _vm.nameRules
                     },
                     model: {
-                      value: _vm.name,
+                      value: _vm.role.name,
                       callback: function($$v) {
-                        _vm.name = $$v
+                        _vm.$set(_vm.role, "name", $$v)
                       },
-                      expression: "name"
+                      expression: "role.name"
                     }
                   }),
                   _vm._v(" "),
@@ -104557,8 +104561,28 @@ var actions = {
       });
     });
   },
-  getPermissions: function getPermissions(_ref5) {
+  editRoles: function editRoles(_ref5, _ref6) {
     var commit = _ref5.commit;
+    var formContents = _ref6.formContents,
+        id = _ref6.id;
+    // axios.get('/sanctum/csrf-cookie').then(() => {
+    axios.put('/api/roles-edit/' + id, formContents).then(function (response) {
+      _router_index_js__WEBPACK_IMPORTED_MODULE_0__["default"].push({
+        name: 'Roles'
+      });
+      sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a.fire({
+        title: response.data.message,
+        icon: 'success',
+        confirmButtonText: '好喔'
+      });
+    })["catch"](function (error) {
+      console.log(formContents);
+      console.log(error.response.data.message);
+      commit('action_errors', error.response.data.errors);
+    }); // });
+  },
+  getPermissions: function getPermissions(_ref7) {
+    var commit = _ref7.commit;
     axios.get('/api/permissions').then(function (response) {
       commit('permissions', response.data.data);
     })["catch"](function () {
@@ -104645,8 +104669,8 @@ var opts = {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\xampp\htdocs\myweb\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\myweb\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\kerwin\code\myweb\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\kerwin\code\myweb\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

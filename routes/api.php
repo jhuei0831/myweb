@@ -30,6 +30,7 @@ Route::middleware('auth:sanctum')->group(function () {
     // 角色
     Route::get('roles', [RoleController::class, 'index']); // 角色列表
     Route::post('roles-create', [RoleController::class, 'store']); // 新增角色
-    Route::get('role/{id}', [RoleController::class, 'show']); // 新增角色
+    Route::get('role/{id}', [RoleController::class, 'show']); // 取得指定角色
+    Route::put('roles-edit/{id}', [RoleController::class, 'update']); // 修改角色
     // Route::resource('roles', RoleController::class);
 });
