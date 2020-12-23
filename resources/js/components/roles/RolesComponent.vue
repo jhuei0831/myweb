@@ -16,7 +16,7 @@
                         <td>{{ key+1 }}</td>
                         <td>{{ role.name }}</td>
                         <td>
-                            <v-btn x-small color="success">修改</v-btn>
+                            <v-btn x-small color="success" @click="enterEdit(role.id)">修改</v-btn>
                             <v-btn x-small color="red white--text">刪除</v-btn>
                         </td>
                     </tr>
@@ -41,6 +41,21 @@
         methods: {
             ...mapActions("roles", ["getRoles"]),
             ...mapActions("auth", ["getPermission"]),
+            enterEdit(id) {
+                this.$router.push({ path: `/roles/edit/${id}`})
+            }
+            // enterCreate() {
+            //     if (window.Permissions.includes('role-create')) {
+            //         this.$router.push({ name: 'RolesCreate', params: { enter: true } })
+            //     }
+            //     else{
+            //         Swal.fire({
+            //             title: '您無權操作!',
+            //             icon: 'error',
+            //             confirmButtonText: '好喔',
+            //         })
+            //     }
+            // }
         }
     }
 </script>

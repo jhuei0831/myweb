@@ -6,7 +6,7 @@
             <p v-if="errors.length">
 				<v-alert v-for="(error, key) in errors" :key="key" type="error">{{ error }}<br></v-alert>
 			</p>
-            <v-form v-model="valid" @submit.prevent="submit" ref="form" lazy-validation id="rolecreate">
+            <v-form v-model="valid" @submit.prevent="submit" ref="form" lazy-validation id="roleedit">
                 <v-text-field name="name" v-model="name" label="名稱" id="name" :rules="nameRules"></v-text-field>
                 <v-select name="permission" v-model="permission" :items="permissions" item-text="name" label="權限" multiple chips></v-select>
                 <v-btn @click="submit" :disabled="!valid">送出</v-btn>
@@ -28,19 +28,23 @@
             permission: []
         }),
         mounted() {
+            // 取得網址的role id
+            let pathname = window.location.pathname.split("/");
+            let filename = pathname[pathname.length-1];
+            this.getRole(filename)
             this.getPermissions()
-            this.getPermission({permission: 'role-create'})
+            this.getPermission({permission: 'role-edit'})
         },
         computed: {
-            ...mapGetters("roles", ["loading", "permissions", "errors"]),
+            ...mapGetters("roles", ["loading", "permissions", "errors", "role"]),
             ...mapGetters("auth", ["allow"]),
         },
         methods: {
-            ...mapActions("roles", ["getPermissions", "createRoles"]),
+            ...mapActions("roles", ["getPermissions", "getRole"]),
             ...mapActions("auth", ["getPermission"]),
             submit() {
                 if (this.$refs.form.validate()) {
-				    this.createRoles({name: this.name, permission: this.permission})
+				    this.editRoles({name: this.name, permission: this.permission})
                 }
             },
             clear() {

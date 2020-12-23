@@ -21,7 +21,7 @@ class CreateAdminUserSeeder extends Seeder
             'email' => 'admin@gmail.com',
             'password' => bcrypt('password')
         ]);
-        $role = Role::create(['name' => 'Admin']);
+        $role = Role::create(['name' => 'Admin', 'guard_name' => 'sanctum']);
         $permissions = Permission::pluck('id','id')->all();
         $role->syncPermissions($permissions);
         $user->assignRole([$role->id]);

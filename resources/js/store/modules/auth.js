@@ -48,28 +48,30 @@ const actions = {
             });
         });
     },
-    getUser({ commit }) {
+    getUser({ commit, dispatch }) {
         axios.get('/api/user')
         .then((response) => {
             commit('auth_user', response.data.user)
             window.Permissions = response.data.permission
         })
         .catch(() => {
-            router.push({ name: 'Home' })
+            // alert('error')
+            dispatch('logout')
+            // router.push({ name: 'Home' })
         })
     },
     getPermission({commit}, {permission}) {
+        state.allow = false
         axios.get('/sanctum/csrf-cookie').then(() => {
             axios.post('/api/get-permission', {permission: permission})
             .then((response) => {
-                console.log(permission)
                 if (!response.data.allow) {
                     Swal.fire({
                         title: '您無權操作!',
                         icon: 'error',
-                        confirmButtonText: '好喔'
+                        confirmButtonText: '好喔',
                     })
-                    router.push({ name: 'Home' }) 
+                    router.go(-1) 
                 }
                 else{
                     state.allow = true
@@ -82,7 +84,8 @@ const actions = {
     },
     logout({ commit }) {
         axios.get('api/logout')
-        .then(() => {
+        .then((response) => {
+            alert(response.data.message)
             localStorage.removeItem("token")
             commit("auth_logout")
             router.push({ name: "Home" })

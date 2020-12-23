@@ -34,7 +34,7 @@ class UserController extends Controller
             return response()->json(["status" => "success", "user" => $user, "permission" => $permisssion]);
         }
         else {
-            return response()->json(["status" => "failed", "message" => "Whoops! no user found"]);
+            return response()->json(["status" => "failed", "message" => "查無使用者"], 401);
         }        
     }
 
@@ -54,10 +54,10 @@ class UserController extends Controller
         $user = Auth::user();
         if(!is_null($user)) { 
             $user->tokens()->where('id', $user->currentAccessToken()->id)->delete();
-            return response()->json(["status" => "success", "message" => '登出成功']);
+            return response()->json(["status" => "success", "message" => "登出成功"]);
         }
         else {
-            return response()->json(["status" => "failed", "message" => "Whoops! no user found"]);
+            return response()->json(["status" => "failed", "message" => "查無使用者"], 401);
         } 
     }
 }

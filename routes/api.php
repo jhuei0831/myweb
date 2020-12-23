@@ -27,5 +27,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('logout', [UserController::class, 'logout']); // 登出
     Route::post('get-permission', [UserController::class, 'user_permission']); // 取得用戶權限
     Route::get('permissions', [RoleController::class, 'permission']); // 權限
-    Route::resource('roles','RoleController');
+    // 角色
+    Route::get('roles', [RoleController::class, 'index']); // 角色列表
+    Route::post('roles-create', [RoleController::class, 'store']); // 新增角色
+    Route::get('role/{id}', [RoleController::class, 'show']); // 新增角色
+    // Route::resource('roles', RoleController::class);
 });

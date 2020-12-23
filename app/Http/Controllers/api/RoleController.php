@@ -24,7 +24,7 @@ class RoleController extends Controller
      */
     public function index(Request $request)
     {
-        $roles = Role::orderBy('id', 'DESC')->get();
+        $roles = Role::orderBy('id', 'ASC')->get();
         return response()->json(["status" => "success", "data" => $roles]);
     }
 
@@ -47,13 +47,18 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
+        $validated = $request->validate([
             'name' => 'required|unique:roles,name',
             'permission' => 'required',
         ]);
-        $role = Role::create(['name' => $request->input('name')]);
-        $role->syncPermissions($request->input('permission'));
-        return redirect()->route('roles.index')->with('success', 'Role created successfully');
+        if ($validated) {
+            $role = Role::create(['name' => $request->input('name')]);
+            $role->syncPermissions($request->input('permission'));
+            return response()->json(["status" => "success", "message" => '角色新增成功']);
+        }
+        else {
+            return response()->json(["status" => "failed", "message" => '角色新增失敗']);
+        }
     }
 
     /**
@@ -68,7 +73,8 @@ class RoleController extends Controller
         $rolePermissions = Permission::join("role_has_permissions", "role_has_permissions.permission_id", "=", "permissions.id")
             ->where("role_has_permissions.role_id", $id)
             ->get();
-        return view('roles.show', compact('role', 'rolePermissions'));
+        return response()->json(["status" => "success", "role" => $role, "rolePermissions" => $rolePermissions]);
+        // return view('roles.show', compact('role', 'rolePermissions'));
     }
 
     /**
