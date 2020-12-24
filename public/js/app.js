@@ -2032,6 +2032,33 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])("auth", ["userdata"]))
@@ -2145,6 +2172,7 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var vuex_map_fields__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex-map-fields */ "./node_modules/vuex-map-fields/dist/index.esm.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -2169,6 +2197,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2186,12 +2215,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   mounted: function mounted() {
     this.getPermissions();
-    this.getPermission({
-      permission: 'role-create'
-    });
   },
-  computed: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])("roles", ["loading", "permissions", "errors"])), Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])("auth", ["allow"])),
-  methods: _objectSpread(_objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])("roles", ["getPermissions", "createRoles"])), Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])("auth", ["getPermission"])), {}, {
+  computed: _objectSpread(_objectSpread({}, Object(vuex_map_fields__WEBPACK_IMPORTED_MODULE_1__["mapFields"])("roles", ["errors"])), Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])("roles", ["loading", "permissions"])),
+  methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])("roles", ["getPermissions", "createRoles"])), {}, {
     submit: function submit() {
       if (this.$refs.form.validate()) {
         this.createRoles({
@@ -2202,6 +2228,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     clear: function clear() {
       this.$refs.form.reset();
+      this.errors = [];
     }
   })
 });
@@ -2218,6 +2245,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var vuex_map_fields__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex-map-fields */ "./node_modules/vuex-map-fields/dist/index.esm.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -2242,6 +2270,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2262,17 +2295,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     var filename = pathname[pathname.length - 1];
     this.getRole(filename);
     this.getPermissions();
-    this.getPermission({
-      permission: 'role-edit'
-    });
   },
-  computed: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])("roles", ["loading", "permissions", "rolePermissions", "errors", "role"])), Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])("auth", ["allow"])),
-  methods: _objectSpread(_objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])("roles", ["getPermissions", "getRole", "editRoles"])), Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])("auth", ["getPermission"])), {}, {
+  computed: _objectSpread(_objectSpread({}, Object(vuex_map_fields__WEBPACK_IMPORTED_MODULE_1__["mapFields"])("roles", ["rolePermissions", "errors"])), Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])("roles", ["loading", "permissions", "role"])),
+  methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])("roles", ["getPermissions", "getRole", "editRoles"])), {}, {
     submit: function submit() {
       if (this.$refs.form.validate()) {
         var formContents = {
           name: this.role.name,
-          permission: this.permission
+          permission: this.rolePermissions
         };
         var id = this.role.id;
         this.editRoles({
@@ -2283,6 +2313,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     clear: function clear() {
       this.$refs.form.reset();
+      this.errors = [];
     }
   })
 });
@@ -2299,6 +2330,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _router_index_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../router/index.js */ "./resources/js/router/index.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -2333,33 +2367,61 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      search: '',
+      headers: [{
+        text: 'No',
+        align: 'start',
+        sortable: true,
+        value: 'id'
+      }, {
+        text: 'Name',
+        value: 'name'
+      } // { text: 'Action', value: 'fat' },
+      ]
+    };
+  },
   mounted: function mounted() {
     this.getRoles();
-    this.getPermission({
-      permission: 'role-list'
-    });
   },
-  computed: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])("roles", ["roles", "loading"])), Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])("auth", ["allow"])),
-  methods: _objectSpread(_objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])("roles", ["getRoles"])), Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])("auth", ["getPermission"])), {}, {
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])("roles", ["roles", "loading"])),
+  methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])("roles", ["getRoles", "deleteConfirm"])), {}, {
     enterEdit: function enterEdit(id) {
-      this.$router.push({
+      _router_index_js__WEBPACK_IMPORTED_MODULE_2__["default"].push({
         path: "/roles/edit/".concat(id)
       });
-    } // enterCreate() {
-    //     if (window.Permissions.includes('role-create')) {
-    //         this.$router.push({ name: 'RolesCreate', params: { enter: true } })
-    //     }
-    //     else{
-    //         Swal.fire({
-    //             title: '您無權操作!',
-    //             icon: 'error',
-    //             confirmButtonText: '好喔',
-    //         })
-    //     }
-    // }
-
+    },
+    enterDelete: function enterDelete(id) {
+      this.deleteConfirm(id);
+    }
   })
 });
 
@@ -42446,7 +42508,14 @@ var render = function() {
               _vm.isLoggedIn
                 ? _c(
                     "v-list-item",
-                    { attrs: { link: "" } },
+                    {
+                      attrs: { link: "" },
+                      on: {
+                        click: function($event) {
+                          return _vm.logout()
+                        }
+                      }
+                    },
                     [
                       _c(
                         "v-list-item-icon",
@@ -42456,19 +42525,7 @@ var render = function() {
                       _vm._v(" "),
                       _c(
                         "v-list-item-content",
-                        [
-                          _c(
-                            "v-list-item-title",
-                            {
-                              on: {
-                                click: function($event) {
-                                  return _vm.logout()
-                                }
-                              }
-                            },
-                            [_vm._v("Logout")]
-                          )
-                        ],
+                        [_c("v-list-item-title", [_vm._v("Logout")])],
                         1
                       )
                     ],
@@ -42502,7 +42559,14 @@ var render = function() {
       _c(
         "v-main",
         { attrs: { app: "" } },
-        [_c("v-container", { attrs: { fluid: "" } }, [_c("router-view")], 1)],
+        [
+          _c(
+            "v-container",
+            { staticClass: "ma-4", attrs: { fluid: "" } },
+            [_c("router-view")],
+            1
+          )
+        ],
         1
       ),
       _vm._v(" "),
@@ -42542,23 +42606,92 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("v-simple-table", [
-    _c("thead", [
-      _c("tr", [
-        _c("th", { staticClass: "text-center" }, [_vm._v("Name")]),
-        _vm._v(" "),
-        _c("th", { staticClass: "text-center" }, [_vm._v("Email")])
-      ])
-    ]),
-    _vm._v(" "),
-    _c("tbody", [
-      _c("tr", [
-        _c("td", [_vm._v(_vm._s(_vm.userdata.name))]),
-        _vm._v(" "),
-        _c("td", [_vm._v(_vm._s(_vm.userdata.email))])
-      ])
-    ])
-  ])
+  return _c(
+    "v-layout",
+    [
+      _c(
+        "v-flex",
+        [
+          _c(
+            "v-card",
+            {
+              staticClass: "mx-auto",
+              attrs: {
+                dark: "",
+                tile: "",
+                img: "https://cdn.vuetifyjs.com/images/cards/server-room.jpg",
+                width: "500"
+              }
+            },
+            [
+              _c(
+                "v-layout",
+                {
+                  attrs: { column: "", "align-center": "", "max-width": "500" }
+                },
+                [
+                  _c(
+                    "v-avatar",
+                    { staticClass: "my-3", attrs: { size: "100" } },
+                    [
+                      _c("v-img", {
+                        attrs: {
+                          src: "https://cdn.vuetifyjs.com/images/john.jpg"
+                        }
+                      })
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-card",
+            {
+              staticClass: "mx-auto",
+              attrs: {
+                dark: "",
+                tile: "",
+                color: "blue-grey darken-4",
+                width: "500"
+              }
+            },
+            [
+              _c(
+                "v-layout",
+                { attrs: { column: "", "align-center": "" } },
+                [
+                  _c(
+                    "v-card-text",
+                    { staticClass: "headline text-center py-1" },
+                    [_vm._v(_vm._s(_vm.userdata.name))]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-card-text",
+                    { staticClass: "text-center pt-1 pb-4" },
+                    [
+                      _c("v-icon", [_vm._v("mdi-email")]),
+                      _vm._v(" " + _vm._s(_vm.userdata.email))
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -42732,14 +42865,14 @@ var render = function() {
   return _c(
     "v-sheet",
     [
-      !_vm.allow
+      _vm.loading
         ? _c("v-skeleton-loader", {
             staticClass: "mx-auto",
             attrs: { type: "article, actions" }
           })
         : _vm._e(),
       _vm._v(" "),
-      _vm.allow
+      !_vm.loading
         ? _c(
             "v-sheet",
             [
@@ -42757,11 +42890,11 @@ var render = function() {
               _vm._v(" "),
               _vm.errors.length
                 ? _c(
-                    "p",
+                    "v-col",
                     _vm._l(_vm.errors, function(error, key) {
                       return _c(
                         "v-alert",
-                        { key: key, attrs: { type: "error" } },
+                        { key: key, attrs: { type: "error", dismissible: "" } },
                         [_vm._v(_vm._s(error)), _c("br")]
                       )
                     }),
@@ -42869,14 +43002,14 @@ var render = function() {
   return _c(
     "v-sheet",
     [
-      !_vm.allow
+      _vm.loading
         ? _c("v-skeleton-loader", {
             staticClass: "mx-auto",
             attrs: { type: "article, actions" }
           })
         : _vm._e(),
       _vm._v(" "),
-      _vm.allow
+      !_vm.loading
         ? _c(
             "v-sheet",
             [
@@ -42894,11 +43027,11 @@ var render = function() {
               _vm._v(" "),
               _vm.errors.length
                 ? _c(
-                    "p",
+                    "v-col",
                     _vm._l(_vm.errors, function(error, key) {
                       return _c(
                         "v-alert",
-                        { key: key, attrs: { type: "error" } },
+                        { key: key, attrs: { type: "error", dismissible: "" } },
                         [_vm._v(_vm._s(error)), _c("br")]
                       )
                     }),
@@ -42951,12 +43084,34 @@ var render = function() {
                       multiple: "",
                       chips: ""
                     },
+                    scopedSlots: _vm._u(
+                      [
+                        {
+                          key: "selection",
+                          fn: function(ref) {
+                            var item = ref.item
+                            return [
+                              _c(
+                                "v-chip",
+                                {
+                                  attrs: { color: "blue lighten-4 blue--text" }
+                                },
+                                [_vm._v(_vm._s(item.name))]
+                              )
+                            ]
+                          }
+                        }
+                      ],
+                      null,
+                      false,
+                      3035484781
+                    ),
                     model: {
-                      value: _vm.permission,
+                      value: _vm.rolePermissions,
                       callback: function($$v) {
-                        _vm.permission = $$v
+                        _vm.rolePermissions = $$v
                       },
-                      expression: "permission"
+                      expression: "rolePermissions"
                     }
                   }),
                   _vm._v(" "),
@@ -43006,84 +43161,63 @@ var render = function() {
   return _c(
     "v-sheet",
     [
-      _vm.loading
-        ? _c("v-skeleton-loader", {
-            staticClass: "mx-auto",
-            attrs: { type: "table" }
-          })
-        : _vm._e(),
-      _vm._v(" "),
-      _vm.allow
-        ? _c(
-            "v-sheet",
-            { attrs: { wrap: "" } },
+      _c(
+        "v-col",
+        [
+          _c(
+            "v-btn",
+            { attrs: { to: "/roles/create", small: "", color: "primary" } },
             [
-              _c(
-                "v-btn",
-                { attrs: { to: "/roles/create", small: "", color: "primary" } },
-                [
-                  _c("v-icon", { attrs: { left: "", small: "" } }, [
-                    _vm._v("mdi-account-plus")
-                  ]),
-                  _vm._v("新增")
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c("v-simple-table", [
-                _c("thead", [
-                  _c("tr", [
-                    _c("th", [_vm._v("No")]),
-                    _vm._v(" "),
-                    _c("th", [_vm._v("名稱")]),
-                    _vm._v(" "),
-                    _c("th", [_vm._v("動作")])
-                  ])
-                ]),
-                _vm._v(" "),
-                _c(
-                  "tbody",
-                  _vm._l(_vm.roles, function(role, key) {
-                    return _c("tr", { key: key }, [
-                      _c("td", [_vm._v(_vm._s(key + 1))]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(role.name))]),
-                      _vm._v(" "),
-                      _c(
-                        "td",
-                        [
-                          _c(
-                            "v-btn",
-                            {
-                              attrs: { "x-small": "", color: "success" },
-                              on: {
-                                click: function($event) {
-                                  return _vm.enterEdit(role.id)
-                                }
-                              }
-                            },
-                            [_vm._v("修改")]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "v-btn",
-                            {
-                              attrs: { "x-small": "", color: "red white--text" }
-                            },
-                            [_vm._v("刪除")]
-                          )
-                        ],
-                        1
-                      )
-                    ])
-                  }),
-                  0
-                )
-              ])
+              _c("v-icon", { attrs: { left: "", small: "" } }, [
+                _vm._v("mdi-account-plus")
+              ]),
+              _vm._v("新增")
             ],
             1
           )
-        : _vm._e()
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-card",
+        [
+          _c(
+            "v-card-title",
+            [
+              _vm._v("\n            Role\n        "),
+              _c("v-spacer"),
+              _vm._v(" "),
+              _c("v-text-field", {
+                attrs: {
+                  "append-icon": "mdi-magnify",
+                  label: "Search",
+                  "single-line": "",
+                  "hide-details": ""
+                },
+                model: {
+                  value: _vm.search,
+                  callback: function($$v) {
+                    _vm.search = $$v
+                  },
+                  expression: "search"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c("v-data-table", {
+            attrs: {
+              headers: _vm.headers,
+              items: _vm.roles,
+              search: _vm.search,
+              loading: _vm.loading
+            }
+          })
+        ],
+        1
+      )
     ],
     1
   )
@@ -102311,6 +102445,222 @@ if(false) {}
 
 /***/ }),
 
+/***/ "./node_modules/vuex-map-fields/dist/index.esm.js":
+/*!********************************************************!*\
+  !*** ./node_modules/vuex-map-fields/dist/index.esm.js ***!
+  \********************************************************/
+/*! exports provided: createHelpers, getField, mapFields, mapMultiRowFields, updateField */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createHelpers", function() { return createHelpers; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getField", function() { return getField; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mapFields", function() { return mapFields; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mapMultiRowFields", function() { return mapMultiRowFields; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateField", function() { return updateField; });
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+function _slicedToArray(arr, i) {
+  return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
+}
+
+function _arrayWithHoles(arr) {
+  if (Array.isArray(arr)) return arr;
+}
+
+function _iterableToArrayLimit(arr, i) {
+  if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return;
+  var _arr = [];
+  var _n = true;
+  var _d = false;
+  var _e = undefined;
+
+  try {
+    for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
+      _arr.push(_s.value);
+
+      if (i && _arr.length === i) break;
+    }
+  } catch (err) {
+    _d = true;
+    _e = err;
+  } finally {
+    try {
+      if (!_n && _i["return"] != null) _i["return"]();
+    } finally {
+      if (_d) throw _e;
+    }
+  }
+
+  return _arr;
+}
+
+function _unsupportedIterableToArray(o, minLen) {
+  if (!o) return;
+  if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+  var n = Object.prototype.toString.call(o).slice(8, -1);
+  if (n === "Object" && o.constructor) n = o.constructor.name;
+  if (n === "Map" || n === "Set") return Array.from(o);
+  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+
+function _arrayLikeToArray(arr, len) {
+  if (len == null || len > arr.length) len = arr.length;
+
+  for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
+
+  return arr2;
+}
+
+function _nonIterableRest() {
+  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+
+function arrayToObject() {
+  var fields = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+  return fields.reduce(function (prev, path) {
+    var key = path.split(".").slice(-1)[0];
+
+    if (prev[key]) {
+      throw new Error("The key `".concat(key, "` is already in use."));
+    } // eslint-disable-next-line no-param-reassign
+
+
+    prev[key] = path;
+    return prev;
+  }, {});
+}
+
+function objectEntries(obj) {
+  return Object.keys(obj).map(function (key) {
+    return [key, obj[key]];
+  });
+}
+
+function normalizeNamespace(fn) {
+  return function () {
+    for (var _len = arguments.length, params = new Array(_len), _key = 0; _key < _len; _key++) {
+      params[_key] = arguments[_key];
+    }
+
+    // eslint-disable-next-line prefer-const
+    var _ref = typeof params[0] === "string" ? [].concat(params) : [""].concat(params),
+        _ref2 = _slicedToArray(_ref, 4),
+        namespace = _ref2[0],
+        map = _ref2[1],
+        getterType = _ref2[2],
+        mutationType = _ref2[3];
+
+    if (namespace.length && namespace.charAt(namespace.length - 1) !== "/") {
+      namespace += "/";
+    }
+
+    getterType = "".concat(namespace).concat(getterType || "getField");
+    mutationType = "".concat(namespace).concat(mutationType || "updateField");
+    return fn(namespace, map, getterType, mutationType);
+  };
+}
+
+function getField(state) {
+  return function (path) {
+    return path.split(/[.[\]]+/).reduce(function (prev, key) {
+      return prev[key];
+    }, state);
+  };
+}
+function updateField(state, _ref3) {
+  var path = _ref3.path,
+      value = _ref3.value;
+  path.split(/[.[\]]+/).reduce(function (prev, key, index, array) {
+    if (array.length === index + 1) {
+      // eslint-disable-next-line no-param-reassign
+      prev[key] = value;
+    }
+
+    return prev[key];
+  }, state);
+}
+var mapFields = normalizeNamespace(function (namespace, fields, getterType, mutationType) {
+  var fieldsObject = Array.isArray(fields) ? arrayToObject(fields) : fields;
+  return Object.keys(fieldsObject).reduce(function (prev, key) {
+    var path = fieldsObject[key];
+    var field = {
+      get: function get() {
+        return this.$store.getters[getterType](path);
+      },
+      set: function set(value) {
+        this.$store.commit(mutationType, {
+          path: path,
+          value: value
+        });
+      }
+    }; // eslint-disable-next-line no-param-reassign
+
+    prev[key] = field;
+    return prev;
+  }, {});
+});
+var mapMultiRowFields = normalizeNamespace(function (namespace, paths, getterType, mutationType) {
+  var pathsObject = Array.isArray(paths) ? arrayToObject(paths) : paths;
+  return Object.keys(pathsObject).reduce(function (entries, key) {
+    var path = pathsObject[key]; // eslint-disable-next-line no-param-reassign
+
+    entries[key] = {
+      get: function get() {
+        var store = this.$store;
+        var rows = objectEntries(store.getters[getterType](path));
+        return rows.map(function (fieldsObject) {
+          return Object.keys(fieldsObject[1]).reduce(function (prev, fieldKey) {
+            var fieldPath = "".concat(path, "[").concat(fieldsObject[0], "].").concat(fieldKey);
+            return Object.defineProperty(prev, fieldKey, {
+              get: function get() {
+                return store.getters[getterType](fieldPath);
+              },
+              set: function set(value) {
+                store.commit(mutationType, {
+                  path: fieldPath,
+                  value: value
+                });
+              }
+            });
+          }, {});
+        });
+      }
+    };
+    return entries;
+  }, {});
+});
+var createHelpers = function createHelpers(_ref4) {
+  var _ref5;
+
+  var getterType = _ref4.getterType,
+      mutationType = _ref4.mutationType;
+  return _ref5 = {}, _defineProperty(_ref5, getterType, getField), _defineProperty(_ref5, mutationType, updateField), _defineProperty(_ref5, "mapFields", normalizeNamespace(function (namespace, fields) {
+    return mapFields(namespace, fields, getterType, mutationType);
+  })), _defineProperty(_ref5, "mapMultiRowFields", normalizeNamespace(function (namespace, paths) {
+    return mapMultiRowFields(namespace, paths, getterType, mutationType);
+  })), _ref5;
+};
+
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vuex/dist/vuex.esm.js":
 /*!********************************************!*\
   !*** ./node_modules/vuex/dist/vuex.esm.js ***!
@@ -104441,13 +104791,21 @@ var actions = {
   logout: function logout(_ref5) {
     var commit = _ref5.commit;
     axios.get('api/logout').then(function (response) {
-      alert(response.data.message);
       localStorage.removeItem("token");
       commit("auth_logout");
       _router_index_js__WEBPACK_IMPORTED_MODULE_0__["default"].push({
-        name: "Home"
+        name: "Login"
+      }); // location.reload()
+
+      sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a.fire({
+        toast: true,
+        showConfirmButton: false,
+        position: 'top-end',
+        icon: 'success',
+        title: response.data.message,
+        timer: 3000,
+        timerProgressBar: true
       });
-      location.reload();
     })["catch"](function (error) {
       console.log(error.response.data.message);
     });
@@ -104492,17 +104850,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _router_index_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../router/index.js */ "./resources/js/router/index.js");
 /* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
 /* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var vuex_map_fields__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex-map-fields */ "./node_modules/vuex-map-fields/dist/index.esm.js");
+
 
 
 var state = {
-  roles: [],
   role: [],
+  roles: [],
   errors: [],
   permissions: [],
   rolePermissions: [],
   loading: true
 };
 var mutations = {
+  updateField: vuex_map_fields__WEBPACK_IMPORTED_MODULE_2__["updateField"],
   role_data: function role_data(state, _ref) {
     var role = _ref.role,
         rolePermissions = _ref.rolePermissions;
@@ -104518,25 +104879,49 @@ var mutations = {
     state.errors.push(error);
   },
   permissions: function permissions(state, _permissions) {
+    state.loading = false;
     state.permissions = _permissions;
   }
 };
 var actions = {
   getRole: function getRole(_ref2, id) {
     var commit = _ref2.commit;
+    state.loading = true;
     axios.get('/api/role/' + id).then(function (response) {
-      var payload = {
-        role: response.data.role,
-        rolePermissions: response.data.rolePermissions
-      };
-      commit('role_data', payload);
+      if (response.data.responseStatus) {
+        sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a.fire({
+          title: response.data.responseMessage,
+          icon: 'error',
+          confirmButtonText: '好喔'
+        });
+        _router_index_js__WEBPACK_IMPORTED_MODULE_0__["default"].push({
+          name: 'Roles'
+        });
+      } else {
+        var payload = {
+          role: response.data.role,
+          rolePermissions: response.data.rolePermissions
+        };
+        commit('role_data', payload);
+      }
     })["catch"](function () {// router.push({ name: 'Home' })
     });
   },
   getRoles: function getRoles(_ref3) {
     var commit = _ref3.commit;
     axios.get('/api/roles').then(function (response) {
-      commit('roles_data', response.data.data);
+      if (response.data.responseStatus) {
+        sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a.fire({
+          title: response.data.responseMessage,
+          icon: 'error',
+          confirmButtonText: '好喔'
+        });
+        _router_index_js__WEBPACK_IMPORTED_MODULE_0__["default"].push({
+          name: 'Home'
+        });
+      } else {
+        commit('roles_data', response.data.data);
+      }
     })["catch"](function () {
       _router_index_js__WEBPACK_IMPORTED_MODULE_0__["default"].push({
         name: 'Home'
@@ -104556,7 +104941,11 @@ var actions = {
           confirmButtonText: '好喔'
         });
       })["catch"](function (error) {
-        console.log(error.response.data.errors);
+        sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a.fire({
+          title: '新增失敗',
+          icon: 'error',
+          confirmButtonText: '好喔'
+        });
         commit('action_errors', error.response.data.errors);
       });
     });
@@ -104565,26 +104954,94 @@ var actions = {
     var commit = _ref5.commit;
     var formContents = _ref6.formContents,
         id = _ref6.id;
-    // axios.get('/sanctum/csrf-cookie').then(() => {
-    axios.put('/api/roles-edit/' + id, formContents).then(function (response) {
-      _router_index_js__WEBPACK_IMPORTED_MODULE_0__["default"].push({
-        name: 'Roles'
+    axios.get('/sanctum/csrf-cookie').then(function () {
+      axios.put('/api/role-edit/' + id, formContents).then(function (response) {
+        _router_index_js__WEBPACK_IMPORTED_MODULE_0__["default"].push({
+          name: 'Roles'
+        });
+        sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a.fire({
+          toast: true,
+          showConfirmButton: false,
+          position: 'top-end',
+          icon: 'success',
+          title: response.data.message,
+          timer: 3000,
+          timerProgressBar: true
+        });
+      })["catch"](function (error) {
+        commit('action_errors', error.response.data.errors);
       });
-      sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a.fire({
-        title: response.data.message,
-        icon: 'success',
-        confirmButtonText: '好喔'
-      });
-    })["catch"](function (error) {
-      console.log(formContents);
-      console.log(error.response.data.message);
-      commit('action_errors', error.response.data.errors);
-    }); // });
+    });
   },
-  getPermissions: function getPermissions(_ref7) {
-    var commit = _ref7.commit;
+  deleteConfirm: function deleteConfirm(_ref7, id) {
+    var dispatch = _ref7.dispatch;
+    sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a.fire({
+      title: "確定刪除?",
+      icon: 'question',
+      confirmButtonText: '確定',
+      showDenyButton: true,
+      denyButtonText: '再想想'
+    }).then(function (result) {
+      if (result.isConfirmed) {
+        dispatch('deleteRole', id);
+      } else if (result.isDenied) {
+        sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a.fire({
+          toast: true,
+          showConfirmButton: false,
+          position: 'top-end',
+          icon: 'info',
+          title: '資料已保留',
+          timer: 3000,
+          timerProgressBar: true
+        });
+      }
+    });
+  },
+  deleteRole: function deleteRole(_ref8, id) {
+    var dispatch = _ref8.dispatch;
+    axios["delete"]('/api/role-delete/' + id).then(function (response) {
+      if (response.data.responseStatus) {
+        sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a.fire({
+          title: response.data.responseMessage,
+          icon: 'error',
+          confirmButtonText: '好喔'
+        });
+      } else {
+        if (response.data.status == 'failed') {
+          sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a.fire({
+            title: response.data.message,
+            icon: 'error',
+            confirmButtonText: '好喔'
+          });
+        } else {
+          sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a.fire({
+            title: response.data.message,
+            icon: 'success',
+            confirmButtonText: '好喔'
+          });
+          dispatch('getRoles');
+        }
+      }
+    })["catch"](function (error) {// console.log(error.response)
+      // router.push({ name: 'Home' })
+    });
+  },
+  getPermissions: function getPermissions(_ref9) {
+    var commit = _ref9.commit;
+    state.loading = true;
     axios.get('/api/permissions').then(function (response) {
-      commit('permissions', response.data.data);
+      if (response.data.responseStatus) {
+        sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a.fire({
+          title: response.data.responseMessage,
+          icon: 'error',
+          confirmButtonText: '好喔'
+        });
+        _router_index_js__WEBPACK_IMPORTED_MODULE_0__["default"].push({
+          name: 'Roles'
+        });
+      } else {
+        commit('permissions', response.data.data);
+      }
     })["catch"](function () {
       _router_index_js__WEBPACK_IMPORTED_MODULE_0__["default"].push({
         name: 'Home'
@@ -104593,6 +105050,7 @@ var actions = {
   }
 };
 var getters = {
+  getField: vuex_map_fields__WEBPACK_IMPORTED_MODULE_2__["getField"],
   roles: function roles(state) {
     return state.roles;
   },
@@ -104669,8 +105127,8 @@ var opts = {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\kerwin\code\myweb\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\kerwin\code\myweb\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\xampp\htdocs\myweb\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\myweb\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

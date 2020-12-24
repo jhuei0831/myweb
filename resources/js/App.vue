@@ -36,12 +36,12 @@
 			
 			<v-list dense>
 				<v-list-item to="/login" v-if="!isLoggedIn" class="text-decoration-none">
-						<v-list-item-icon><v-icon>mdi-login-variant</v-icon></v-list-item-icon>
-						<v-list-item-content><v-list-item-title>Login</v-list-item-title></v-list-item-content>									
+					<v-list-item-icon><v-icon>mdi-login-variant</v-icon></v-list-item-icon>
+					<v-list-item-content><v-list-item-title>Login</v-list-item-title></v-list-item-content>									
 				</v-list-item>
-				<v-list-item v-if="isLoggedIn" link>
+				<v-list-item v-if="isLoggedIn" @click="logout()" link>
 					<v-list-item-icon><v-icon>mdi-logout-variant</v-icon></v-list-item-icon>
-					<v-list-item-content><v-list-item-title @click="logout()">Logout</v-list-item-title></v-list-item-content>
+					<v-list-item-content><v-list-item-title>Logout</v-list-item-title></v-list-item-content>
 				</v-list-item>
 			</v-list>
 		</v-navigation-drawer>
@@ -52,7 +52,7 @@
 		</v-app-bar>
 
 		<v-main app>
-			<v-container fluid>
+			<v-container fluid class="ma-4">
 				<router-view />	
 			</v-container>
 		</v-main>

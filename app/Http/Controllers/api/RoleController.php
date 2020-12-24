@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api;
 
 use DB;
+use Auth;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -12,9 +13,9 @@ class RoleController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('permission:role-list|role-create|role-edit|role-delete', ['only' => ['index', 'store']]);
-        $this->middleware('permission:role-create', ['only' => ['create', 'store']]);
-        $this->middleware('permission:role-edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:role-list', ['only' => ['index']]);
+        $this->middleware('permission:role-create', ['only' => ['permission', 'store']]);
+        $this->middleware('permission:role-edit', ['only' => ['show', 'edit', 'update']]);
         $this->middleware('permission:role-delete', ['only' => ['destroy']]);
     }
     /**
@@ -115,7 +116,6 @@ class RoleController extends Controller
         else {
             return response()->json(["status" => "failed", "message" => $request->input('permission')]);
         }
-        // return redirect()->route('roles.index')->with('success', 'Role updated successfully');
     }
 
     /**
@@ -126,7 +126,13 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
-        DB::table("roles")->where('id', $id)->delete();
-        return redirect()->route('roles.index')->with('success', 'Role deleted successfully');
+        $role = DB::table("roles")->where('id', $id)->first();
+        if (Auth::user()->hasRole($role->name)) {
+            return response()->json(["status" => "failed", "message" => '角色刪除失敗'], 401);
+        }
+        else {
+            DB::table("roles")->where('id', $id)->delete();
+            return response()->json(["status" => "success", "message" => '角色刪除成功']);
+        }
     }
 }

@@ -85,11 +85,19 @@ const actions = {
     logout({ commit }) {
         axios.get('api/logout')
         .then((response) => {
-            alert(response.data.message)
             localStorage.removeItem("token")
             commit("auth_logout")
-            router.push({ name: "Home" })
-            location.reload()
+            router.push({ name: "Login" })
+            // location.reload()
+            Swal.fire({
+                toast: true,
+                showConfirmButton: false,
+                position: 'top-end',
+                icon: 'success',
+                title: response.data.message,
+                timer: 3000,
+                timerProgressBar: true,
+            })
         })
         .catch((error) => {
             console.log(error.response.data.message)

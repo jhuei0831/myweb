@@ -30,6 +30,7 @@ class UserController extends Controller
     {
         $user = Auth::user();
         $permisssion = Auth::user()->allPermissions;
+        $role = Auth::user()->role;
         if(!is_null($user)) { 
             return response()->json(["status" => "success", "user" => $user, "permission" => $permisssion]);
         }

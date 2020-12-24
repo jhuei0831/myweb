@@ -23,14 +23,15 @@ use App\Http\Controllers\api\RoleController;
 Route::post('login', [UserController::class, 'login']); // 登入
 
 Route::middleware('auth:sanctum')->group(function () {
+    // 用戶
     Route::get("user", [UserController::class, "user"]);      // 取得用戶資料 
     Route::get('logout', [UserController::class, 'logout']); // 登出
     Route::post('get-permission', [UserController::class, 'user_permission']); // 取得用戶權限
-    Route::get('permissions', [RoleController::class, 'permission']); // 權限
     // 角色
+    Route::get('permissions', [RoleController::class, 'permission']); // 取得權限
     Route::get('roles', [RoleController::class, 'index']); // 角色列表
     Route::post('roles-create', [RoleController::class, 'store']); // 新增角色
     Route::get('role/{id}', [RoleController::class, 'show']); // 取得指定角色
-    Route::put('roles-edit/{id}', [RoleController::class, 'update']); // 修改角色
-    // Route::resource('roles', RoleController::class);
+    Route::put('role-edit/{id}', [RoleController::class, 'update']); // 修改角色
+    Route::delete('role-delete/{id}', [RoleController::class, 'destroy']); // 刪除角色
 });

@@ -27,6 +27,7 @@
         "sweetalert2": "^10.12.5",
         "vue-router": "^3.4.9",
         "vuetify": "^2.3.21",
-        "vuex": "^3.6.0"
+        "vuex": "^3.6.0",
+        "vuex-map-fields": "^1.4.1"
     }
 }
