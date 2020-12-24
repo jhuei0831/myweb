@@ -1,17 +1,30 @@
 <template>
-    <v-sheet>
+    <v-sheet color="transparent">
         <v-skeleton-loader class="mx-auto" type="article, actions" v-if="loading"></v-skeleton-loader>
-        <v-sheet v-if="!loading">
-            <v-btn to="/roles" small color="primary"><v-icon left small>mdi-arrow-left</v-icon>返回</v-btn>
+        <v-sheet v-if="!loading" color="transparent">
+            <v-col>
+                <v-btn to="/roles" small color="primary"><v-icon left small>mdi-arrow-left</v-icon>返回</v-btn>
+            </v-col>
             <v-col v-if="errors.length">
 				<v-alert v-for="(error, key) in errors" :key="key" type="error" dismissible>{{ error }}<br></v-alert>
 			</v-col>
-            <v-form v-model="valid" @submit.prevent="submit" ref="form" lazy-validation id="rolecreate">
-                <v-text-field name="name" v-model="name" label="名稱" id="name" :rules="nameRules"></v-text-field>
-                <v-select name="permission" v-model="permission" :items="permissions" item-text="name" label="權限" multiple chips></v-select>
-                <v-btn @click="submit" :disabled="!valid">送出</v-btn>
-                <v-btn @click="clear">清除</v-btn>
-            </v-form> 
+            <v-card class="blue-grey lighten-5">
+                <v-card-title class="cyan darken-3 white--text">
+                    <v-icon color="white">mdi-account-plus-outline</v-icon>&nbsp;角色新增
+                </v-card-title>
+                <v-card-text>
+                    <v-form v-model="valid" @submit.prevent="submit" ref="form" lazy-validation id="rolecreate" class="mt-4">
+                        <v-text-field name="name" v-model="name" label="名稱" id="name" :rules="nameRules"></v-text-field>
+                        <v-select name="permission" v-model="permission" :items="permissions" item-text="name" label="權限" multiple chips>
+                            <template #selection="{ item }">
+                                <v-chip color="blue lighten-4 blue--text">{{item.name}}</v-chip>
+                            </template>
+                        </v-select>
+                        <v-btn color="success" @click="submit" :disabled="!valid">送出</v-btn>
+                        <v-btn color="error" @click="clear">清除</v-btn>
+                    </v-form> 
+                </v-card-text>
+            </v-card>      
         </v-sheet>      
     </v-sheet>
 </template>

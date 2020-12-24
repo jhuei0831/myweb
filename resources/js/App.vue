@@ -1,6 +1,6 @@
 <template>
-	<v-app>
-		<v-navigation-drawer v-model="drawer" app>
+	<v-app id="bg">
+		<v-navigation-drawer v-model="drawer" app color="blue-grey lighten-4">
 			<v-list rounded dense v-if="isLoggedIn">
 				<v-list-item class="justify-center">
 					<v-list-item-avatar>
@@ -46,18 +46,20 @@
 			</v-list>
 		</v-navigation-drawer>
 
-		<v-app-bar app>
+		<v-app-bar app color="blue-grey lighten-4">
 			<v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 			<v-toolbar-title>MyWeb</v-toolbar-title>
+			<v-spacer></v-spacer>
+			<v-switch  v-model="$vuetify.theme.dark"></v-switch>
 		</v-app-bar>
 
 		<v-main app>
-			<v-container fluid class="ma-4">
+			<v-container fluid class="mb-6">
 				<router-view />	
 			</v-container>
 		</v-main>
 
-		<v-footer app>
+		<v-footer app color="blue-grey lighten-4">
 			<v-col class="text-center"><strong>{{ new Date().getFullYear() }} Jhuei</strong></v-col>
 		</v-footer>
 	</v-app>
@@ -89,4 +91,14 @@ export default {
     a {
         text-decoration: none !important;
     }
+	#bg {
+		background: url('https://i.pinimg.com/originals/cb/c2/2c/cbc22ca5a3d7568a742262639a9f6b3f.jpg');
+		/* background: url('https://marketplace.canva.com/EAEMngvLCL0/1/0/800w/canva-green-foliage-holiday-zoom-virtual-background-lFKQ1lGmxs4.jpg'); */
+		/* Full height */
+		height: 100%;
+		/* Center and scale the image nicely */
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: cover;
+	}
 </style>

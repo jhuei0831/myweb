@@ -114,7 +114,7 @@ class RoleController extends Controller
             return response()->json(["status" => "success", "message" => '角色修改成功']);
         }
         else {
-            return response()->json(["status" => "failed", "message" => $request->input('permission')]);
+            return response()->json(["status" => "failed", "message" => '角色修改失敗']);
         }
     }
 

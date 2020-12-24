@@ -1980,6 +1980,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2197,6 +2199,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2252,6 +2267,16 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2367,29 +2392,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -2405,8 +2407,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }, {
         text: 'Name',
         value: 'name'
-      } // { text: 'Action', value: 'fat' },
-      ]
+      }, {
+        text: 'Action'
+      }]
     };
   },
   mounted: function mounted() {
@@ -6886,7 +6889,7 @@ exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader
 
 
 // module
-exports.push([module.i, "\na {\n    text-decoration: none !important;\n}\n", ""]);
+exports.push([module.i, "\na {\n        text-decoration: none !important;\n}\n#bg {\n\t\tbackground: url('https://i.pinimg.com/originals/cb/c2/2c/cbc22ca5a3d7568a742262639a9f6b3f.jpg');\n\t\t/* background: url('https://marketplace.canva.com/EAEMngvLCL0/1/0/800w/canva-green-foliage-holiday-zoom-virtual-background-lFKQ1lGmxs4.jpg'); */\n\t\t/* Full height */\n\t\theight: 100%;\n\t\t/* Center and scale the image nicely */\n\t\tbackground-position: center;\n\t\tbackground-repeat: no-repeat;\n\t\tbackground-size: cover;\n}\n", ""]);
 
 // exports
 
@@ -42321,11 +42324,12 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "v-app",
+    { attrs: { id: "bg" } },
     [
       _c(
         "v-navigation-drawer",
         {
-          attrs: { app: "" },
+          attrs: { app: "", color: "blue-grey lighten-4" },
           model: {
             value: _vm.drawer,
             callback: function($$v) {
@@ -42541,7 +42545,7 @@ var render = function() {
       _vm._v(" "),
       _c(
         "v-app-bar",
-        { attrs: { app: "" } },
+        { attrs: { app: "", color: "blue-grey lighten-4" } },
         [
           _c("v-app-bar-nav-icon", {
             on: {
@@ -42551,7 +42555,19 @@ var render = function() {
             }
           }),
           _vm._v(" "),
-          _c("v-toolbar-title", [_vm._v("MyWeb")])
+          _c("v-toolbar-title", [_vm._v("MyWeb")]),
+          _vm._v(" "),
+          _c("v-spacer"),
+          _vm._v(" "),
+          _c("v-switch", {
+            model: {
+              value: _vm.$vuetify.theme.dark,
+              callback: function($$v) {
+                _vm.$set(_vm.$vuetify.theme, "dark", $$v)
+              },
+              expression: "$vuetify.theme.dark"
+            }
+          })
         ],
         1
       ),
@@ -42562,7 +42578,7 @@ var render = function() {
         [
           _c(
             "v-container",
-            { staticClass: "ma-4", attrs: { fluid: "" } },
+            { staticClass: "mb-6", attrs: { fluid: "" } },
             [_c("router-view")],
             1
           )
@@ -42572,7 +42588,7 @@ var render = function() {
       _vm._v(" "),
       _c(
         "v-footer",
-        { attrs: { app: "" } },
+        { attrs: { app: "", color: "blue-grey lighten-4" } },
         [
           _c("v-col", { staticClass: "text-center" }, [
             _c("strong", [_vm._v(_vm._s(new Date().getFullYear()) + " Jhuei")])
@@ -42864,6 +42880,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "v-sheet",
+    { attrs: { color: "transparent" } },
     [
       _vm.loading
         ? _c("v-skeleton-loader", {
@@ -42875,15 +42892,22 @@ var render = function() {
       !_vm.loading
         ? _c(
             "v-sheet",
+            { attrs: { color: "transparent" } },
             [
               _c(
-                "v-btn",
-                { attrs: { to: "/roles", small: "", color: "primary" } },
+                "v-col",
                 [
-                  _c("v-icon", { attrs: { left: "", small: "" } }, [
-                    _vm._v("mdi-arrow-left")
-                  ]),
-                  _vm._v("返回")
+                  _c(
+                    "v-btn",
+                    { attrs: { to: "/roles", small: "", color: "primary" } },
+                    [
+                      _c("v-icon", { attrs: { left: "", small: "" } }, [
+                        _vm._v("mdi-arrow-left")
+                      ]),
+                      _vm._v("返回")
+                    ],
+                    1
+                  )
                 ],
                 1
               ),
@@ -42903,69 +42927,126 @@ var render = function() {
                 : _vm._e(),
               _vm._v(" "),
               _c(
-                "v-form",
-                {
-                  ref: "form",
-                  attrs: { "lazy-validation": "", id: "rolecreate" },
-                  on: {
-                    submit: function($event) {
-                      $event.preventDefault()
-                      return _vm.submit($event)
-                    }
-                  },
-                  model: {
-                    value: _vm.valid,
-                    callback: function($$v) {
-                      _vm.valid = $$v
-                    },
-                    expression: "valid"
-                  }
-                },
+                "v-card",
+                { staticClass: "blue-grey lighten-5" },
                 [
-                  _c("v-text-field", {
-                    attrs: {
-                      name: "name",
-                      label: "名稱",
-                      id: "name",
-                      rules: _vm.nameRules
-                    },
-                    model: {
-                      value: _vm.name,
-                      callback: function($$v) {
-                        _vm.name = $$v
-                      },
-                      expression: "name"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("v-select", {
-                    attrs: {
-                      name: "permission",
-                      items: _vm.permissions,
-                      "item-text": "name",
-                      label: "權限",
-                      multiple: "",
-                      chips: ""
-                    },
-                    model: {
-                      value: _vm.permission,
-                      callback: function($$v) {
-                        _vm.permission = $$v
-                      },
-                      expression: "permission"
-                    }
-                  }),
-                  _vm._v(" "),
                   _c(
-                    "v-btn",
-                    {
-                      attrs: { disabled: !_vm.valid },
-                      on: { click: _vm.submit }
-                    },
-                    [_vm._v("送出")]
+                    "v-card-title",
+                    { staticClass: "cyan darken-3 white--text" },
+                    [
+                      _c("v-icon", { attrs: { color: "white" } }, [
+                        _vm._v("mdi-account-plus-outline")
+                      ]),
+                      _vm._v(" 角色新增\n                ")
+                    ],
+                    1
                   ),
                   _vm._v(" "),
-                  _c("v-btn", { on: { click: _vm.clear } }, [_vm._v("清除")])
+                  _c(
+                    "v-card-text",
+                    [
+                      _c(
+                        "v-form",
+                        {
+                          ref: "form",
+                          staticClass: "mt-4",
+                          attrs: { "lazy-validation": "", id: "rolecreate" },
+                          on: {
+                            submit: function($event) {
+                              $event.preventDefault()
+                              return _vm.submit($event)
+                            }
+                          },
+                          model: {
+                            value: _vm.valid,
+                            callback: function($$v) {
+                              _vm.valid = $$v
+                            },
+                            expression: "valid"
+                          }
+                        },
+                        [
+                          _c("v-text-field", {
+                            attrs: {
+                              name: "name",
+                              label: "名稱",
+                              id: "name",
+                              rules: _vm.nameRules
+                            },
+                            model: {
+                              value: _vm.name,
+                              callback: function($$v) {
+                                _vm.name = $$v
+                              },
+                              expression: "name"
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("v-select", {
+                            attrs: {
+                              name: "permission",
+                              items: _vm.permissions,
+                              "item-text": "name",
+                              label: "權限",
+                              multiple: "",
+                              chips: ""
+                            },
+                            scopedSlots: _vm._u(
+                              [
+                                {
+                                  key: "selection",
+                                  fn: function(ref) {
+                                    var item = ref.item
+                                    return [
+                                      _c(
+                                        "v-chip",
+                                        {
+                                          attrs: {
+                                            color: "blue lighten-4 blue--text"
+                                          }
+                                        },
+                                        [_vm._v(_vm._s(item.name))]
+                                      )
+                                    ]
+                                  }
+                                }
+                              ],
+                              null,
+                              false,
+                              3035484781
+                            ),
+                            model: {
+                              value: _vm.permission,
+                              callback: function($$v) {
+                                _vm.permission = $$v
+                              },
+                              expression: "permission"
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "v-btn",
+                            {
+                              attrs: { color: "success", disabled: !_vm.valid },
+                              on: { click: _vm.submit }
+                            },
+                            [_vm._v("送出")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-btn",
+                            {
+                              attrs: { color: "error" },
+                              on: { click: _vm.clear }
+                            },
+                            [_vm._v("清除")]
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
                 ],
                 1
               )
@@ -43001,6 +43082,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "v-sheet",
+    { attrs: { color: "transparent" } },
     [
       _vm.loading
         ? _c("v-skeleton-loader", {
@@ -43012,15 +43094,22 @@ var render = function() {
       !_vm.loading
         ? _c(
             "v-sheet",
+            { attrs: { color: "transparent" } },
             [
               _c(
-                "v-btn",
-                { attrs: { to: "/roles", small: "", color: "primary" } },
+                "v-col",
                 [
-                  _c("v-icon", { attrs: { left: "", small: "" } }, [
-                    _vm._v("mdi-arrow-left")
-                  ]),
-                  _vm._v("返回")
+                  _c(
+                    "v-btn",
+                    { attrs: { to: "/roles", small: "", color: "primary" } },
+                    [
+                      _c("v-icon", { attrs: { left: "", small: "" } }, [
+                        _vm._v("mdi-arrow-left")
+                      ]),
+                      _vm._v("返回")
+                    ],
+                    1
+                  )
                 ],
                 1
               ),
@@ -43040,91 +43129,126 @@ var render = function() {
                 : _vm._e(),
               _vm._v(" "),
               _c(
-                "v-form",
-                {
-                  ref: "form",
-                  attrs: { "lazy-validation": "", id: "roleedit" },
-                  on: {
-                    submit: function($event) {
-                      $event.preventDefault()
-                      return _vm.submit($event)
-                    }
-                  },
-                  model: {
-                    value: _vm.valid,
-                    callback: function($$v) {
-                      _vm.valid = $$v
-                    },
-                    expression: "valid"
-                  }
-                },
+                "v-card",
+                { staticClass: "blue-grey lighten-5" },
                 [
-                  _c("v-text-field", {
-                    attrs: {
-                      name: "name",
-                      label: "名稱",
-                      id: "name",
-                      rules: _vm.nameRules
-                    },
-                    model: {
-                      value: _vm.role.name,
-                      callback: function($$v) {
-                        _vm.$set(_vm.role, "name", $$v)
-                      },
-                      expression: "role.name"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("v-select", {
-                    attrs: {
-                      name: "permission",
-                      items: _vm.permissions,
-                      "item-text": "name",
-                      label: "權限",
-                      multiple: "",
-                      chips: ""
-                    },
-                    scopedSlots: _vm._u(
-                      [
-                        {
-                          key: "selection",
-                          fn: function(ref) {
-                            var item = ref.item
-                            return [
-                              _c(
-                                "v-chip",
-                                {
-                                  attrs: { color: "blue lighten-4 blue--text" }
-                                },
-                                [_vm._v(_vm._s(item.name))]
-                              )
-                            ]
-                          }
-                        }
-                      ],
-                      null,
-                      false,
-                      3035484781
-                    ),
-                    model: {
-                      value: _vm.rolePermissions,
-                      callback: function($$v) {
-                        _vm.rolePermissions = $$v
-                      },
-                      expression: "rolePermissions"
-                    }
-                  }),
-                  _vm._v(" "),
                   _c(
-                    "v-btn",
-                    {
-                      attrs: { disabled: !_vm.valid },
-                      on: { click: _vm.submit }
-                    },
-                    [_vm._v("送出")]
+                    "v-card-title",
+                    { staticClass: "cyan darken-3 white--text" },
+                    [
+                      _c("v-icon", { attrs: { color: "white" } }, [
+                        _vm._v("mdi-account-edit-outline")
+                      ]),
+                      _vm._v(" 角色修改\n                ")
+                    ],
+                    1
                   ),
                   _vm._v(" "),
-                  _c("v-btn", { on: { click: _vm.clear } }, [_vm._v("清除")])
+                  _c(
+                    "v-card-text",
+                    [
+                      _c(
+                        "v-form",
+                        {
+                          ref: "form",
+                          staticClass: "mt-4",
+                          attrs: { "lazy-validation": "", id: "roleedit" },
+                          on: {
+                            submit: function($event) {
+                              $event.preventDefault()
+                              return _vm.submit($event)
+                            }
+                          },
+                          model: {
+                            value: _vm.valid,
+                            callback: function($$v) {
+                              _vm.valid = $$v
+                            },
+                            expression: "valid"
+                          }
+                        },
+                        [
+                          _c("v-text-field", {
+                            attrs: {
+                              name: "name",
+                              label: "名稱",
+                              id: "name",
+                              rules: _vm.nameRules
+                            },
+                            model: {
+                              value: _vm.role.name,
+                              callback: function($$v) {
+                                _vm.$set(_vm.role, "name", $$v)
+                              },
+                              expression: "role.name"
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("v-select", {
+                            attrs: {
+                              name: "permission",
+                              items: _vm.permissions,
+                              "item-text": "name",
+                              label: "權限",
+                              multiple: "",
+                              chips: ""
+                            },
+                            scopedSlots: _vm._u(
+                              [
+                                {
+                                  key: "selection",
+                                  fn: function(ref) {
+                                    var item = ref.item
+                                    return [
+                                      _c(
+                                        "v-chip",
+                                        {
+                                          attrs: {
+                                            color: "blue lighten-4 blue--text"
+                                          }
+                                        },
+                                        [_vm._v(_vm._s(item.name))]
+                                      )
+                                    ]
+                                  }
+                                }
+                              ],
+                              null,
+                              false,
+                              3035484781
+                            ),
+                            model: {
+                              value: _vm.rolePermissions,
+                              callback: function($$v) {
+                                _vm.rolePermissions = $$v
+                              },
+                              expression: "rolePermissions"
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "v-btn",
+                            {
+                              attrs: { color: "success", disabled: !_vm.valid },
+                              on: { click: _vm.submit }
+                            },
+                            [_vm._v("送出")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-btn",
+                            {
+                              attrs: { color: "error" },
+                              on: { click: _vm.clear }
+                            },
+                            [_vm._v("清除")]
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
                 ],
                 1
               )
@@ -43160,6 +43284,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "v-sheet",
+    { attrs: { rounded: "", color: "transparent" } },
     [
       _c(
         "v-col",
@@ -43184,15 +43309,21 @@ var render = function() {
         [
           _c(
             "v-card-title",
+            { staticClass: "cyan darken-3 white--text" },
             [
-              _vm._v("\n            Role\n        "),
+              _c("v-icon", { attrs: { color: "white" } }, [
+                _vm._v("mdi-account-outline")
+              ]),
+              _vm._v(" Role\n            "),
               _c("v-spacer"),
               _vm._v(" "),
               _c("v-text-field", {
+                staticClass: "cyan lighten-3",
                 attrs: {
+                  color: "cyan darken-3",
+                  rounded: "",
                   "append-icon": "mdi-magnify",
                   label: "Search",
-                  "single-line": "",
                   "hide-details": ""
                 },
                 model: {
@@ -43208,12 +43339,62 @@ var render = function() {
           ),
           _vm._v(" "),
           _c("v-data-table", {
+            staticClass: "blue-grey lighten-5",
             attrs: {
               headers: _vm.headers,
               items: _vm.roles,
               search: _vm.search,
               loading: _vm.loading
-            }
+            },
+            scopedSlots: _vm._u([
+              {
+                key: "item",
+                fn: function(role) {
+                  return [
+                    _c("tr", [
+                      _c("td", [_vm._v(_vm._s(role.item.id))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(role.item.name))]),
+                      _vm._v(" "),
+                      _c(
+                        "td",
+                        [
+                          _c(
+                            "v-btn",
+                            {
+                              attrs: { "x-small": "", color: "success" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.enterEdit(role.item.id)
+                                }
+                              }
+                            },
+                            [_vm._v("修改")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-btn",
+                            {
+                              attrs: {
+                                "x-small": "",
+                                color: "red white--text"
+                              },
+                              on: {
+                                click: function($event) {
+                                  return _vm.enterDelete(role.item.id)
+                                }
+                              }
+                            },
+                            [_vm._v("刪除")]
+                          )
+                        ],
+                        1
+                      )
+                    ])
+                  ]
+                }
+              }
+            ])
           })
         ],
         1
@@ -104969,6 +105150,7 @@ var actions = {
           timerProgressBar: true
         });
       })["catch"](function (error) {
+        console.log(error.response);
         commit('action_errors', error.response.data.errors);
       });
     });
@@ -105127,8 +105309,8 @@ var opts = {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\xampp\htdocs\myweb\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\myweb\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\kerwin\code\myweb\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\kerwin\code\myweb\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

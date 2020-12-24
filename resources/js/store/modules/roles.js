@@ -108,6 +108,7 @@ const actions = {
                     })
                 })
                 .catch((error) => {
+                    console.log(error.response)
                     commit('action_errors', error.response.data.errors);
                 });
         });
