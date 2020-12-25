@@ -5,6 +5,8 @@ import About from '../components/AboutComponent.vue'
 import Roles from '../components/roles/RolesComponent.vue'
 import RolesCreate from '../components/roles/CreateComponent.vue'
 import RolesEdit from '../components/roles/EditComponent.vue'
+import Users from '../components/users/IndexComponent.vue'
+import UsersCreate from '../components/users/CreateComponent.vue'
 
 Vue.use(VueRouter)
 
@@ -36,6 +38,18 @@ const routes = [
         name: 'RolesEdit',
         meta: { auth: true },
         component: RolesEdit,
+    },
+    {
+        path: '/users',
+        name: 'Users',
+        meta: { auth: true },
+        component: Users
+    },
+    {
+        path: '/users/create',
+        name: 'UsersCreate',
+        meta: { auth: true },
+        component: UsersCreate,
     },
     {
         path: '/login',

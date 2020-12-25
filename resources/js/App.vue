@@ -1,5 +1,5 @@
 <template>
-	<v-app id="bg">
+	<v-app id="">
 		<v-navigation-drawer v-model="drawer" app color="blue-grey lighten-4">
 			<v-list rounded dense v-if="isLoggedIn">
 				<v-list-item class="justify-center">
@@ -28,7 +28,11 @@
 					</v-list-item>
 					<v-list-item v-if="can('role-list')" to="/roles">
 						<v-list-item-icon><v-icon>mdi-account</v-icon></v-list-item-icon>
-						<v-list-item-content><v-list-item-title>Role</v-list-item-title></v-list-item-content>
+						<v-list-item-content><v-list-item-title>Roles</v-list-item-title></v-list-item-content>
+					</v-list-item>
+					<v-list-item v-if="can('role-list')" to="/users">
+						<v-list-item-icon><v-icon>mdi-account-multiple</v-icon></v-list-item-icon>
+						<v-list-item-content><v-list-item-title>Users</v-list-item-title></v-list-item-content>
 					</v-list-item>
 				</v-list-item-group>
 				<v-divider></v-divider>
@@ -50,7 +54,6 @@
 			<v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 			<v-toolbar-title>MyWeb</v-toolbar-title>
 			<v-spacer></v-spacer>
-			<v-switch  v-model="$vuetify.theme.dark"></v-switch>
 		</v-app-bar>
 
 		<v-main app>

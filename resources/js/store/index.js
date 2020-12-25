@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import auth from './modules/auth';
 import roles from './modules/roles';
+import users from './modules/users';
 
 Vue.use(Vuex);
 
@@ -21,7 +22,8 @@ const store = new Vuex.Store({
     },
     modules: {
         auth,
-        roles
+        roles,
+        users
     }
 })
 export default store;

@@ -2,22 +2,24 @@
     <v-sheet rounded color="transparent">
         <!-- <v-skeleton-loader class="mx-auto" type="table" v-if="loading"></v-skeleton-loader> -->
         <v-col>
-            <v-btn to="/roles/create" small color="primary"><v-icon left small>mdi-account-plus</v-icon>新增</v-btn>
+            <v-btn to="/users/create" small color="primary"><v-icon left small>mdi-account-plus</v-icon>新增</v-btn>
         </v-col>
         <v-card>
             <v-card-title class="cyan darken-3 white--text">
-                <v-icon color="white">mdi-account-outline</v-icon>&nbsp;角色列表
+                <v-icon color="white">mdi-account-multiple-outline</v-icon>&nbsp;使用者列表
                 <v-spacer></v-spacer>
                 <v-text-field color="cyan darken-3" class="cyan lighten-3" rounded v-model="search" append-icon="mdi-magnify" label="Search" hide-details></v-text-field>
             </v-card-title>
-            <v-data-table :headers="headers" :items="roles" :search="search" :loading="loading" class="blue-grey lighten-5"> 
-                <template v-slot:item="role">
+            <v-data-table :headers="headers" :items="users" :search="search" :loading="loading" class="blue-grey lighten-5"> 
+                <template v-slot:item="user">
                     <tr>
-                        <td>{{role.item.id}}</td>
-                        <td>{{role.item.name}}</td>
+                        <td>{{user.item.id}}</td>
+                        <td>{{user.item.name}}</td>
+                        <td>{{user.item.email}}</td>
+                        <td v-for="(role, key) in user.item.roles" :key="key">{{ role.name }}</td>
                         <td>
-                            <v-btn x-small color="success" @click="enterEdit(role.item.id)">修改</v-btn>
-                            <v-btn x-small color="red white--text" @click="enterDelete(role.item.id)">刪除</v-btn>
+                            <v-btn x-small color="success" @click="enterEdit(user.item.id)">修改</v-btn>
+                            <v-btn x-small color="red white--text" @click="enterDelete(user.item.id)">刪除</v-btn>
                         </td>
                     </tr>
                 </template>    
@@ -43,18 +45,20 @@
                         value: 'id',
                     },
                     { text: 'Name', value: 'name'},
+                    { text: 'E-mail', value: 'email'},
+                    { text: 'Role', value: 'role'},
                     { text: 'Action' },
                 ],
             }
         },
         mounted() {
-            this.getRoles()
+            this.getUsers()
         },
         computed: {
-            ...mapGetters("roles", ["roles", "loading"]),
+            ...mapGetters("users", ["users", "loading"]),
         },
         methods: {
-            ...mapActions("roles", ["getRoles", "deleteConfirm"]),
+            ...mapActions("users", ["getUsers", "deleteConfirm"]),
             enterEdit(id) {
                 router.push({ path: `/roles/edit/${id}`})
             },

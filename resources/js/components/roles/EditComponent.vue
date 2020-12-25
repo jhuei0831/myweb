@@ -21,7 +21,8 @@
                             </template>
                         </v-select>
                         <v-btn color="success" @click="submit" :disabled="!valid">送出</v-btn>
-                        <v-btn color="error" @click="clear">清除</v-btn>
+                        <v-btn color="error" @click="clear">清除表單內容</v-btn>
+                        <v-btn color="warning" @click="clear_errors">清除錯誤訊息</v-btn>
                     </v-form> 
                 </v-card-text>
             </v-card>
@@ -31,7 +32,7 @@
 </template>
 
 <script>
-    import { mapState, mapGetters, mapActions } from "vuex";
+    import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
     import { mapFields } from 'vuex-map-fields';
 
     export default {
@@ -54,16 +55,20 @@
         },
         methods: {
             ...mapActions("roles", ["getPermissions", "getRole", "editRoles"]),
+            ...mapMutations("roles", ["clean_errors"]),
             submit() {
                 if (this.$refs.form.validate()) {
                     let formContents = {name: this.role.name, permission: this.rolePermissions}
                     let id = this.role.id
+                    this.clean_errors()
 				    this.editRoles({formContents, id})
                 }
             },
             clear() {
                 this.$refs.form.reset()
-                this.errors = []
+            },
+            clear_errors() {
+                this.clean_errors()
             }
         }
     }

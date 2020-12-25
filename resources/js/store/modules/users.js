@@ -3,24 +3,24 @@ import Swal from 'sweetalert2'
 import { getField, updateField } from "vuex-map-fields";
 
 const state = {
-    role: [],
-    roles: [],
+    user: [],
+    users: [],
     errors:[],
-    permissions: [],
-    rolePermissions: [],
+    roles: [],
+    user_role: [],
     loading: true,
 }
 
 const mutations = {
     updateField,
-    role_data(state, {role, rolePermissions}) {
+    user_data(state, {user, user_role}) {
         state.loading = false
-        state.role = role
-        state.rolePermissions = rolePermissions
+        state.user = user
+        state.user_role = user_role
     },
-    roles_data(state, roles) {
+    users_data(state, users) {
         state.loading = false
-        state.roles = roles
+        state.users = users
     },
     action_errors(state, error) {
         state.errors.push(error)
@@ -28,15 +28,15 @@ const mutations = {
     clean_errors(state) {
         state.errors = []
     },
-    permissions(state, permissions) {
+    roles(state, roles) {
         state.loading = false
-        state.permissions = permissions
+        state.roles = roles
     }
 }
 
 const actions = {
-    getRole({ commit }, id) {
-        state.loading = true
+    getUser({ commit }, id) {
+        // state.loading = true
         axios.get('/api/role/'+id)
         .then((response) => {
             if (response.data.responseStatus) {
@@ -56,8 +56,8 @@ const actions = {
             // router.push({ name: 'Home' })
         })
     },
-    getRoles({ commit }) {
-        axios.get('/api/roles')
+    getUsers({ commit }) {
+        axios.get('/api/users')
         .then((response) => {
             if (response.data.responseStatus) {
                 Swal.fire({
@@ -68,14 +68,14 @@ const actions = {
                 router.push({ name: 'Home' })
             }
             else{
-                commit('roles_data', response.data.data)
+                commit('users_data', response.data.data)
             }
         })
         .catch(() => {
             router.push({ name: 'Home' })
         })
     },   
-    createRoles({commit}, formContents) {
+    createUser({commit}, formContents) {
         axios.get('/sanctum/csrf-cookie').then(() => {
             axios.post('/api/roles-create', formContents)
             .then((response) => {
@@ -178,9 +178,9 @@ const actions = {
             // router.push({ name: 'Home' })
         })
     },
-    getPermissions({ commit }) {
+    getRoles({ commit }) {
         state.loading = true
-        axios.get('/api/permissions')
+        axios.get('/api/roles')
         .then((response) => {
             if (response.data.responseStatus) {
                 Swal.fire({
@@ -191,7 +191,7 @@ const actions = {
                 router.push({ name: 'Roles' })
             }
             else{
-                commit('permissions', response.data.data)
+                commit('roles', response.data.data)
             }
         })
         .catch(() => {
@@ -202,12 +202,12 @@ const actions = {
 
 const getters = {
     getField,
-    roles: state => state.roles,
-    role: state => state.role,
+    users: state => state.users,
+    user: state => state.user,
     errors: state => state.errors,
     loading: state => state.loading,
-    permissions: state => state.permissions,
-    rolePermissions: state => state.rolePermissions,
+    roles: state => state.roles,
+    user_role: state => state.user_role,
 }
 
 export default {

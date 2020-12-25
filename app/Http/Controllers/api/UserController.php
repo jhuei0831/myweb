@@ -2,63 +2,127 @@
 
 namespace App\Http\Controllers\api;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+
 use App\Models\User;
-use Auth;
+use Spatie\Permission\Models\Role;
+use DB;
 use Hash;
-use Str;
 
 class UserController extends Controller
 {
-    public function login(Request $request)
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index(Request $request)
     {
-        $user = User::where('email', $request->email)->first();
-        if ($user && Hash::check($request->password, $user->password)) {
-            $apiToken = $user->createToken('api_token')->plainTextToken; //使用Sanctum自動產生token
-            if ($user->update(['api_token' => $apiToken])) { //更新 api_token
-                return response()->json(['token' => $apiToken, 'user' => $user], 200);
-            }
-        } 
-        else {
-            return response()->json(['message' => '登入失敗 : 帳號或密碼錯誤'], 401);
+        $users = User::with('roles')->orderBy('id','ASC')->get();
+        return response()->json(["status" => "success", "data" => $users]);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        $roles = Role::pluck('name','name')->all();
+        return response()->json(["status" => "success", "data" => $roles]);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|same:confirm-password',
+            'roles' => 'required'
+        ]);
+        if ($validated) {
+            $input = $request->all();
+            $input['password'] = Hash::make($input['password']);
+            $user = User::create($input);
+            $user->assignRole($request->input('roles'));
+            return response()->json(["status" => "success", "message" => '使用者新增成功']);
+        }
+        else{
+            return response()->json(["status" => "success", "message" => '使用者新增失敗']);
         }
     }
 
-    public function user() 
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
     {
-        $user = Auth::user();
-        $permisssion = Auth::user()->allPermissions;
-        $role = Auth::user()->role;
-        if(!is_null($user)) { 
-            return response()->json(["status" => "success", "user" => $user, "permission" => $permisssion]);
-        }
-        else {
-            return response()->json(["status" => "failed", "message" => "查無使用者"], 401);
-        }        
+        $user = User::find($id);
+        return view('users.show',compact('user'));
     }
 
-    function user_permission(Request $request)
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
     {
-        $permisssion = Auth::user()->allPermissions;
-        if (in_array($request->permission, $permisssion)) {
-            return response()->json(["status" => "success", "allow" => true]);
-        }
-        else {
-            return response()->json(["status" => "failed", "allow" => false]);
-        }
+        $user = User::find($id);
+        $roles = Role::pluck('name','name')->all();
+        $userRole = $user->roles->pluck('name','name')->all();
+        return view('users.edit',compact('user','roles','userRole'));
     }
-    
-    function logout()
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
     {
-        $user = Auth::user();
-        if(!is_null($user)) { 
-            $user->tokens()->where('id', $user->currentAccessToken()->id)->delete();
-            return response()->json(["status" => "success", "message" => "登出成功"]);
+        $this->validate($request, [
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email,'.$id,
+            'password' => 'same:confirm-password',
+            'roles' => 'required'
+        ]);
+        $input = $request->all();
+        if(!empty($input['password'])){
+            $input['password'] = Hash::make($input['password']);
+        }else{
+            $input = Arr::except($input,array('password'));
         }
-        else {
-            return response()->json(["status" => "failed", "message" => "查無使用者"], 401);
-        } 
+        $user = User::find($id);
+        $user->update($input);
+        DB::table('model_has_roles')->where('model_id',$id)->delete();
+        $user->assignRole($request->input('roles'));
+        return redirect()->route('users.index')->with('success','User updated successfully');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        User::find($id)->delete();
+        return redirect()->route('users.index')->with('success','User deleted successfully');
     }
 }

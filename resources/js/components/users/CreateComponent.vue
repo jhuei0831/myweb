@@ -3,19 +3,22 @@
         <v-skeleton-loader class="mx-auto" type="article, actions" v-if="loading"></v-skeleton-loader>
         <v-sheet v-if="!loading" color="transparent">
             <v-col>
-                <v-btn to="/roles" small color="primary"><v-icon left small>mdi-arrow-left</v-icon>返回</v-btn>
+                <v-btn to="/users" small color="primary"><v-icon left small>mdi-arrow-left</v-icon>返回</v-btn>
             </v-col>
             <v-col v-if="errors.length">
 				<v-alert v-for="(error, key) in errors" :key="key" type="error" dismissible>{{ error }}<br></v-alert>
 			</v-col>
             <v-card class="blue-grey lighten-5">
                 <v-card-title class="cyan darken-3 white--text">
-                    <v-icon color="white">mdi-account-plus-outline</v-icon>&nbsp;角色新增
+                    <v-icon color="white">mdi-account-plus-outline</v-icon>&nbsp;使用者新增
                 </v-card-title>
                 <v-card-text>
                     <v-form v-model="valid" @submit.prevent="submit" ref="form" lazy-validation id="rolecreate" class="mt-4">
                         <v-text-field name="name" v-model="name" label="名稱" id="name" :rules="nameRules"></v-text-field>
-                        <v-select name="permission" :rules="permissionRules" v-model="permission" :items="permissions" item-text="name" label="權限" multiple chips>
+                        <v-text-field name="email" v-model="email" label="電子信箱" id="email" :rules="emailRules"></v-text-field>
+                        <v-text-field name="password" v-model="password" label="電子信箱" id="password" :rules="passwordRules"></v-text-field>
+                        <v-text-field name="email" v-model="email" label="電子信箱" id="email" :rules="nameRules"></v-text-field>
+                        <v-select name="role" :rules="roleRules" v-model="role" :items="roles" item-text="name" label="角色" chips>
                             <template #selection="{ item }">
                                 <v-chip color="blue lighten-4 blue--text">{{item.name}}</v-chip>
                             </template>
@@ -39,20 +42,25 @@
             valid: true,
             name: "",
             nameRules: [v => !!v || "名稱必填", v => (v && v.length <= 10) || "名稱必須小於10個字"],
+            email: '',
+            emailRules: [
+                v => !!v || 'E-mail is required',
+                v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
+            ],
             select: null,
-            permission: [],
-            permissionRules: [(v) =>  v.length>0 || "權限必填"],
+            role: '',
+            roleRules: [v => !!v || "權限必填"],
         }),
         mounted() {
-            this.getPermissions()
+            this.getRoles()
         },
         computed: {
-            ...mapFields("roles", ["errors"]),
-            ...mapGetters("roles", ["loading", "permissions"]),
+            ...mapFields("users", ["errors"]),
+            ...mapGetters("users", ["loading", "roles"]),
         },
         methods: {
-            ...mapActions("roles", ["getPermissions", "createRoles"]),
-            ...mapMutations("roles", ["clean_errors"]),
+            ...mapActions("users", ["getRoles", "createUser"]),
+            ...mapMutations("users", ["clean_errors"]),
             submit() {
                 if (this.$refs.form.validate()) {
 				    this.createRoles({name: this.name, permission: this.permission})

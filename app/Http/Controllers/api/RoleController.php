@@ -107,11 +107,27 @@ class RoleController extends Controller
             'permission' => 'required',
         ]);
         if ($validated) {
+            // 檢查名稱是否重複
+            $check_name = Role::where('id', '!=', $id)->where('name', $request->input('name'))->get();
+            if ($check_name->isNotEmpty()) {
+                return response()->json(["status" => "failed", "message" => '角色修改失敗', "errors" => '名稱重複' ]);
+            }
             $role = Role::find($id);
-            $role->name = $request->input('name');
-            $role->save();
-            $role->syncPermissions($request->input('permission'));
-            return response()->json(["status" => "success", "message" => '角色修改成功']);
+            if (isset($request->input('permission')[0]['id']) && $role->name == $request->input('name')) {
+                return response()->json(["status" => "failed", "message" => '角色修改失敗', "errors" => '無修改動作']);
+            }
+            elseif (isset($request->input('permission')[0]['id'])) {
+                $role->name = $request->input('name');
+                $role->save();
+                return response()->json(["status" => "success", "message" => '角色名稱修改成功']);
+            }
+            else{
+                $role->name = $request->input('name');
+                $role->save();
+                $role->syncPermissions($request->input('permission'));
+                return response()->json(["status" => "success", "message" => '角色修改成功']); 
+            }
+                 
         }
         else {
             return response()->json(["status" => "failed", "message" => '角色修改失敗']);
