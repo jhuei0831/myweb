@@ -60,7 +60,7 @@
         methods: {
             ...mapActions("users", ["getUsers", "deleteConfirm"]),
             enterEdit(id) {
-                router.push({ path: `/roles/edit/${id}`})
+                router.push({ path: `/users/edit/${id}`})
             },
             enterDelete(id) {
                 this.deleteConfirm(id)

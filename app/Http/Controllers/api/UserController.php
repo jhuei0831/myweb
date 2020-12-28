@@ -12,6 +12,7 @@ use Hash;
 
 class UserController extends Controller
 {
+    
     /**
      * Display a listing of the resource.
      *
@@ -45,14 +46,14 @@ class UserController extends Controller
         $validated = $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|same:confirm-password',
-            'roles' => 'required'
+            'password' => 'required|same:password_confirmation',
+            'role' => 'required'
         ]);
         if ($validated) {
             $input = $request->all();
             $input['password'] = Hash::make($input['password']);
             $user = User::create($input);
-            $user->assignRole($request->input('roles'));
+            $user->assignRole($request->input('role'));
             return response()->json(["status" => "success", "message" => '使用者新增成功']);
         }
         else{
@@ -69,7 +70,8 @@ class UserController extends Controller
     public function show($id)
     {
         $user = User::find($id);
-        return view('users.show',compact('user'));
+        $user_role = User::with('roles')->find($id)->roles[0]->name;
+        return response()->json(["status" => "success", "user" => $user, "user_role" => $user_role]);
     }
 
     /**

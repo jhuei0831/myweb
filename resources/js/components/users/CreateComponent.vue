@@ -13,20 +13,32 @@
                     <v-icon color="white">mdi-account-plus-outline</v-icon>&nbsp;使用者新增
                 </v-card-title>
                 <v-card-text>
-                    <v-form v-model="valid" @submit.prevent="submit" ref="form" lazy-validation id="rolecreate" class="mt-4">
-                        <v-text-field name="name" v-model="name" label="名稱" id="name" :rules="nameRules"></v-text-field>
-                        <v-text-field name="email" v-model="email" label="電子信箱" id="email" :rules="emailRules"></v-text-field>
-                        <v-text-field name="password" v-model="password" label="電子信箱" id="password" :rules="passwordRules"></v-text-field>
-                        <v-text-field name="email" v-model="email" label="電子信箱" id="email" :rules="nameRules"></v-text-field>
-                        <v-select name="role" :rules="roleRules" v-model="role" :items="roles" item-text="name" label="角色" chips>
-                            <template #selection="{ item }">
-                                <v-chip color="blue lighten-4 blue--text">{{item.name}}</v-chip>
-                            </template>
-                        </v-select>
-                        <v-btn color="success" @click="submit" :disabled="!valid">送出</v-btn>
-                        <v-btn color="error" @click="clear">清除表單內容</v-btn>
+                    <validation-observer ref="observer" v-slot="{ invalid, reset }">
+                    <v-form @submit.prevent="submit" @reset.prevent="reset" ref="form" lazy-validation id="rolecreate" class="mt-4">
+                        <validation-provider v-slot="{errors}" name="名稱" rules="required|max:10">
+                            <v-text-field name="name" v-model="name" label="名稱" id="name" :error-messages="errors"></v-text-field>
+                        </validation-provider>
+                        <validation-provider v-slot="{errors}" name="電子信箱" rules="required|email">
+                            <v-text-field name="email" v-model="email" label="電子信箱" id="email" :error-messages="errors"></v-text-field>
+                        </validation-provider>
+                        <validation-provider v-slot="{ errors }" name="密碼" rules="required|password:@password_confirmation">
+                            <v-text-field type="password" name="password" v-model="password" label="密碼" id="password" :error-messages="errors"></v-text-field>
+                        </validation-provider>
+                        <validation-provider v-slot="{ errors }" name="確認密碼" vid="password_confirmation" rules="required">
+                            <v-text-field type="password" name="password_confirmation" v-model="password_confirmation" label="確認密碼" id="password_confirmation" :error-messages="errors"></v-text-field>
+                        </validation-provider>
+                        <validation-provider v-slot="{errors}" name="電子信箱" rules="required">
+                            <v-select name="role" v-model="role" :items="roles" item-text="name" label="角色" chips :error-messages="errors">
+                                <template #selection="{ item }">
+                                    <v-chip color="blue lighten-4 blue--text">{{ item.name }}</v-chip>
+                                </template>
+                            </v-select>
+                        </validation-provider>
+                        <v-btn color="success" @click="submit" :disabled="invalid">送出</v-btn>
+                        <v-btn color="error" type="reset">清除表單內容</v-btn>
                         <v-btn color="warning" @click="clear_errors">清除錯誤訊息</v-btn>
                     </v-form> 
+                    </validation-observer>
                 </v-card-text>
             </v-card>      
         </v-sheet>      
@@ -39,17 +51,11 @@
 
     export default {
         data: () => ({
-            valid: true,
-            name: "",
-            nameRules: [v => !!v || "名稱必填", v => (v && v.length <= 10) || "名稱必須小於10個字"],
             email: '',
-            emailRules: [
-                v => !!v || 'E-mail is required',
-                v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
-            ],
-            select: null,
+            name: '',
+            password: '',
+            password_confirmation: '',
             role: '',
-            roleRules: [v => !!v || "權限必填"],
         }),
         mounted() {
             this.getRoles()
@@ -63,11 +69,14 @@
             ...mapMutations("users", ["clean_errors"]),
             submit() {
                 if (this.$refs.form.validate()) {
-				    this.createRoles({name: this.name, permission: this.permission})
+				    this.createUser({
+                        name: this.name, 
+                        email: this.email,
+                        password: this.password,
+                        password_confirmation: this.password_confirmation,
+                        role: this.role,
+                    })
                 }
-            },
-            clear() {
-                this.$refs.form.reset()
             },
             clear_errors() {
                 this.clean_errors()

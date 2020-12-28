@@ -10,7 +10,8 @@ window.Vue = require('vue');
 import vuetify from './vuetify'
 import store from './store'
 import router from './router'
-import Permission from './components/PermissionComponent';
+import LaravelPermission from './components/LaravelPermission';
+import VeeValidation from './components/VeeValidation';
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -24,7 +25,8 @@ import Permission from './components/PermissionComponent';
 
 Vue.component('login-component', require('./components/LoginComponent.vue').default);
 Vue.component('app', require('./App.vue').default);
-Vue.mixin(Permission);
+Vue.mixin(LaravelPermission);
+Vue.mixin(VeeValidation);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

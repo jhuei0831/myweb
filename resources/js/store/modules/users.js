@@ -37,7 +37,7 @@ const mutations = {
 const actions = {
     getUser({ commit }, id) {
         // state.loading = true
-        axios.get('/api/role/'+id)
+        axios.get('/api/user/'+id)
         .then((response) => {
             if (response.data.responseStatus) {
                 Swal.fire({
@@ -48,8 +48,8 @@ const actions = {
                 router.push({ name: 'Roles' })
             }
             else{
-                const payload = { role: response.data.role, rolePermissions: response.data.rolePermissions }
-                commit('role_data', payload)
+                const payload = { user: response.data.user, user_role: response.data.user_role }
+                commit('user_data', payload)
             }    
         })
         .catch(() => {
@@ -77,9 +77,9 @@ const actions = {
     },   
     createUser({commit}, formContents) {
         axios.get('/sanctum/csrf-cookie').then(() => {
-            axios.post('/api/roles-create', formContents)
+            axios.post('/api/users-create', formContents)
             .then((response) => {
-                router.push({ name: 'Roles' })
+                router.push({ name: 'Users' })
                 Swal.fire({
                     title: response.data.message,
                     icon: 'success',

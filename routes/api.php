@@ -39,4 +39,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('users', [UserController::class, 'index']); // 使用者列表
     // Route::get('roles', [UserController::class, 'create']); // 取得角色
     Route::post('users-create', [UserController::class, 'store']); // 新增使用者
+    Route::get('user/{id}', [UserController::class, 'show']); // 取得指定使用者
+
 });

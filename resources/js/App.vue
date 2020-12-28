@@ -1,6 +1,6 @@
 <template>
 	<v-app id="">
-		<v-navigation-drawer v-model="drawer" app color="blue-grey lighten-4">
+		<v-navigation-drawer v-model="drawer" app color="grey lighten-4">
 			<v-list rounded dense v-if="isLoggedIn">
 				<v-list-item class="justify-center">
 					<v-list-item-avatar>
@@ -50,7 +50,7 @@
 			</v-list>
 		</v-navigation-drawer>
 
-		<v-app-bar app color="blue-grey lighten-4">
+		<v-app-bar app color="grey lighten-4">
 			<v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 			<v-toolbar-title>MyWeb</v-toolbar-title>
 			<v-spacer></v-spacer>
@@ -62,8 +62,8 @@
 			</v-container>
 		</v-main>
 
-		<v-footer app color="blue-grey lighten-4">
-			<v-col class="text-center"><strong>{{ new Date().getFullYear() }} Jhuei</strong></v-col>
+		<v-footer app color="grey lighten-4">
+			<v-col class="text-center"><strong>{{ new Date().getFullYear() }} &copy; Jhuei</strong></v-col>
 		</v-footer>
 	</v-app>
 </template>
