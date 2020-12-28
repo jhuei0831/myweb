@@ -9,6 +9,7 @@ use App\Models\User;
 use Spatie\Permission\Models\Role;
 use DB;
 use Hash;
+use Auth;
 
 class UserController extends Controller
 {
@@ -57,7 +58,7 @@ class UserController extends Controller
             return response()->json(["status" => "success", "message" => '使用者新增成功']);
         }
         else{
-            return response()->json(["status" => "success", "message" => '使用者新增失敗']);
+            return response()->json(["status" => "failed", "message" => '使用者新增失敗']);
         }
     }
 
@@ -97,23 +98,40 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
-            'name' => 'required',
-            'email' => 'required|email|unique:users,email,'.$id,
-            'password' => 'same:confirm-password',
-            'roles' => 'required'
-        ]);
-        $input = $request->all();
-        if(!empty($input['password'])){
-            $input['password'] = Hash::make($input['password']);
-        }else{
-            $input = Arr::except($input,array('password'));
+        if ($request->has('password')) {
+            $validated = $request->validate([
+                'password' => 'same:password_confirmation',
+            ]);
+            if ($validated) {
+                $input = $request->only('password');
+                $input['password'] = Hash::make($input['password']);
+                $user = User::find($id);
+                $user->update($input);
+                return response()->json(["status" => "success", "message" => '使用者密碼修改成功']);
+            }
+            else{
+                return response()->json(["status" => "failed", "message" => '使用者密碼修改失敗']);
+            }
         }
-        $user = User::find($id);
-        $user->update($input);
-        DB::table('model_has_roles')->where('model_id',$id)->delete();
-        $user->assignRole($request->input('roles'));
-        return redirect()->route('users.index')->with('success','User updated successfully');
+        else {
+            $validated = $request->validate([
+                'name' => 'required',
+                'email' => 'required|email|unique:users,email,'.$id,
+                'roles' => 'required'
+            ]);
+            if ($validated) {
+                $input = $request->only('name', 'email');
+                $user = User::find($id);
+
+                $user->update($input);
+                DB::table('model_has_roles')->where('model_id',$id)->delete();
+                $user->assignRole($request->input('roles'));
+                return response()->json(["status" => "success", "message" => '使用者資料修改成功']);
+            }
+            else{
+                return response()->json(["status" => "failed", "message" => '使用者資料修改失敗']);
+            }
+        }
     }
 
     /**
@@ -124,7 +142,12 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        User::find($id)->delete();
-        return redirect()->route('users.index')->with('success','User deleted successfully');
+        if (Auth::user()->id == $id) {
+            return response()->json(["status" => "failed", "message" => '不能刪除目前登入的帳號']);
+        }
+        else{
+            User::find($id)->delete();
+            return response()->json(["status" => "success", "message" => '使用者刪除成功']);
+        }     
     }
 }

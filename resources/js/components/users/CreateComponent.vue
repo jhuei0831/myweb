@@ -14,7 +14,7 @@
                 </v-card-title>
                 <v-card-text>
                     <validation-observer ref="observer" v-slot="{ invalid, reset }">
-                    <v-form @submit.prevent="submit" @reset.prevent="reset" ref="form" lazy-validation id="rolecreate" class="mt-4">
+                    <v-form @submit.prevent="submit" @reset.prevent="reset" ref="form" lazy-validation id="usercreate" class="mt-4">
                         <validation-provider v-slot="{errors}" name="名稱" rules="required|max:10">
                             <v-text-field name="name" v-model="name" label="名稱" id="name" :error-messages="errors"></v-text-field>
                         </validation-provider>

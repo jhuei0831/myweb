@@ -2176,8 +2176,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vee_validate_dist_rules__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vee-validate/dist/rules */ "./node_modules/vee-validate/dist/rules.js");
-/* harmony import */ var vee_validate__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vee-validate */ "./node_modules/vee-validate/dist/vee-validate.esm.js");
+/* harmony import */ var vee_validate_dist_rules__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vee-validate/dist/rules */ "./node_modules/vee-validate/dist/rules.js");
+/* harmony import */ var vee_validate__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vee-validate */ "./node_modules/vee-validate/dist/vee-validate.esm.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -2186,19 +2186,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
-Object(vee_validate__WEBPACK_IMPORTED_MODULE_1__["extend"])('confirmed', _objectSpread(_objectSpread({}, vee_validate_dist_rules__WEBPACK_IMPORTED_MODULE_0__["confirmed"]), {}, {
+Object(vee_validate__WEBPACK_IMPORTED_MODULE_2__["extend"])('confirmed', _objectSpread(_objectSpread({}, vee_validate_dist_rules__WEBPACK_IMPORTED_MODULE_1__["confirmed"]), {}, {
   message: '{_field_}必須等於{length}個數字. ({_value_})'
 }));
-Object(vee_validate__WEBPACK_IMPORTED_MODULE_1__["extend"])('digits', _objectSpread(_objectSpread({}, vee_validate_dist_rules__WEBPACK_IMPORTED_MODULE_0__["digits"]), {}, {
+Object(vee_validate__WEBPACK_IMPORTED_MODULE_2__["extend"])('digits', _objectSpread(_objectSpread({}, vee_validate_dist_rules__WEBPACK_IMPORTED_MODULE_1__["digits"]), {}, {
   message: '{_field_}必須等於{length}個數字. ({_value_})'
 }));
-Object(vee_validate__WEBPACK_IMPORTED_MODULE_1__["extend"])('email', _objectSpread(_objectSpread({}, vee_validate_dist_rules__WEBPACK_IMPORTED_MODULE_0__["email"]), {}, {
+Object(vee_validate__WEBPACK_IMPORTED_MODULE_2__["extend"])('email', _objectSpread(_objectSpread({}, vee_validate_dist_rules__WEBPACK_IMPORTED_MODULE_1__["email"]), {}, {
   message: '{_field_}格式必須正確'
 }));
-Object(vee_validate__WEBPACK_IMPORTED_MODULE_1__["extend"])('max', _objectSpread(_objectSpread({}, vee_validate_dist_rules__WEBPACK_IMPORTED_MODULE_0__["max"]), {}, {
+Object(vee_validate__WEBPACK_IMPORTED_MODULE_2__["extend"])('max', _objectSpread(_objectSpread({}, vee_validate_dist_rules__WEBPACK_IMPORTED_MODULE_1__["max"]), {}, {
   message: '{_field_}不能超過{length}個字'
 }));
-Object(vee_validate__WEBPACK_IMPORTED_MODULE_1__["extend"])('password', {
+Object(vee_validate__WEBPACK_IMPORTED_MODULE_2__["extend"])('password', {
   params: ['target'],
   validate: function validate(value, _ref) {
     var target = _ref.target;
@@ -2206,16 +2206,16 @@ Object(vee_validate__WEBPACK_IMPORTED_MODULE_1__["extend"])('password', {
   },
   message: '密碼與確認密碼不相符'
 });
-Object(vee_validate__WEBPACK_IMPORTED_MODULE_1__["extend"])('regex', _objectSpread(_objectSpread({}, vee_validate_dist_rules__WEBPACK_IMPORTED_MODULE_0__["regex"]), {}, {
+Object(vee_validate__WEBPACK_IMPORTED_MODULE_2__["extend"])('regex', _objectSpread(_objectSpread({}, vee_validate_dist_rules__WEBPACK_IMPORTED_MODULE_1__["regex"]), {}, {
   message: '{_field_}{_value_}和{regex}不相符'
 }));
-Object(vee_validate__WEBPACK_IMPORTED_MODULE_1__["extend"])('required', _objectSpread(_objectSpread({}, vee_validate_dist_rules__WEBPACK_IMPORTED_MODULE_0__["required"]), {}, {
+Object(vee_validate__WEBPACK_IMPORTED_MODULE_2__["extend"])('required', _objectSpread(_objectSpread({}, vee_validate_dist_rules__WEBPACK_IMPORTED_MODULE_1__["required"]), {}, {
   message: '{_field_}為必填'
 }));
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    ValidationProvider: vee_validate__WEBPACK_IMPORTED_MODULE_1__["ValidationProvider"],
-    ValidationObserver: vee_validate__WEBPACK_IMPORTED_MODULE_1__["ValidationObserver"]
+    ValidationProvider: vee_validate__WEBPACK_IMPORTED_MODULE_2__["ValidationProvider"],
+    ValidationObserver: vee_validate__WEBPACK_IMPORTED_MODULE_2__["ValidationObserver"]
   }
 });
 
@@ -2699,15 +2699,30 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   computed: _objectSpread(_objectSpread({}, Object(vuex_map_fields__WEBPACK_IMPORTED_MODULE_1__["mapFields"])("users", ["user_role", "errors"])), Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])("users", ["loading", "roles", "user"])),
   methods: _objectSpread(_objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])("users", ["getRoles", "getUser", "editUser"])), Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapMutations"])("users", ["clean_errors"])), {}, {
-    submit: function submit() {
-      if (this.$refs.form.validate()) {
+    detail_submit: function detail_submit() {
+      if (this.$refs.form_detail.validate()) {
         var formContents = {
-          name: this.role.name,
-          permission: this.rolePermissions
+          name: this.user.name,
+          email: this.user.email,
+          roles: this.user_role
         };
-        var id = this.role.id;
+        var id = this.user.id;
         this.clean_errors();
-        this.editRoles({
+        this.editUser({
+          formContents: formContents,
+          id: id
+        });
+      }
+    },
+    password_submit: function password_submit() {
+      if (this.$refs.form_password.validate()) {
+        var formContents = {
+          password: this.password,
+          password_confirmation: this.password_confirmation
+        };
+        var id = this.user.id;
+        this.clean_errors();
+        this.editUser({
           formContents: formContents,
           id: id
         });
@@ -46719,7 +46734,7 @@ var render = function() {
                                       staticClass: "mt-4",
                                       attrs: {
                                         "lazy-validation": "",
-                                        id: "rolecreate"
+                                        id: "usercreate"
                                       },
                                       on: {
                                         submit: function($event) {
@@ -46993,7 +47008,7 @@ var render = function() {
                           ],
                           null,
                           false,
-                          2519107487
+                          1262205370
                         )
                       })
                     ],
@@ -47171,16 +47186,18 @@ var render = function() {
                                           _c(
                                             "v-form",
                                             {
-                                              ref: "form",
+                                              ref: "form_detail",
                                               staticClass: "mt-4",
                                               attrs: {
                                                 "lazy-validation": "",
-                                                id: "rolecreate"
+                                                id: "user_detail"
                                               },
                                               on: {
                                                 submit: function($event) {
                                                   $event.preventDefault()
-                                                  return _vm.submit($event)
+                                                  return _vm.detail_submit(
+                                                    $event
+                                                  )
                                                 },
                                                 reset: function($event) {
                                                   $event.preventDefault()
@@ -47206,7 +47223,9 @@ var render = function() {
                                                               name: "name",
                                                               label: "名稱",
                                                               id: "name",
-                                                              "error-messages": errors
+                                                              "error-messages": errors,
+                                                              rounded: "",
+                                                              filled: ""
                                                             },
                                                             model: {
                                                               value:
@@ -47250,7 +47269,9 @@ var render = function() {
                                                               name: "email",
                                                               label: "電子信箱",
                                                               id: "email",
-                                                              "error-messages": errors
+                                                              "error-messages": errors,
+                                                              rounded: "",
+                                                              filled: ""
                                                             },
                                                             model: {
                                                               value:
@@ -47297,7 +47318,9 @@ var render = function() {
                                                                 "name",
                                                               label: "角色",
                                                               chips: "",
-                                                              "error-messages": errors
+                                                              "error-messages": errors,
+                                                              rounded: "",
+                                                              filled: ""
                                                             },
                                                             scopedSlots: _vm._u(
                                                               [
@@ -47359,9 +47382,12 @@ var render = function() {
                                                 {
                                                   attrs: {
                                                     color: "success",
-                                                    disabled: invalid
+                                                    disabled: invalid,
+                                                    rounded: ""
                                                   },
-                                                  on: { click: _vm.submit }
+                                                  on: {
+                                                    click: _vm.detail_submit
+                                                  }
                                                 },
                                                 [_vm._v("送出")]
                                               ),
@@ -47371,7 +47397,8 @@ var render = function() {
                                                 {
                                                   attrs: {
                                                     color: "error",
-                                                    type: "reset"
+                                                    type: "reset",
+                                                    rounded: ""
                                                   }
                                                 },
                                                 [_vm._v("清除表單內容")]
@@ -47380,7 +47407,10 @@ var render = function() {
                                               _c(
                                                 "v-btn",
                                                 {
-                                                  attrs: { color: "warning" },
+                                                  attrs: {
+                                                    color: "warning",
+                                                    rounded: ""
+                                                  },
                                                   on: {
                                                     click: _vm.clear_errors
                                                   }
@@ -47396,7 +47426,7 @@ var render = function() {
                                   ],
                                   null,
                                   false,
-                                  993967278
+                                  2010341943
                                 )
                               })
                             ],
@@ -47420,16 +47450,18 @@ var render = function() {
                                           _c(
                                             "v-form",
                                             {
-                                              ref: "form",
+                                              ref: "form_password",
                                               staticClass: "mt-4",
                                               attrs: {
                                                 "lazy-validation": "",
-                                                id: "rolecreate"
+                                                id: "user_password"
                                               },
                                               on: {
                                                 submit: function($event) {
                                                   $event.preventDefault()
-                                                  return _vm.submit($event)
+                                                  return _vm.password_submit(
+                                                    $event
+                                                  )
                                                 },
                                                 reset: function($event) {
                                                   $event.preventDefault()
@@ -47457,7 +47489,11 @@ var render = function() {
                                                               name: "password",
                                                               label: "密碼",
                                                               id: "password",
-                                                              "error-messages": errors
+                                                              "error-messages": errors,
+                                                              rounded: "",
+                                                              filled: "",
+                                                              autocomplete:
+                                                                "off"
                                                             },
                                                             model: {
                                                               value:
@@ -47501,7 +47537,11 @@ var render = function() {
                                                               label: "確認密碼",
                                                               id:
                                                                 "password_confirmation",
-                                                              "error-messages": errors
+                                                              "error-messages": errors,
+                                                              rounded: "",
+                                                              filled: "",
+                                                              autocomplete:
+                                                                "off"
                                                             },
                                                             model: {
                                                               value:
@@ -47529,9 +47569,12 @@ var render = function() {
                                                 {
                                                   attrs: {
                                                     color: "success",
-                                                    disabled: invalid
+                                                    disabled: invalid,
+                                                    rounded: ""
                                                   },
-                                                  on: { click: _vm.submit }
+                                                  on: {
+                                                    click: _vm.password_submit
+                                                  }
                                                 },
                                                 [_vm._v("送出")]
                                               ),
@@ -47541,7 +47584,8 @@ var render = function() {
                                                 {
                                                   attrs: {
                                                     color: "error",
-                                                    type: "reset"
+                                                    type: "reset",
+                                                    rounded: ""
                                                   }
                                                 },
                                                 [_vm._v("清除表單內容")]
@@ -47550,7 +47594,10 @@ var render = function() {
                                               _c(
                                                 "v-btn",
                                                 {
-                                                  attrs: { color: "warning" },
+                                                  attrs: {
+                                                    color: "warning",
+                                                    rounded: ""
+                                                  },
                                                   on: {
                                                     click: _vm.clear_errors
                                                   }
@@ -47566,7 +47613,7 @@ var render = function() {
                                   ],
                                   null,
                                   false,
-                                  2347625656
+                                  444527852
                                 )
                               })
                             ],
@@ -110097,17 +110144,17 @@ var actions = {
       });
     });
   },
-  editRoles: function editRoles(_ref5, _ref6) {
+  editUser: function editUser(_ref5, _ref6) {
     var commit = _ref5.commit;
     var formContents = _ref6.formContents,
         id = _ref6.id;
     axios.get('/sanctum/csrf-cookie').then(function () {
-      axios.put('/api/role-edit/' + id, formContents).then(function (response) {
+      axios.put('/api/user-edit/' + id, formContents).then(function (response) {
         if (response.data.status == 'failed') {
           commit('action_errors', response.data.errors);
         } else {
           _router_index_js__WEBPACK_IMPORTED_MODULE_0__["default"].push({
-            name: 'Roles'
+            name: 'Users'
           });
           sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a.fire({
             toast: true,
@@ -110151,7 +110198,7 @@ var actions = {
   },
   deleteRole: function deleteRole(_ref8, id) {
     var dispatch = _ref8.dispatch;
-    axios["delete"]('/api/role-delete/' + id).then(function (response) {
+    axios["delete"]('/api/user-delete/' + id).then(function (response) {
       if (response.data.responseStatus) {
         sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a.fire({
           title: response.data.responseMessage,
@@ -110171,11 +110218,11 @@ var actions = {
             icon: 'success',
             confirmButtonText: '好喔'
           });
-          dispatch('getRoles');
+          dispatch('getUsers');
         }
       }
-    })["catch"](function (error) {// console.log(error.response)
-      // router.push({ name: 'Home' })
+    })["catch"](function (error) {
+      console.log(error.response); // router.push({ name: 'Home' })
     });
   },
   getRoles: function getRoles(_ref9) {
@@ -110287,8 +110334,8 @@ var opts = {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\xampp\htdocs\myweb\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\myweb\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\kerwin\code\myweb\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\kerwin\code\myweb\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

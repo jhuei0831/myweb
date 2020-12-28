@@ -96,15 +96,15 @@ const actions = {
             });
         });
     },
-    editRoles({commit}, {formContents, id}) {
+    editUser({commit}, {formContents, id}) {
         axios.get('/sanctum/csrf-cookie').then(() => {
-            axios.put('/api/role-edit/'+id, formContents)
+            axios.put('/api/user-edit/'+id, formContents)
                 .then((response) => {
                     if (response.data.status == 'failed') {
                         commit('action_errors', response.data.errors);
                     }
                     else{
-                        router.push({name: 'Roles'})
+                        router.push({name: 'Users'})
                         Swal.fire({
                             toast: true,
                             showConfirmButton: false,
@@ -146,7 +146,7 @@ const actions = {
         })
     },
     deleteRole({ dispatch }, id) {
-        axios.delete('/api/role-delete/'+id)
+        axios.delete('/api/user-delete/'+id)
         .then((response) => {
             if (response.data.responseStatus) {
                 Swal.fire({
@@ -169,12 +169,12 @@ const actions = {
                         icon: 'success',
                         confirmButtonText: '好喔',
                     })
-                    dispatch('getRoles')
+                    dispatch('getUsers')
                 }                           
             }
         })
         .catch((error) => {
-            // console.log(error.response)
+            console.log(error.response)
             // router.push({ name: 'Home' })
         })
     },
