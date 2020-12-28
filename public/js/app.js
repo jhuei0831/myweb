@@ -110089,7 +110089,7 @@ var actions = {
           confirmButtonText: '好喔'
         });
         _router_index_js__WEBPACK_IMPORTED_MODULE_0__["default"].push({
-          name: 'Roles'
+          name: 'Users'
         });
       } else {
         var payload = {
@@ -110182,7 +110182,7 @@ var actions = {
       denyButtonText: '再想想'
     }).then(function (result) {
       if (result.isConfirmed) {
-        dispatch('deleteRole', id);
+        dispatch('deleteUser', id);
       } else if (result.isDenied) {
         sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a.fire({
           toast: true,
@@ -110196,7 +110196,7 @@ var actions = {
       }
     });
   },
-  deleteRole: function deleteRole(_ref8, id) {
+  deleteUser: function deleteUser(_ref8, id) {
     var dispatch = _ref8.dispatch;
     axios["delete"]('/api/user-delete/' + id).then(function (response) {
       if (response.data.responseStatus) {
@@ -110236,7 +110236,7 @@ var actions = {
           confirmButtonText: '好喔'
         });
         _router_index_js__WEBPACK_IMPORTED_MODULE_0__["default"].push({
-          name: 'Roles'
+          name: 'Users'
         });
       } else {
         commit('roles', response.data.data);

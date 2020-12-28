@@ -45,7 +45,7 @@ const actions = {
                     icon: 'error',
                     confirmButtonText: '好喔',
                 })
-                router.push({ name: 'Roles' })
+                router.push({ name: 'Users' })
             }
             else{
                 const payload = { user: response.data.user, user_role: response.data.user_role }
@@ -131,7 +131,7 @@ const actions = {
             denyButtonText: '再想想',
         }).then((result) => {
             if (result.isConfirmed) {      
-                dispatch('deleteRole', id)
+                dispatch('deleteUser', id)
             } else if (result.isDenied) {                        
                 Swal.fire({
                     toast: true,
@@ -145,7 +145,7 @@ const actions = {
             }
         })
     },
-    deleteRole({ dispatch }, id) {
+    deleteUser({ dispatch }, id) {
         axios.delete('/api/user-delete/'+id)
         .then((response) => {
             if (response.data.responseStatus) {
@@ -188,7 +188,7 @@ const actions = {
                     icon: 'error',
                     confirmButtonText: '好喔',
                 })
-                router.push({ name: 'Roles' })
+                router.push({ name: 'Users' })
             }
             else{
                 commit('roles', response.data.data)
