@@ -10,6 +10,10 @@ use Auth;
 use DB;
 use Request;
 
+# Model
+use App\Models\Log;
+use Carbon\Carbon;
+
 class LogService
 {
     protected $repository;
@@ -111,9 +115,9 @@ class LogService
 
     public function write_log($table, $data, $action = NULL)
     {
-    	$agent = $this->get_agent();
-
-    	DB::table('logs')->insert([
+		$agent = $this->get_agent();
+		
+		Log::create([
     		'user' => (Auth::user()->first())['name'],
     		'ip'   => Request::ip(),
     		'os'   => $agent['platform'],	
@@ -122,7 +126,7 @@ class LogService
     		'action'   => $action ?? Request::method(),	
     		'table'   => $table,	
     		'data'   => json_encode($data, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES),
-    		'created_at'   => now()
+    		'created_at'   => Carbon::now()
     	]);
 
     	return true;

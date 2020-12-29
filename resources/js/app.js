@@ -7,6 +7,7 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
+import moment from 'moment';
 import vuetify from './vuetify'
 import store from './store'
 import router from './router'
@@ -23,10 +24,16 @@ import VeeValidation from './components/VeeValidation';
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
+
 Vue.component('login-component', require('./components/LoginComponent.vue').default);
 Vue.component('app', require('./App.vue').default);
 Vue.mixin(LaravelPermission);
 Vue.mixin(VeeValidation);
+Vue.filter('formatDate', function (value) {
+    if (value) {
+        return moment(String(value)).format('YYYY-MM-DD HH:mm:ss')
+    }
+});
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

@@ -11,7 +11,7 @@
             <v-card dark tile color="purple darken-4" class="mx-auto" width="800" :height="isEditing ? '280' : '200'">
                 <v-toolbar flat color="purple">
                     <v-toolbar-title class="font-weight-light">
-                        <v-icon small>mdi-card-account-details</v-icon> Profile
+                        <v-icon>mdi-card-account-details</v-icon> User Profile
                     </v-toolbar-title>
                     <v-spacer></v-spacer>
                     <v-btn color="purple darken-3" fab small @click="isEditing = !isEditing">

@@ -5,10 +5,11 @@ import About from '../components/AboutComponent.vue'
 import Roles from '../components/roles/RolesComponent.vue'
 import RolesCreate from '../components/roles/CreateComponent.vue'
 import RolesEdit from '../components/roles/EditComponent.vue'
-import Users from '../components/users/IndexComponent.vue'
+import Users from '../components/users/UsersComponent.vue'
 import UsersCreate from '../components/users/CreateComponent.vue'
 import UsersEdit from '../components/users/EditComponent.vue'
-import Logs from '../components/LogsComponent.vue'
+import Logs from '../components/logs/LogsComponent.vue'
+import LogDetail from '../components/logs/DetailComponent.vue'
 import NotFound from '../components/NotFound.vue'
 
 Vue.use(VueRouter)
@@ -65,6 +66,12 @@ const routes = [
         name: 'Logs',
         meta: { auth: true },
         component: Logs
+    },
+    {
+        path: '/logs/detail/:id',
+        name: 'LogDetail',
+        meta: { auth: true },
+        component: LogDetail
     },
     {
         path: '/login',

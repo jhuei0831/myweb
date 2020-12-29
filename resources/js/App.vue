@@ -1,5 +1,5 @@
 <template>
-	<v-app id="">
+	<v-app id="bg">
 		<v-navigation-drawer v-model="drawer" app color="grey lighten-4">
 			<v-list rounded dense v-if="isLoggedIn">
 				<v-list-item class="justify-center">
@@ -34,7 +34,7 @@
 						<v-list-item-icon><v-icon>mdi-account-multiple</v-icon></v-list-item-icon>
 						<v-list-item-content><v-list-item-title>Users</v-list-item-title></v-list-item-content>
 					</v-list-item>
-					<v-list-item v-if="can('user-list')" to="/logs">
+					<v-list-item v-if="can('log-list')" to="/logs">
 						<v-list-item-icon><v-icon>mdi-file-document-multiple</v-icon></v-list-item-icon>
 						<v-list-item-content><v-list-item-title>Logs</v-list-item-title></v-list-item-content>
 					</v-list-item>

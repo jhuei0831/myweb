@@ -14,10 +14,10 @@ class Log extends Model
     protected $primaryKey = 'id';
 
     protected $fillable = [
-        "user", "ip", "os", "browser", "browser_detail", "action", "table", "created_at", "updated_at"
+        "user", "ip", "os", "browser", "browser_detail", "data", "action", "table", "created_at", "updated_at"
     ];
 
-    protected $hidden = [
-        "data"
-    ];
+    // protected $hidden = [
+    //     "data"
+    // ];
 }

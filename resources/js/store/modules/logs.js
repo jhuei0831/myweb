@@ -23,16 +23,9 @@ const mutations = {
 const actions = {
     getLog({ commit }, id) {
         // state.loading = true
-        axios.get('/api/log/'+id)
+        axios.get('/api/logs/'+id)
         .then((response) => {
-            if(!response.data.user_role) {
-                const payload = { user: response.data.user, user_role: [] }
-                commit('log_data', payload)
-            }
-            else{
-                const payload = { user: response.data.user, user_role: response.data.user_role }
-                commit('log_data', payload)
-            }    
+            commit('log_data', response.data.data)
         })
         .catch((error) => {
             // Swal.fire({
@@ -40,7 +33,7 @@ const actions = {
             //     icon: 'error',
             //     confirmButtonText: '好喔',
             // })
-            // router.push({ name: 'Users' })
+            router.push({ name: 'Home' })
         })
     },
     getLogs({ commit }) {
@@ -55,7 +48,7 @@ const actions = {
                 icon: 'error',
                 confirmButtonText: '好喔',
             })
-            // router.push({ name: 'Home' })
+            router.push({ name: 'Home' })
         })
     },   
 }

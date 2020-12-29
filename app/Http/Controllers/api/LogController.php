@@ -12,9 +12,20 @@ use App\Models\Log;
 
 class LogController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:log-list', ['only' => ['index', 'detail']]);
+    }
+
     function index()
     {
         $logs = Log::all();
         return response()->json(['status' => 'success', 'data' => $logs]);
+    }
+
+    function detail($id)
+    {
+        $log = Log::find($id);      
+        return response()->json(['status' => 'success', 'data' => $log]);
     }
 }

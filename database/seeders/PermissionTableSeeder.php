@@ -23,6 +23,7 @@ class PermissionTableSeeder extends Seeder
             'user-create',
             'user-edit',
             'user-delete',
+            'log-list',
             'product-list',
             'product-create',
             'product-edit',

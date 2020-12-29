@@ -46,4 +46,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('user-delete/{id}', [UserController::class, 'destroy']); // 刪除使用者
     // Logs
     Route::get('logs', [LogController::class, 'index']); // Log列表
+    Route::get('logs/{id}', [LogController::class, 'detail']); // Log詳細資料
 });
