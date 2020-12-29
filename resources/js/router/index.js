@@ -8,6 +8,8 @@ import RolesEdit from '../components/roles/EditComponent.vue'
 import Users from '../components/users/IndexComponent.vue'
 import UsersCreate from '../components/users/CreateComponent.vue'
 import UsersEdit from '../components/users/EditComponent.vue'
+import Logs from '../components/LogsComponent.vue'
+import NotFound from '../components/NotFound.vue'
 
 Vue.use(VueRouter)
 
@@ -59,9 +61,20 @@ const routes = [
         component: UsersEdit,
     },
     {
+        path: '/logs',
+        name: 'Logs',
+        meta: { auth: true },
+        component: Logs
+    },
+    {
         path: '/login',
         name: 'Login',
         component: Login
+    },
+    {
+        path: '*',
+        name: 'NotFound',
+        component: NotFound
     }
 ]
 

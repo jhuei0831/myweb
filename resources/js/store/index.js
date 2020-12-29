@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import auth from './modules/auth';
+import logs from './modules/logs';
 import roles from './modules/roles';
 import users from './modules/users';
 
@@ -22,6 +23,7 @@ const store = new Vuex.Store({
     },
     modules: {
         auth,
+        logs,
         roles,
         users
     }

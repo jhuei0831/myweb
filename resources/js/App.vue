@@ -30,9 +30,13 @@
 						<v-list-item-icon><v-icon>mdi-account</v-icon></v-list-item-icon>
 						<v-list-item-content><v-list-item-title>Roles</v-list-item-title></v-list-item-content>
 					</v-list-item>
-					<v-list-item v-if="can('role-list')" to="/users">
+					<v-list-item v-if="can('user-list')" to="/users">
 						<v-list-item-icon><v-icon>mdi-account-multiple</v-icon></v-list-item-icon>
 						<v-list-item-content><v-list-item-title>Users</v-list-item-title></v-list-item-content>
+					</v-list-item>
+					<v-list-item v-if="can('user-list')" to="/logs">
+						<v-list-item-icon><v-icon>mdi-file-document-multiple</v-icon></v-list-item-icon>
+						<v-list-item-content><v-list-item-title>Logs</v-list-item-title></v-list-item-content>
 					</v-list-item>
 				</v-list-item-group>
 				<v-divider></v-divider>

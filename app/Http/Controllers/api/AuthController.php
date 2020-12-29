@@ -61,4 +61,9 @@ class AuthController extends Controller
             return response()->json(["status" => "failed", "message" => "查無使用者"], 401);
         } 
     }
+
+    function notfound()
+    {
+        return response()->json(["status" => "failed", "message" => "查無頁面"], 404);
+    }
 }

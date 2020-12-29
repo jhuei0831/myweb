@@ -1,41 +1,38 @@
 <template>
-    <!-- <v-layout justify-center>
-        <v-card :width="500">
-            <v-avatar size="100">
-                    <img alt="user" src="https://cdn.vuetifyjs.com/images/john.png">
-            </v-avatar>
-        </v-card>
-    </v-layout> -->
-    <!-- <v-card class="mx-auto" max-width="500" tile>
-        <v-card-title primary-title>
-            title
-        </v-card-title>
-        <v-img height="200" src="https://cdn.vuetifyjs.com/images/cards/server-room.jpg"></v-img>
-        <v-row no-gutters>
-            <v-list-item>
-                <v-list-item-avatar size="100">
-                    <img src="https://www.w3schools.com/howto/img_avatar.png" alt="John">
-                </v-list-item-avatar>
-                <v-list-item-content>
-                    <v-list-item-title class="title" style="margin-top:20px;">Injamamul Haque Sonet</v-list-item-title>
-                    <v-list-item-subtitle>Software Engineer | dokanee</v-list-item-subtitle>
-                </v-list-item-content>
-            </v-list-item>
-        </v-row>
-    </v-card> -->
     <v-layout>
         <v-flex>
-            <v-card dark tile img="https://cdn.vuetifyjs.com/images/cards/server-room.jpg" class="mx-auto" width="500">
+            <v-card dark tile img="https://cdn.vuetifyjs.com/images/cards/server-room.jpg" class="mx-auto" width="800">
                 <v-layout column align-center max-width="500">
                     <v-avatar size='100' class="my-3">
                         <v-img src="https://cdn.vuetifyjs.com/images/john.jpg"></v-img>  
                     </v-avatar>
                 </v-layout>
             </v-card>
-            <v-card dark tile color="blue-grey darken-4" class="mx-auto" width="500">
-                <v-layout column align-center>
-                    <v-card-text class="headline text-center py-1">{{ userdata.name }}</v-card-text>
-                    <v-card-text class="text-center pt-1 pb-4"><v-icon>mdi-email</v-icon> {{ userdata.email }}</v-card-text>
+            <v-card dark tile color="purple darken-4" class="mx-auto" width="800" :height="isEditing ? '280' : '200'">
+                <v-toolbar flat color="purple">
+                    <v-toolbar-title class="font-weight-light">
+                        <v-icon small>mdi-card-account-details</v-icon> Profile
+                    </v-toolbar-title>
+                    <v-spacer></v-spacer>
+                    <v-btn color="purple darken-3" fab small @click="isEditing = !isEditing">
+                        <v-icon v-if="isEditing">mdi-close</v-icon>
+                        <v-icon v-else>mdi-pencil</v-icon>
+                    </v-btn>
+                </v-toolbar>
+                <v-layout column align-center class="mt-4 text-center">
+                    <v-card-text class="headline py-1" v-show="!isEditing">{{ userdata.name }}</v-card-text>
+                    <v-card-text class="pt-1 pb-4" v-show="!isEditing"><v-icon>mdi-email</v-icon> {{ userdata.email }}</v-card-text>  
+                    <validation-observer ref="observer" v-slot="{ invalid }">
+                        <v-form @submit.prevent="detail_submit" v-show="isEditing" ref="form_detail" lazy-validation>
+                            <validation-provider v-slot="{errors}" name="名稱" rules="required|max:10">
+                                <v-text-field name="name" label="名稱" v-model="userdata.name" :error-messages="errors"></v-text-field>         
+                            </validation-provider>
+                            <validation-provider v-slot="{errors}" name="電子信箱" rules="required|email">
+                                <v-text-field name="email" label="信箱" v-model="userdata.email" :error-messages="errors"></v-text-field>  
+                            </validation-provider>
+                            <v-btn :disabled="invalid" color="purple lighten-2" @click="detail_submit">Save</v-btn>
+                        </v-form>                         
+                    </validation-observer> 
                 </v-layout>
             </v-card>
         </v-flex>
@@ -46,8 +43,24 @@
     import { mapGetters, mapActions } from "vuex";
 
     export default {
+        data() {
+            return{
+                isEditing: null,
+            }
+        },
         computed: {
             ...mapGetters("auth", ["userdata"])
+        },
+        methods: {
+            ...mapActions("users", ["editSelf"]),
+            detail_submit() {
+                if (this.$refs.form_detail.validate()) {
+                    let formContents = {name: this.userdata.name, email: this.userdata.email}
+                    let id = this.userdata.id
+                    this.editSelf({formContents, id})
+                    this.isEditing = false
+                }
+            },
         }
     }
 </script>

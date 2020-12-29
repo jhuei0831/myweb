@@ -44,7 +44,7 @@ class Handler extends ExceptionHandler
             return response()->json([
                 'responseMessage' => '您無權操作!',
                 'responseStatus'  => 403,
-            ]);
+            ], 403);
         }
 
         return parent::render($request, $exception);

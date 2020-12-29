@@ -22,13 +22,13 @@
                             <validation-observer ref="observer" v-slot="{ invalid, reset }">
                             <v-form @submit.prevent="detail_submit" @reset.prevent="reset" ref="form_detail" lazy-validation id="user_detail" class="mt-4">
                                 <validation-provider v-slot="{errors}" name="名稱" rules="required|max:10">
-                                    <v-text-field name="name" v-model="user.name" label="名稱" id="name" :error-messages="errors" rounded filled></v-text-field>
+                                    <v-text-field name="name" v-model="user.name" label="名稱" id="name" :error-messages="errors" rounded filled background-color="white"></v-text-field>
                                 </validation-provider>
                                 <validation-provider v-slot="{errors}" name="電子信箱" rules="required|email">
-                                    <v-text-field name="email" v-model="user.email" label="電子信箱" id="email" :error-messages="errors" rounded filled></v-text-field>
+                                    <v-text-field name="email" v-model="user.email" label="電子信箱" id="email" :error-messages="errors" rounded filled background-color="white"></v-text-field>
                                 </validation-provider>
                                 <validation-provider v-slot="{errors}" name="角色" rules="required">
-                                    <v-select name="role" v-model="user_role" :items="roles" item-text="name" label="角色" chips :error-messages="errors" rounded filled>
+                                    <v-select name="role" v-model="user_role" :items="roles" item-text="name" label="角色" chips :error-messages="errors" rounded filled background-color="white">
                                         <template #selection="{ item }">
                                             <v-chip color="blue lighten-4 blue--text">{{ item.name }}</v-chip>
                                         </template>
@@ -44,10 +44,10 @@
                             <validation-observer ref="observer" v-slot="{ invalid, reset }">
                             <v-form @submit.prevent="password_submit" @reset.prevent="reset" ref="form_password" lazy-validation id="user_password" class="mt-4">
                                 <validation-provider v-slot="{ errors }" name="密碼" rules="required|password:@password_confirmation">
-                                    <v-text-field type="password" name="password" v-model="password" label="密碼" id="password" :error-messages="errors" rounded filled autocomplete="off"></v-text-field>
+                                    <v-text-field type="password" name="password" v-model="password" label="密碼" id="password" :error-messages="errors" rounded filled autocomplete="off" background-color="white"></v-text-field>
                                 </validation-provider>
                                 <validation-provider v-slot="{ errors }" name="確認密碼" vid="password_confirmation" rules="required">
-                                    <v-text-field type="password" name="password_confirmation" v-model="password_confirmation" label="確認密碼" id="password_confirmation" :error-messages="errors" rounded filled autocomplete="off"></v-text-field>
+                                    <v-text-field type="password" name="password_confirmation" v-model="password_confirmation" label="確認密碼" id="password_confirmation" :error-messages="errors" rounded filled autocomplete="off" background-color="white"></v-text-field>
                                 </validation-provider>
                                 <v-btn color="success" @click="password_submit" :disabled="invalid" rounded>送出</v-btn>
                                 <v-btn color="error" type="reset" rounded>清除表單內容</v-btn>

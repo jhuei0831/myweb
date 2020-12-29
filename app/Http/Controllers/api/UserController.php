@@ -2,18 +2,31 @@
 
 namespace App\Http\Controllers\api;
 
+# Facades
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
-use App\Models\User;
-use Spatie\Permission\Models\Role;
 use DB;
 use Hash;
 use Auth;
 
+# Model
+use App\Models\User;
+use Spatie\Permission\Models\Role;
+
+# Service
+use App\Services\LogService;
+
+
 class UserController extends Controller
 {
-    
+    public function __construct(LogService $log)
+    {
+        $this->log = $log;
+        $this->middleware('permission:user-list', ['only' => ['index']]);
+        $this->middleware('permission:user-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:user-edit', ['only' => ['show', 'update']]);
+        $this->middleware('permission:user-delete', ['only' => ['destroy']]);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -32,7 +45,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        $roles = Role::pluck('name','name')->all();
+        $roles = Role::orderBy('id', 'ASC')->get();
         return response()->json(["status" => "success", "data" => $roles]);
     }
 
@@ -55,10 +68,31 @@ class UserController extends Controller
             $input['password'] = Hash::make($input['password']);
             $user = User::create($input);
             $user->assignRole($request->input('role'));
+            $this->log->write_log('users', ['message' => '使用者新增成功', 'data' => $request->except(['_token', 'password', 'password_confirmation'])], 'create');
             return response()->json(["status" => "success", "message" => '使用者新增成功']);
         }
         else{
+            $this->log->write_log('users', ['message' => '使用者新增失敗', 'data' => $request->except(['_token', 'password', 'password_confirmation'])], 'create_failed');
             return response()->json(["status" => "failed", "message" => '使用者新增失敗']);
+        }
+    }
+
+    function edit_self(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email,'.$id,
+        ]);
+        if ($validated) {
+            $input = $request->only('name', 'email');
+            $user = User::find($id);
+            $user->update($input);
+            $this->log->write_log('users', ['message' => '使用者資料修改成功', 'data' => $request->only(['name', 'email'])], 'update');
+            return response()->json(["status" => "success", "message" => '使用者資料修改成功']);
+        }
+        else{
+            $this->log->write_log('users', ['message' => '使用者資料修改失敗', 'data' => $request->only(['name', 'email'])], 'update_failed');
+            return response()->json(["status" => "failed", "message" => '使用者資料修改失敗']);
         }
     }
 
@@ -71,22 +105,15 @@ class UserController extends Controller
     public function show($id)
     {
         $user = User::find($id);
-        $user_role = User::with('roles')->find($id)->roles[0]->name;
+        $user_role = User::with('roles')->find($id)->roles;
+        // 判斷使用者帳號是否有角色
+        if ($user_role->isNotEmpty()) {
+            $user_role = User::with('roles')->find($id)->roles[0]->name;
+        }
+        else {
+            $user_role = null;
+        }
         return response()->json(["status" => "success", "user" => $user, "user_role" => $user_role]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        $user = User::find($id);
-        $roles = Role::pluck('name','name')->all();
-        $userRole = $user->roles->pluck('name','name')->all();
-        return view('users.edit',compact('user','roles','userRole'));
     }
 
     /**
@@ -107,9 +134,11 @@ class UserController extends Controller
                 $input['password'] = Hash::make($input['password']);
                 $user = User::find($id);
                 $user->update($input);
+                $this->log->write_log('users', ['message' => '密碼修改'], 'edit');
                 return response()->json(["status" => "success", "message" => '使用者密碼修改成功']);
             }
             else{
+                $this->log->write_log('users', ['message' => '密碼修改'], 'edit_failed');
                 return response()->json(["status" => "failed", "message" => '使用者密碼修改失敗']);
             }
         }
@@ -122,13 +151,14 @@ class UserController extends Controller
             if ($validated) {
                 $input = $request->only('name', 'email');
                 $user = User::find($id);
-
                 $user->update($input);
                 DB::table('model_has_roles')->where('model_id',$id)->delete();
                 $user->assignRole($request->input('roles'));
+                $this->log->write_log('users', ['message' => '使用者資料修改成功', 'data' => $request->only(['name', 'email', 'roles'])], 'update');
                 return response()->json(["status" => "success", "message" => '使用者資料修改成功']);
             }
             else{
+                $this->log->write_log('users', ['message' => '使用者資料修改失敗', 'data' => $request->only(['name', 'email', 'roles'])], 'update_failed');
                 return response()->json(["status" => "failed", "message" => '使用者資料修改失敗']);
             }
         }
@@ -143,10 +173,14 @@ class UserController extends Controller
     public function destroy($id)
     {
         if (Auth::user()->id == $id) {
+            $user = User::find($id);
+            $this->log->write_log('users', ['message' => '不能刪除目前登入的帳號', 'data' => $user], 'delete_failed');
             return response()->json(["status" => "failed", "message" => '不能刪除目前登入的帳號']);
         }
         else{
+            $user = User::find($id);
             User::find($id)->delete();
+            $this->log->write_log('users', ['message' => '使用者刪除成功', 'data' => $user], 'delete');
             return response()->json(["status" => "success", "message" => '使用者刪除成功']);
         }     
     }

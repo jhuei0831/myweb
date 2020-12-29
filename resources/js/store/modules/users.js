@@ -39,39 +39,35 @@ const actions = {
         // state.loading = true
         axios.get('/api/user/'+id)
         .then((response) => {
-            if (response.data.responseStatus) {
-                Swal.fire({
-                    title: response.data.responseMessage,
-                    icon: 'error',
-                    confirmButtonText: '好喔',
-                })
-                router.push({ name: 'Users' })
+            if(!response.data.user_role) {
+                const payload = { user: response.data.user, user_role: [] }
+                commit('user_data', payload)
             }
             else{
                 const payload = { user: response.data.user, user_role: response.data.user_role }
                 commit('user_data', payload)
             }    
         })
-        .catch(() => {
-            // router.push({ name: 'Home' })
+        .catch((error) => {
+            // Swal.fire({
+            //     title: error.response.data.responseMessage,
+            //     icon: 'error',
+            //     confirmButtonText: '好喔',
+            // })
+            // router.push({ name: 'Users' })
         })
     },
     getUsers({ commit }) {
         axios.get('/api/users')
         .then((response) => {
-            if (response.data.responseStatus) {
-                Swal.fire({
-                    title: response.data.responseMessage,
-                    icon: 'error',
-                    confirmButtonText: '好喔',
-                })
-                router.push({ name: 'Home' })
-            }
-            else{
-                commit('users_data', response.data.data)
-            }
+            commit('users_data', response.data.data)
         })
-        .catch(() => {
+        .catch((error) => {
+            Swal.fire({
+                title: error.response.data.responseMessage,
+                icon: 'error',
+                confirmButtonText: '好喔',
+            })
             router.push({ name: 'Home' })
         })
     },   
@@ -92,7 +88,7 @@ const actions = {
                     icon: 'error',
                     confirmButtonText: '好喔',
                 })
-                commit('action_errors', error.response.data.errors);
+                commit('action_errors', error.response.data.errors)
             });
         });
     },
@@ -116,8 +112,32 @@ const actions = {
                         })
                     }
                 })
-                .catch((error) => {
-                    console.log(error.response)
+                .catch((error) => {                  
+                    commit('action_errors', error.response.data.errors);
+                });
+        });
+    },
+    editSelf({commit}, {formContents, id}) {
+        axios.get('/sanctum/csrf-cookie').then(() => {
+            axios.put('/api/user-edit-self/'+id, formContents)
+                .then((response) => {
+                    if (response.data.status == 'failed') {
+                        commit('action_errors', response.data.errors);
+                    }
+                    else{
+                        Swal.fire({
+                            toast: true,
+                            showConfirmButton: false,
+                            position: 'top-end',
+                            icon: 'success',
+                            title: response.data.message,
+                            timer: 3000,
+                            timerProgressBar: true,
+                        })
+                    }
+                })
+                .catch((error) => {           
+                    // console.log(error.response)
                     commit('action_errors', error.response.data.errors);
                 });
         });
@@ -148,54 +168,44 @@ const actions = {
     deleteUser({ dispatch }, id) {
         axios.delete('/api/user-delete/'+id)
         .then((response) => {
-            if (response.data.responseStatus) {
+            if (response.data.status == 'failed') {
                 Swal.fire({
-                    title: response.data.responseMessage,
+                    title: response.data.message,
                     icon: 'error',
                     confirmButtonText: '好喔',
                 })
             }
             else{
-                if (response.data.status == 'failed') {
-                    Swal.fire({
-                        title: response.data.message,
-                        icon: 'error',
-                        confirmButtonText: '好喔',
-                    })
-                }
-                else{
-                    Swal.fire({
-                        title: response.data.message,
-                        icon: 'success',
-                        confirmButtonText: '好喔',
-                    })
-                    dispatch('getUsers')
-                }                           
-            }
+                Swal.fire({
+                    title: response.data.message,
+                    icon: 'success',
+                    confirmButtonText: '好喔',
+                })
+                dispatch('getUsers')
+            }   
         })
         .catch((error) => {
-            console.log(error.response)
+            Swal.fire({
+                title: error.response.data.responseMessage,
+                icon: 'error',
+                confirmButtonText: '好喔',
+            })
             // router.push({ name: 'Home' })
         })
     },
     getRoles({ commit }) {
         state.loading = true
-        axios.get('/api/roles')
+        axios.get('/api/user/roles')
         .then((response) => {
-            if (response.data.responseStatus) {
-                Swal.fire({
-                    title: response.data.responseMessage,
-                    icon: 'error',
-                    confirmButtonText: '好喔',
-                })
-                router.push({ name: 'Users' })
-            }
-            else{
-                commit('roles', response.data.data)
-            }
+            commit('roles', response.data.data)
         })
-        .catch(() => {
-            router.push({ name: 'Home' })
+        .catch((error) => {
+            Swal.fire({
+                title: error.response.data.responseMessage,
+                icon: 'error',
+                confirmButtonText: '好喔',
+            })
+            router.push({ name: 'Users' })
         })
     }
 }

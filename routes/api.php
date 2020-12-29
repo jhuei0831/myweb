@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\AuthController;
+use App\Http\Controllers\api\LogController;
 use App\Http\Controllers\api\RoleController;
 use App\Http\Controllers\api\UserController;
 
@@ -37,9 +38,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('role-delete/{id}', [RoleController::class, 'destroy']); // 刪除角色
     // 使用者
     Route::get('users', [UserController::class, 'index']); // 使用者列表
-    // Route::get('roles', [UserController::class, 'create']); // 取得角色
+    Route::get('user/roles', [UserController::class, 'create']); // 取得角色
     Route::post('users-create', [UserController::class, 'store']); // 新增使用者
     Route::get('user/{id}', [UserController::class, 'show']); // 取得指定使用者
     Route::put('user-edit/{id}', [UserController::class, 'update']); // 修改使用者
+    Route::put('user-edit-self/{id}', [UserController::class, 'edit_self']); // 使用者修改自己的資料
     Route::delete('user-delete/{id}', [UserController::class, 'destroy']); // 刪除使用者
+    // Logs
+    Route::get('logs', [LogController::class, 'index']); // Log列表
 });
