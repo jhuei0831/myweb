@@ -118,7 +118,7 @@ class LogService
 		$agent = $this->get_agent();
 		
 		Log::create([
-    		'user' => (Auth::user()->first())['name'],
+    		'user' => Auth::check() ? (Auth::user()->first())['name'] : 'UNKNOW',
     		'ip'   => Request::ip(),
     		'os'   => $agent['platform'],	
     		'browser'   => $agent['name'],	

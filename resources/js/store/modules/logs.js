@@ -22,7 +22,7 @@ const mutations = {
 
 const actions = {
     getLog({ commit }, id) {
-        // state.loading = true
+        state.loading = true
         axios.get('/api/logs/'+id)
         .then((response) => {
             commit('log_data', response.data.data)
@@ -37,6 +37,7 @@ const actions = {
         })
     },
     getLogs({ commit }) {
+        state.loading = true
         axios.get('/api/logs')
         .then((response) => {
             commit('logs_data', response.data.data)

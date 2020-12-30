@@ -1,5 +1,5 @@
 <template>
-	<v-app id="bg">
+	<v-app id="">
 		<v-navigation-drawer v-model="drawer" app color="grey lighten-4">
 			<v-list rounded dense v-if="isLoggedIn">
 				<v-list-item class="justify-center">
