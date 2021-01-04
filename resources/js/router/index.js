@@ -11,6 +11,7 @@ import UsersEdit from '../components/users/EditComponent.vue'
 import Logs from '../components/logs/LogsComponent.vue'
 import LogDetail from '../components/logs/DetailComponent.vue'
 import NotFound from '../components/NotFound.vue'
+import Upload from '../components/UploadComponent.vue'
 
 Vue.use(VueRouter)
 
@@ -20,9 +21,17 @@ const routes = [
         name: 'Home',
     },
     {
+        path: '/upload',
+        name: 'Upload',
+        meta: { auth: true },
+        component: Upload
+    },
+    {
         path: '/about',
         name: 'About',
-        meta: { auth: true },
+        meta: {
+            auth: true
+        },
         component: About
     },
     {

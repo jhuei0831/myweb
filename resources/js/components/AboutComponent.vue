@@ -4,7 +4,7 @@
             <v-card dark tile img="https://cdn.vuetifyjs.com/images/cards/server-room.jpg" class="mx-auto" width="800">
                 <v-layout column align-center max-width="500">
                     <v-avatar size='100' class="my-3">
-                        <v-img src="https://cdn.vuetifyjs.com/images/john.jpg"></v-img>  
+                        <v-img src="https://www.shutterstock.com/blog/wp-content/uploads/sites/5/2019/07/Man-Silhouette.jpg"></v-img>  
                     </v-avatar>
                 </v-layout>
             </v-card>
