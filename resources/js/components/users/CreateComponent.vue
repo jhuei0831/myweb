@@ -69,7 +69,7 @@
             ...mapMutations("users", ["clean_errors"]),
             submit() {
                 if (this.$refs.form.validate()) {
-				    this.createUser({
+                    this.createUser({
                         name: this.name, 
                         email: this.email,
                         password: this.password,
