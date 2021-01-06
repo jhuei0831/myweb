@@ -184,4 +184,18 @@ class UserController extends Controller
             return response()->json(["status" => "success", "message" => '使用者刪除成功']);
         }     
     }
+
+    /**
+     * 修改大頭貼照片
+     */
+    public function photo(Request $request, $id)
+    {
+        if ($request->has('photo')) {
+            $input = $request->only('photo');
+            $user = User::find($id);
+            $user->update($input);
+            $this->log->write_log('users', ['message' => '照片修改'], 'edit');
+            return response()->json(["status" => "success", "message" => $input]);
+        }
+    }
 }

@@ -44,6 +44,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('user-edit/{id}', [UserController::class, 'update']); // 修改使用者
     Route::put('user-edit-self/{id}', [UserController::class, 'edit_self']); // 使用者修改自己的資料
     Route::delete('user-delete/{id}', [UserController::class, 'destroy']); // 刪除使用者
+    Route::put('user-photo/{id}', [UserController::class, 'photo']); // 使用者照片
     // Logs
     Route::get('logs', [LogController::class, 'index']); // Log列表
     Route::get('logs/{id}', [LogController::class, 'detail']); // Log詳細資料
