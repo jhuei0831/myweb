@@ -142,6 +142,15 @@ const actions = {
                 });
         });
     },
+    editPhoto({dispatch}, {formContents, id}) {
+        axios.put('/api/user-photo/'+id, formContents)
+        .then(() => {
+            dispatch('auth/getUser', null, { root: true })
+        })
+        .catch(function (error) {
+            console.log(error.response)
+        })
+    },
     deleteConfirm({ dispatch }, id) {
         Swal.fire({
             title: "確定刪除?",

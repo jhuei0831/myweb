@@ -4,10 +4,22 @@
             <v-card dark tile img="https://cdn.vuetifyjs.com/images/cards/server-room.jpg" class="mx-auto" width="800">
                 <v-layout column align-center max-width="500">
                     <v-avatar size='100' class="my-3">
-                        <v-img src="https://www.shutterstock.com/blog/wp-content/uploads/sites/5/2019/07/Man-Silhouette.jpg"></v-img>  
+                        <v-img :src="userdata.photo ? userdata.photo : 'https://cdn2.ettoday.net/images/1457/d1457772.jpg'" style="cursor: pointer" @click="$refs.FileInput.click()"></v-img>  
+                        <input ref="FileInput" type="file" style="display: none;" @change="onFileSelect"/>
                     </v-avatar>
                 </v-layout>
             </v-card>
+            <v-dialog v-model="dialog">
+                <v-card>
+                    <v-card-text>
+                        <VueCropper v-show="selectedFile" ref="cropper" :src="selectedFile" alt="Source Image"></VueCropper>
+                    </v-card-text>
+                    <v-card-actions>
+                        <v-btn class="primary" @click="saveImage(), (dialog = false)">保存</v-btn>
+                        <v-btn color="primary" text @click="dialog = false">取消</v-btn>
+                    </v-card-actions>
+                </v-card>
+            </v-dialog>
             <v-card dark tile color="purple darken-4" class="mx-auto" width="800" :height="isEditing ? '280' : '200'">
                 <v-toolbar flat color="purple">
                     <v-toolbar-title class="font-weight-light">
@@ -40,27 +52,71 @@
 </template>
 
 <script>
-    import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapActions } from "vuex";
+import VueCropper from 'vue-cropperjs'
+import 'cropperjs/dist/cropper.css'
+import Swal from 'sweetalert2'
 
-    export default {
-        data() {
-            return{
-                isEditing: null,
+export default {
+    components: { VueCropper },
+    data() {
+        return{
+            mime_type: '',
+            cropedImage: '',
+            autoCrop: false,
+            selectedFile: '',
+            image: '',
+            dialog: false,
+            files: '',
+            isEditing: null,
+        }
+    },
+    computed: {
+        ...mapGetters("auth", ["userdata"])
+    },
+    methods: {
+        ...mapActions("users", ["editSelf", "editPhoto"]),
+        ...mapActions("auth", ["getUser"]),
+        detail_submit() {
+            if (this.$refs.form_detail.validate()) {
+                let formContents = {name: this.userdata.name, email: this.userdata.email}
+                let id = this.userdata.id
+                this.editSelf({formContents, id})
+                this.isEditing = false
             }
         },
-        computed: {
-            ...mapGetters("auth", ["userdata"])
+        saveImage() {
+            let id = this.userdata.id
+            this.cropedImage = this.$refs.cropper.getCroppedCanvas().toDataURL()
+            let formContents = {photo: this.cropedImage}
+            if (this.cropedImage.length > 65536) {
+                Swal.fire({
+                    title: '圖片大小需小於64KB',
+                    text: 'size : ' + this.cropedImage.length,
+                    icon: 'error',
+                    confirmButtonText: '好喔',
+                })
+            }
+            else{
+                this.editPhoto({formContents, id})
+            } 
         },
-        methods: {
-            ...mapActions("users", ["editSelf"]),
-            detail_submit() {
-                if (this.$refs.form_detail.validate()) {
-                    let formContents = {name: this.userdata.name, email: this.userdata.email}
-                    let id = this.userdata.id
-                    this.editSelf({formContents, id})
-                    this.isEditing = false
+        onFileSelect(e) {
+            const file = e.target.files[0]
+            this.mime_type = file.type
+            console.log(this.mime_type)
+            if (typeof FileReader === 'function') {
+                this.dialog = true
+                const reader = new FileReader()
+                reader.onload = (event) => {
+                    this.selectedFile = event.target.result
+                    this.$refs.cropper.replace(this.selectedFile)
                 }
-            },
-        }
+                reader.readAsDataURL(file)
+            } else {
+                alert('Sorry, FileReader API not supported')
+            }
+        },
     }
+}
 </script>

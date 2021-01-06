@@ -4,7 +4,7 @@
 			<v-list rounded dense v-if="isLoggedIn">
 				<v-list-item class="justify-center">
 					<v-list-item-avatar>
-						<v-img src="https://cdn.vuetifyjs.com/images/john.png"></v-img>
+						<v-img :src="userdata.photo ? userdata.photo : 'https://cdn2.ettoday.net/images/1457/d1457772.jpg'"></v-img>
 					</v-list-item-avatar>
 				</v-list-item>
 				<v-list-item link>

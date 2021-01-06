@@ -31,7 +31,7 @@ const mutations = {
 }
 
 const actions = {
-    login({commit}, formContents) {
+    login({commit, dispatch}, formContents) {
         commit('auth_request')
         axios.get('/sanctum/csrf-cookie').then(() => {
             axios.post('/api/login', formContents)
@@ -41,7 +41,7 @@ const actions = {
                 window.axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
                 commit('auth_success', token);
                 router.push({ name: 'About' })
-                location.reload();
+                dispatch('getUser')
             })
             .catch((error) => {
                 commit('auth_error', error.response.data.message);
