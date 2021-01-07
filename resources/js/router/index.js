@@ -11,6 +11,7 @@ import UsersEdit from '../components/users/EditComponent.vue'
 import Logs from '../components/logs/LogsComponent.vue'
 import LogDetail from '../components/logs/DetailComponent.vue'
 import NotFound from '../components/NotFound.vue'
+import Home from '../components/HomeComponent.vue'
 
 Vue.use(VueRouter)
 
@@ -18,6 +19,7 @@ const routes = [
     {
         path: '/',
         name: 'Home',
+        component: Home
     },
     {
         path: '/about',

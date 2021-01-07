@@ -51,19 +51,19 @@
 			</v-list>
 		</v-navigation-drawer>
 
-		<v-app-bar app color="grey lighten-4" elevation="0">
+		<v-app-bar app color="transparent" elevation="0" dark>
 			<span class="hidden-sm-and-up"><v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon></span>
-			<router-link to="/" tag="span" style="cursor: pointer"><v-toolbar-title>MyWeb</v-toolbar-title></router-link>
+			<router-link to="/" tag="span" style="cursor: pointer"><v-toolbar-title class="font-weight-bold">MyWeb</v-toolbar-title></router-link>
 			<v-spacer></v-spacer>
 			<v-toolbar-items class="hidden-xs-only" v-if="!isLoggedIn">
-				<v-btn text v-for="item in menuItems" :key="item.title" :to="item.path" active-class="teal--text">
+				<v-btn text v-for="item in menuItems" :key="item.title" :to="item.path">
           			<v-icon left dark>{{ item.icon }}</v-icon>{{ item.title }}
         		</v-btn>
       		</v-toolbar-items>
 			<v-toolbar-items class="hidden-xs-only" v-if="isLoggedIn">
-				<v-btn text active-class="teal--text" v-if="can('role-list')" to="/roles"><v-icon left>mdi-account</v-icon>Roles</v-btn>
-				<v-btn text active-class="teal--text" v-if="can('user-list')" to="/users"><v-icon left>mdi-account-multiple</v-icon>Users</v-btn>
-				<v-btn text active-class="teal--text" v-if="can('log-list')" to="/logs"><v-icon left>mdi-file-document-multiple</v-icon>Logs</v-btn>
+				<v-btn text v-if="can('role-list')" to="/roles" class="font-weight-bold"><v-icon left>mdi-account</v-icon>Roles</v-btn>
+				<v-btn text v-if="can('user-list')" to="/users" class="font-weight-bold"><v-icon left>mdi-account-multiple</v-icon>Users</v-btn>
+				<v-btn text v-if="can('log-list')" to="/logs" class="font-weight-bold"><v-icon left>mdi-file-document-multiple</v-icon>Logs</v-btn>	
 				<v-menu bottom min-width="200px" rounded offset-y>
 					<template v-slot:activator="{ on }">
 						<v-btn icon x-large v-on="on">
@@ -139,7 +139,8 @@ export default {
         text-decoration: none !important;
     }
 	#bg {
-		/* background: url('https://i.pinimg.com/originals/cb/c2/2c/cbc22ca5a3d7568a742262639a9f6b3f.jpg'); */
+		/* background-color: rgb(85, 88, 88); */
+		background: url('./assets/man.jpg');
 		/* background: url('https://marketplace.canva.com/EAEMngvLCL0/1/0/800w/canva-green-foliage-holiday-zoom-virtual-background-lFKQ1lGmxs4.jpg'); */
 		/* Full height */
 		height: 100%;
@@ -152,4 +153,5 @@ export default {
 	#nav-drawer .v-list-item__title{
 		font-weight: bold;
 	}
+	#back{position:absolute;top:0;left:0;}
 </style>
