@@ -35,6 +35,10 @@ const mutations = {
 }
 
 const actions = {
+    /**
+     * 取得特定角色資料 
+     * @param {角色資料流水號} id 
+     */
     getRole({ commit }, id) {
         state.loading = true
         axios.get('/api/role/'+id)
@@ -56,6 +60,9 @@ const actions = {
             // router.push({ name: 'Home' })
         })
     },
+    /**
+     * 取得所有角色資料
+     */
     getRoles({ commit }) {
         axios.get('/api/roles')
         .then((response) => {
@@ -75,6 +82,10 @@ const actions = {
             router.push({ name: 'Home' })
         })
     },   
+    /**
+     * 建立角色
+     * @param {name, permission} formContents 
+     */
     createRoles({commit}, formContents) {
         axios.get('/sanctum/csrf-cookie').then(() => {
             axios.post('/api/roles-create', formContents)
@@ -96,32 +107,41 @@ const actions = {
             });
         });
     },
+    /**
+     * 修改角色資料
+     * @param {name, permission} formContents 
+     * @param {角色流水號} id 
+     */
     editRoles({commit}, {formContents, id}) {
         axios.get('/sanctum/csrf-cookie').then(() => {
             axios.put('/api/role-edit/'+id, formContents)
-                .then((response) => {
-                    if (response.data.status == 'failed') {
-                        commit('action_errors', response.data.errors);
-                    }
-                    else{
-                        router.push({name: 'Roles'})
-                        Swal.fire({
-                            toast: true,
-                            showConfirmButton: false,
-                            position: 'top-end',
-                            icon: 'success',
-                            title: response.data.message,
-                            timer: 3000,
-                            timerProgressBar: true,
-                        })
-                    }
-                })
-                .catch((error) => {
-                    console.log(error.response)
-                    commit('action_errors', error.response.data.errors);
-                });
+            .then((response) => {
+                if (response.data.status == 'failed') {
+                    commit('action_errors', response.data.errors);
+                }
+                else{
+                    router.push({name: 'Roles'})
+                    Swal.fire({
+                        toast: true,
+                        showConfirmButton: false,
+                        position: 'top-end',
+                        icon: 'success',
+                        title: response.data.message,
+                        timer: 3000,
+                        timerProgressBar: true,
+                    })
+                }
+            })
+            .catch((error) => {
+                console.log(error.response)
+                commit('action_errors', error.response.data.errors);
+            });
         });
     },
+    /**
+     * 確認是否刪除角色
+     * @param {角色流水號} id 
+     */
     deleteConfirm({ dispatch }, id) {
         Swal.fire({
             title: "確定刪除?",
@@ -145,6 +165,10 @@ const actions = {
             }
         })
     },
+    /**
+     * 刪除角色
+     * @param {角色流水號} id 
+     */
     deleteRole({ dispatch }, id) {
         axios.delete('/api/role-delete/'+id)
         .then((response) => {
@@ -178,6 +202,9 @@ const actions = {
             // router.push({ name: 'Home' })
         })
     },
+    /**
+     * 取得所有權限資料
+     */
     getPermissions({ commit }) {
         state.loading = true
         axios.get('/api/permissions')

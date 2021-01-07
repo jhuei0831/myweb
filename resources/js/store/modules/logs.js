@@ -5,7 +5,7 @@ import { getField, updateField } from "vuex-map-fields";
 const state = {
     log: [],
     logs: [],
-    loading: false
+    loading: true
 }
 
 const mutations = {
@@ -21,6 +21,10 @@ const mutations = {
 }
 
 const actions = {
+    /**
+     * 取得特定log詳細資料
+     * @param {log流水號} id 
+     */
     getLog({ commit }, id) {
         state.loading = true
         axios.get('/api/logs/'+id)
@@ -36,14 +40,15 @@ const actions = {
             router.push({ name: 'Home' })
         })
     },
+    /**
+     * 取得所有log
+     */
     getLogs({ commit }) {
-        state.loading = true
         axios.get('/api/logs')
         .then((response) => {
             commit('logs_data', response.data.data)
         })
         .catch((error) => {
-            console.log(error.response)
             Swal.fire({
                 title: error.response.data.responseMessage,
                 icon: 'error',

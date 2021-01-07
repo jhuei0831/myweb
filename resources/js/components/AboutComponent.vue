@@ -3,14 +3,20 @@
         <v-flex>
             <v-card dark tile img="https://cdn.vuetifyjs.com/images/cards/server-room.jpg" class="mx-auto" width="800">
                 <v-layout column align-center max-width="500">
-                    <v-avatar size='100' class="my-3">
-                        <v-img :src="userdata.photo ? userdata.photo : 'https://cdn2.ettoday.net/images/1457/d1457772.jpg'" style="cursor: pointer" @click="$refs.FileInput.click()"></v-img>  
-                        <input ref="FileInput" type="file" style="display: none;" @change="onFileSelect"/>
-                    </v-avatar>
+                    <v-tooltip right>
+                        <template v-slot:activator="{ on, attrs }">
+                            <v-avatar size='100' class="my-3" v-bind="attrs" v-on="on">
+                                <v-img :src="userdata.photo ? userdata.photo : 'https://cdn2.ettoday.net/images/1457/d1457772.jpg'" style="cursor: pointer" @click="$refs.FileInput.click()"></v-img>  
+                                <input ref="FileInput" type="file" style="display: none;" @change="onFileSelect"/>
+                            </v-avatar>
+                        </template>
+                        <span>點擊更換大頭貼</span>
+                    </v-tooltip>
                 </v-layout>
             </v-card>
             <v-dialog v-model="dialog">
                 <v-card>
+                    <v-card-title>圖片剪裁</v-card-title>
                     <v-card-text>
                         <VueCropper v-show="selectedFile" ref="cropper" :src="selectedFile" alt="Source Image"></VueCropper>
                     </v-card-text>
@@ -76,7 +82,6 @@ export default {
     },
     methods: {
         ...mapActions("users", ["editSelf", "editPhoto"]),
-        ...mapActions("auth", ["getUser"]),
         detail_submit() {
             if (this.$refs.form_detail.validate()) {
                 let formContents = {name: this.userdata.name, email: this.userdata.email}
@@ -104,8 +109,17 @@ export default {
         onFileSelect(e) {
             const file = e.target.files[0]
             this.mime_type = file.type
-            console.log(this.mime_type)
-            if (typeof FileReader === 'function') {
+            // console.log(this.mime_type)
+            // 判斷檔案格式
+            if (this.mime_type != 'image/jpeg' &&　this.mime_type != 'image/png' && this.mime_type != 'image/jpg') {
+                Swal.fire({
+                    title: '只接受.jpg和.png格式',
+                    text: 'type : ' + this.mime_type,
+                    icon: 'error',
+                    confirmButtonText: '好喔',
+                })
+            }
+            else if (typeof FileReader === 'function') {
                 this.dialog = true
                 const reader = new FileReader()
                 reader.onload = (event) => {
@@ -113,7 +127,8 @@ export default {
                     this.$refs.cropper.replace(this.selectedFile)
                 }
                 reader.readAsDataURL(file)
-            } else {
+            } 
+            else {
                 alert('Sorry, FileReader API not supported')
             }
         },

@@ -1,9 +1,9 @@
 <template>
-	<v-layout align-start justify-center>
-		<v-form v-model="isValid" @submit.prevent="checkForm" id="loginform" ref="form" lazy-validation>
-			<p v-if="errors.length">
-				<v-alert v-for="error in errors" :key="error" type="error">{{ error }}</v-alert>
-			</p>
+	<v-form v-model="isValid" @submit.prevent="checkForm" id="loginform" ref="form" lazy-validation>
+		<p v-if="errors.length">
+			<v-alert v-for="error in errors" :key="error" type="error">{{ error }}</v-alert>
+		</p>
+		<v-layout align-start justify-center>
 			<v-card :elevation="10" :width="500">
 				<v-card-title class="cyan lighten-2 white--text">Login</v-card-title>
 				<v-spacer></v-spacer>
@@ -19,8 +19,8 @@
 					</v-btn>
 				</v-card-actions>
 			</v-card>
-		</v-form>
-	</v-layout>
+		</v-layout>
+	</v-form>
 </template>
 
 <script>

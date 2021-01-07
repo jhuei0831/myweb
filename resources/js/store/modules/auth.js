@@ -48,15 +48,16 @@ const actions = {
             });
         });
     },
-    getUser({ commit, dispatch }) {
+    getUser({ commit }) {
         axios.get('/api/user')
         .then((response) => {
             commit('auth_user', response.data.user)
             window.Permissions = response.data.permission
         })
         .catch(() => {
+            localStorage.removeItem("token")
             // alert('error')
-            dispatch('logout')
+            // dispatch('logout')
             // router.push({ name: 'Home' })
         })
     },

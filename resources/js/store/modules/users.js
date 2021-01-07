@@ -35,6 +35,10 @@ const mutations = {
 }
 
 const actions = {
+    /**
+     * 取得特定使用者資料
+     * @param {使用者流水號} id 
+     */
     getUser({ commit }, id) {
         // state.loading = true
         axios.get('/api/user/'+id)
@@ -57,6 +61,9 @@ const actions = {
             // router.push({ name: 'Users' })
         })
     },
+    /**
+     * 取得所有使用者資料
+     */
     getUsers({ commit }) {
         axios.get('/api/users')
         .then((response) => {
@@ -71,6 +78,10 @@ const actions = {
             router.push({ name: 'Home' })
         })
     },   
+    /**
+     * 建立使用者
+     * @param {name, email, password, password_confirmation, role} formContents 
+     */
     createUser({commit}, formContents) {
         axios.get('/sanctum/csrf-cookie').then(() => {
             axios.post('/api/users-create', formContents)
@@ -92,60 +103,84 @@ const actions = {
             });
         });
     },
+    /**
+     * 修改特定使用者資料
+     * @param {name, email, password, password_confirmation, role} formContents 
+     * @param {使用者流水號} id 
+     */
     editUser({commit}, {formContents, id}) {
         axios.get('/sanctum/csrf-cookie').then(() => {
             axios.put('/api/user-edit/'+id, formContents)
-                .then((response) => {
-                    if (response.data.status == 'failed') {
-                        commit('action_errors', response.data.errors);
-                    }
-                    else{
-                        router.push({name: 'Users'})
-                        Swal.fire({
-                            toast: true,
-                            showConfirmButton: false,
-                            position: 'top-end',
-                            icon: 'success',
-                            title: response.data.message,
-                            timer: 3000,
-                            timerProgressBar: true,
-                        })
-                    }
-                })
-                .catch((error) => {                  
-                    commit('action_errors', error.response.data.errors);
-                });
+            .then((response) => {
+                if (response.data.status == 'failed') {
+                    commit('action_errors', response.data.errors);
+                }
+                else{
+                    router.push({name: 'Users'})
+                    Swal.fire({
+                        toast: true,
+                        showConfirmButton: false,
+                        position: 'top-end',
+                        icon: 'success',
+                        title: response.data.message,
+                        timer: 3000,
+                        timerProgressBar: true,
+                    })
+                }
+            })
+            .catch((error) => {                  
+                commit('action_errors', error.response.data.errors);
+            });
         });
     },
+    /**
+     * 使用者修改自己的資料
+     * @param {name, email} formContents 
+     * @param {使用者流水號} id 
+     */
     editSelf({commit}, {formContents, id}) {
         axios.get('/sanctum/csrf-cookie').then(() => {
             axios.put('/api/user-edit-self/'+id, formContents)
-                .then((response) => {
-                    if (response.data.status == 'failed') {
-                        commit('action_errors', response.data.errors);
-                    }
-                    else{
-                        Swal.fire({
-                            toast: true,
-                            showConfirmButton: false,
-                            position: 'top-end',
-                            icon: 'success',
-                            title: response.data.message,
-                            timer: 3000,
-                            timerProgressBar: true,
-                        })
-                    }
-                })
-                .catch((error) => {           
-                    // console.log(error.response)
-                    commit('action_errors', error.response.data.errors);
-                });
+            .then((response) => {
+                if (response.data.status == 'failed') {
+                    commit('action_errors', response.data.errors);
+                }
+                else{
+                    Swal.fire({
+                        toast: true,
+                        showConfirmButton: false,
+                        position: 'top-end',
+                        icon: 'success',
+                        title: response.data.message,
+                        timer: 3000,
+                        timerProgressBar: true,
+                    })
+                }
+            })
+            .catch((error) => {           
+                // console.log(error.response)
+                commit('action_errors', error.response.data.errors);
+            });
         });
     },
+    /**
+     * 使用者編輯大頭貼
+     * @param {photo} formContents 
+     * @param {*} id 
+     */
     editPhoto({dispatch}, {formContents, id}) {
         axios.put('/api/user-photo/'+id, formContents)
-        .then(() => {
+        .then((response) => {
             dispatch('auth/getUser', null, { root: true })
+            Swal.fire({
+                toast: true,
+                showConfirmButton: false,
+                position: 'top-end',
+                icon: 'success',
+                title: response.data.message,
+                timer: 3000,
+                timerProgressBar: true,
+            })
         })
         .catch(function (error) {
             console.log(error.response)

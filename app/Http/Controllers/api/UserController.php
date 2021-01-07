@@ -194,8 +194,11 @@ class UserController extends Controller
             $input = $request->only('photo');
             $user = User::find($id);
             $user->update($input);
-            $this->log->write_log('users', ['message' => '照片修改'], 'edit');
-            return response()->json(["status" => "success", "message" => $input]);
+            $this->log->write_log('users', ['message' => '照片修改'], 'edit_photo');
+            return response()->json(["status" => "success", "message" => '使用者照片修改成功']);
+        }
+        else {
+            return response()->json(["status" => "failed", "message" => '使用者照片修改失敗']);
         }
     }
 }
