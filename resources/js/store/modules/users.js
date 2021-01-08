@@ -8,7 +8,7 @@ const state = {
     errors:[],
     roles: [],
     user_role: [],
-    loading: true,
+    loading: false,
 }
 
 const mutations = {
@@ -35,6 +35,27 @@ const mutations = {
 }
 
 const actions = {
+    /**
+     * 忘記密碼
+     * @param {會員電子信箱} email 
+     */
+    forgot_password({ commit }, email) {
+        state.loading = true
+        axios.post('/api/forgot-password', email)
+        .then((response) => {
+            Swal.fire({
+                title: response.data.message,
+                text: '請至郵件帳號:'+email.email+'收取信件。',
+                icon: 'success',
+                confirmButtonText: '好喔',
+            })
+            state.loading = false
+        })
+        .catch((error) => {
+            console.log(error.response)
+            commit('action_errors', error.response.data.message);
+        });
+    },
     /**
      * 取得特定使用者資料
      * @param {使用者流水號} id 
@@ -88,9 +109,14 @@ const actions = {
             .then((response) => {
                 router.push({ name: 'Users' })
                 Swal.fire({
-                    title: response.data.message,
+                    toast: true,
+                    showConfirmButton: false,
+                    position: 'top-end',
                     icon: 'success',
-                    confirmButtonText: '好喔',
+                    title: response.data.message,
+                    background: '#F1F8E9',
+                    timer: 3000,
+                    timerProgressBar: true,
                 })
             })
             .catch((error) => {
@@ -123,6 +149,7 @@ const actions = {
                         position: 'top-end',
                         icon: 'success',
                         title: response.data.message,
+                        background: '#F1F8E9',
                         timer: 3000,
                         timerProgressBar: true,
                     })
@@ -152,6 +179,7 @@ const actions = {
                         position: 'top-end',
                         icon: 'success',
                         title: response.data.message,
+                        background: '#F1F8E9',
                         timer: 3000,
                         timerProgressBar: true,
                     })
@@ -178,6 +206,7 @@ const actions = {
                 position: 'top-end',
                 icon: 'success',
                 title: response.data.message,
+                background: '#F1F8E9',
                 timer: 3000,
                 timerProgressBar: true,
             })
@@ -203,6 +232,7 @@ const actions = {
                     position: 'top-end',
                     icon: 'info',
                     title: '資料已保留',
+                    background: '#F1F8E9',
                     timer: 3000,
                     timerProgressBar: true,
                 })
@@ -221,9 +251,14 @@ const actions = {
             }
             else{
                 Swal.fire({
-                    title: response.data.message,
+                    toast: true,
+                    showConfirmButton: false,
+                    position: 'top-end',
                     icon: 'success',
-                    confirmButtonText: '好喔',
+                    title: response.data.message,
+                    background: '#F1F8E9',
+                    timer: 3000,
+                    timerProgressBar: true,
                 })
                 dispatch('getUsers')
             }   

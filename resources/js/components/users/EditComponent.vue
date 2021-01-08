@@ -43,7 +43,7 @@
                         <v-tab-item id="password">
                             <validation-observer ref="observer" v-slot="{ invalid, reset }">
                             <v-form @submit.prevent="password_submit" @reset.prevent="reset" ref="form_password" lazy-validation id="user_password" class="mt-4">
-                                <validation-provider v-slot="{ errors }" name="密碼" rules="required|password:@password_confirmation">
+                                <validation-provider v-slot="{ errors }" name="密碼" rules="required|min:8|password:@password_confirmation">
                                     <v-text-field type="password" name="password" v-model="password" label="密碼" id="password" :error-messages="errors" rounded filled autocomplete="off" background-color="white"></v-text-field>
                                 </validation-provider>
                                 <validation-provider v-slot="{ errors }" name="確認密碼" vid="password_confirmation" rules="required">

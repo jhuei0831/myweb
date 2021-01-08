@@ -4,6 +4,7 @@ namespace App\Http\Controllers\api;
 
 # Facades
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 use DB;
 use Hash;
@@ -13,9 +14,11 @@ use Auth;
 use App\Models\User;
 use Spatie\Permission\Models\Role;
 
+# Mail
+use App\Mail\OrderPassword;
+
 # Service
 use App\Services\LogService;
-
 
 class UserController extends Controller
 {
@@ -199,6 +202,22 @@ class UserController extends Controller
         }
         else {
             return response()->json(["status" => "failed", "message" => '使用者照片修改失敗']);
+        }
+    }
+
+    /**
+     * 忘記密碼
+     */
+    public function forgot_password(Request $request)
+    {
+        $check_user = DB::table('users')->where('email', $request->input('email'))->first();
+        if ($check_user) {
+            $user = User::find($check_user->id);
+            Mail::to($request->input('email'))->send(new OrderPassword());
+            return response()->json(["status" => "success", "message" => '密碼重設信送出成功']);
+        }
+        else {
+            return response()->json(["status" => "failed", "message" => '密碼重設信送出失敗']);
         }
     }
 }

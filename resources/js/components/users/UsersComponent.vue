@@ -18,8 +18,8 @@
                         <td>{{user.item.email}}</td>
                         <td v-for="(role, key) in user.item.roles" :key="key"><v-chip color="cyan" text-color="white" small>{{ role.name }}</v-chip></td>
                         <td>
-                            <v-btn icon @click="enterEdit(user.item.id)"><v-icon>mdi-circle-edit-outline</v-icon></v-btn>
-                            <v-btn icon @click="enterDelete(user.item.id)"><v-icon>mdi-delete-circle-outline</v-icon></v-btn>
+                            <v-btn icon @click="enterEdit(user.item.id)"><v-icon color="success">mdi-circle-edit-outline</v-icon></v-btn>
+                            <v-btn icon @click="enterDelete(user.item.id)"><v-icon color="error">mdi-delete-circle-outline</v-icon></v-btn>
                         </td>
                     </tr>
                 </template>    

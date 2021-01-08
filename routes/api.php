@@ -23,6 +23,7 @@ use App\Http\Controllers\api\UserController;
 // });
 
 Route::post('login', [AuthController::class, 'login']); // 登入
+Route::post('forgot-password', [UserController::class, 'forgot_password']); // 使用者忘記密碼
 
 Route::middleware('auth:sanctum')->group(function () {
     // Auth

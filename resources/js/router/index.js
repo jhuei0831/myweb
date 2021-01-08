@@ -16,77 +16,18 @@ import Home from '../components/HomeComponent.vue'
 Vue.use(VueRouter)
 
 const routes = [
-    {
-        path: '/',
-        name: 'Home',
-        component: Home
-    },
-    {
-        path: '/about',
-        name: 'About',
-        meta: {
-            auth: true
-        },
-        component: About
-    },
-    {
-        path: '/roles',
-        name: 'Roles',
-        meta: { auth: true },
-        component: Roles
-    },
-    {
-        path: '/roles/create',
-        name: 'RolesCreate',
-        meta: { auth: true },
-        component: RolesCreate,
-    },
-    {
-        path: '/roles/edit/:id',
-        name: 'RolesEdit',
-        meta: { auth: true },
-        component: RolesEdit,
-    },
-    {
-        path: '/users',
-        name: 'Users',
-        meta: { auth: true },
-        component: Users
-    },
-    {
-        path: '/users/create',
-        name: 'UsersCreate',
-        meta: { auth: true },
-        component: UsersCreate,
-    },
-    {
-        path: '/users/edit/:id',
-        name: 'UsersEdit',
-        meta: { auth: true },
-        component: UsersEdit,
-    },
-    {
-        path: '/logs',
-        name: 'Logs',
-        meta: { auth: true },
-        component: Logs
-    },
-    {
-        path: '/logs/detail/:id',
-        name: 'LogDetail',
-        meta: { auth: true },
-        component: LogDetail
-    },
-    {
-        path: '/login',
-        name: 'Login',
-        component: Login
-    },
-    {
-        path: '*',
-        name: 'NotFound',
-        component: NotFound
-    }
+    {path: '/', name: 'Home', component: Home},
+    {path: '/about', name: 'About', meta: { auth: true }, component: About},
+    {path: '/roles', name: 'Roles', meta: { auth: true }, component: Roles},
+    {path: '/roles/create', name: 'RolesCreate', meta: { auth: true }, component: RolesCreate},
+    {path: '/roles/edit/:id', name: 'RolesEdit', meta: { auth: true }, component: RolesEdit},
+    {path: '/users', name: 'Users', meta: { auth: true }, component: Users},
+    {path: '/users/create', name: 'UsersCreate', meta: { auth: true }, component: UsersCreate},
+    {path: '/users/edit/:id', name: 'UsersEdit', meta: { auth: true }, component: UsersEdit},
+    {path: '/logs', name: 'Logs', meta: { auth: true }, component: Logs},
+    {path: '/logs/detail/:id', name: 'LogDetail', meta: { auth: true }, component: LogDetail},
+    {path: '/login', name: 'Login', component: Login},
+    {path: '*', name: 'NotFound', component: NotFound}
 ]
 
 const router = new VueRouter({

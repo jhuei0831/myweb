@@ -13,20 +13,25 @@
                     <v-icon color="white">mdi-account-edit-outline</v-icon>&nbsp;角色修改
                 </v-card-title>
                 <v-card-text>
-                    <v-form v-model="valid" @submit.prevent="submit" ref="form" lazy-validation id="roleedit" class="mt-4">
-                        <v-text-field name="name" v-model="role.name" label="名稱" id="name" :rules="nameRules"></v-text-field>
-                        <v-select name="permission" v-model="rolePermissions" :items="permissions" item-text="name" label="權限" multiple chips>
-                            <template #selection="{ item }">
-                                <v-chip color="blue lighten-4 blue--text">{{item.name}}</v-chip>
-                            </template>
-                        </v-select>
-                        <v-btn color="success" @click="submit" :disabled="!valid">送出</v-btn>
-                        <v-btn color="error" @click="clear">清除表單內容</v-btn>
-                        <v-btn color="warning" @click="clear_errors">清除錯誤訊息</v-btn>
-                    </v-form> 
+                    <validation-observer ref="observer" v-slot="{ invalid, reset }">
+                        <v-form @submit.prevent="submit" @reset.prevent="reset" ref="form" lazy-validation id="roleedit" class="mt-4">
+                            <validation-provider v-slot="{errors}" name="名稱" rules="required|max:10">
+                                <v-text-field name="name" v-model="role.name" label="名稱" id="name" :error-messages="errors" rounded filled background-color="white"></v-text-field>
+                            </validation-provider>
+                            <validation-provider v-slot="{errors}" name="權限" rules="required">
+                                <v-select name="permission" v-model="rolePermissions" :items="permissions" item-text="name" label="權限" multiple chips :error-messages="errors" rounded filled background-color="white">
+                                    <template #selection="{ item }">
+                                        <v-chip color="blue lighten-4 blue--text">{{item.name}}</v-chip>
+                                    </template>
+                                </v-select>
+                            </validation-provider>
+                            <v-btn color="success" @click="submit" :disabled="invalid">送出</v-btn>
+                            <v-btn color="error" @click="clear">清除表單內容</v-btn>
+                            <v-btn color="warning" @click="clear_errors">清除錯誤訊息</v-btn>
+                        </v-form> 
+                    </validation-observer>
                 </v-card-text>
-            </v-card>
-            
+            </v-card>  
         </v-sheet>      
     </v-sheet>
 </template>
@@ -37,9 +42,7 @@
 
     export default {
         data: () => ({
-            valid: true,
             name: "",
-            nameRules: [v => !!v || "Name is required", v => (v && v.length <= 10) || "Name must be less than 10 characters"],
             permission: []
         }),
         mounted() {

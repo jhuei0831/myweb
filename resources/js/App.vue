@@ -5,7 +5,7 @@
 				<img width="196" src="https://lo2y.com/wp-content/uploads/2016/02/hello-world-510x219.png" alt="logo">
 			</v-layout>
 		</v-system-bar>
-		<v-navigation-drawer class="hidden-sm-and-up" v-model="drawer" app color="grey lighten-4" floating id="nav-drawer">
+		<v-navigation-drawer class="hidden-sm-and-up" v-model="drawer" app color="grey lighten-4" floating id="nav-drawer" disable-resize-watcher bottom>
 			<v-list rounded dense v-if="isLoggedIn">
 				<v-list-item class="justify-center">
 					<router-link to="/About" tag="span" style="cursor: pointer">
@@ -51,12 +51,11 @@
 			</v-list>
 		</v-navigation-drawer>
 
-		<v-app-bar app color="transparent" elevation="0" dark>
-			<span class="hidden-sm-and-up"><v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon></span>
+		<v-app-bar app color="white" elevation="0">
 			<router-link to="/" tag="span" style="cursor: pointer"><v-toolbar-title class="font-weight-bold">MyWeb</v-toolbar-title></router-link>
 			<v-spacer></v-spacer>
 			<v-toolbar-items class="hidden-xs-only" v-if="!isLoggedIn">
-				<v-btn text v-for="item in menuItems" :key="item.title" :to="item.path">
+				<v-btn text v-for="item in menuItems" :key="item.title" :to="item.path" class="font-weight-bold">
           			<v-icon left dark>{{ item.icon }}</v-icon>{{ item.title }}
         		</v-btn>
       		</v-toolbar-items>
@@ -80,12 +79,13 @@
 								<v-divider></v-divider>
 								<v-btn depressed rounded text to="/About"><v-icon left>mdi-card-account-details</v-icon>Account Info</v-btn>
 								<v-divider></v-divider>
-								<v-btn @click="logout()" depressed rounded text><v-icon left>mdi-logout-variant</v-icon>Logout</v-btn>
+								<v-btn @click="logout()" depressed rounded text class="red--text"><v-icon left>mdi-logout-variant</v-icon>Logout</v-btn>
 							</div>
 						</v-list-item-content>
 					</v-card>
 				</v-menu>				
       		</v-toolbar-items>
+			<span class="hidden-sm-and-up"><v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon></span>
 		</v-app-bar>
 
 		<v-main app>
@@ -111,11 +111,6 @@ export default {
 		menuItems: [
 			{ title: 'Login', path: '/login', icon: 'mdi-login-variant' }
 		],
-		user: {
-        initials: 'JD',
-        fullName: 'John Doe',
-        email: 'john.doe@doe.com',
-      },
 	}),
 	mounted() {
 		if (this.isLoggedIn) {
@@ -127,9 +122,6 @@ export default {
 	},
 	methods: {
 		...mapActions("auth", ["getUser", "logout"]),
-		goAbout() {
-			router.push({ name: 'About' })
-		}
 	},
 };
 </script>
@@ -140,7 +132,7 @@ export default {
     }
 	#bg {
 		/* background-color: rgb(85, 88, 88); */
-		background: url('./assets/man.jpg');
+		/* background: url('./assets/man.jpg'); */
 		/* background: url('https://marketplace.canva.com/EAEMngvLCL0/1/0/800w/canva-green-foliage-holiday-zoom-virtual-background-lFKQ1lGmxs4.jpg'); */
 		/* Full height */
 		height: 100%;
@@ -153,5 +145,4 @@ export default {
 	#nav-drawer .v-list-item__title{
 		font-weight: bold;
 	}
-	#back{position:absolute;top:0;left:0;}
 </style>

@@ -1,5 +1,5 @@
 <script>
-    import { confirmed, email, digits, max, regex, required } from 'vee-validate/dist/rules'
+    import { confirmed, email, digits, max, min, regex, required } from 'vee-validate/dist/rules'
     import { ValidationProvider, ValidationObserver, extend } from 'vee-validate';
     
     extend('confirmed', {
@@ -20,6 +20,11 @@
     extend('max', {
         ...max,
         message: '{_field_}不能超過{length}個字',
+    })
+
+    extend('min', {
+        ...min,
+        message: '{_field_}不能少於{length}個字',
     })
 
     extend('password', {

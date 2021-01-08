@@ -92,9 +92,14 @@ const actions = {
             .then((response) => {
                 router.push({ name: 'Roles' })
                 Swal.fire({
-                    title: response.data.message,
+                    toast: true,
+                    showConfirmButton: false,
+                    position: 'top-end',
                     icon: 'success',
-                    confirmButtonText: '好喔',
+                    title: response.data.message,
+                    background: '#F1F8E9',
+                    timer: 3000,
+                    timerProgressBar: true,
                 })
             })
             .catch((error) => {
@@ -127,13 +132,13 @@ const actions = {
                         position: 'top-end',
                         icon: 'success',
                         title: response.data.message,
+                        background: '#F1F8E9',
                         timer: 3000,
                         timerProgressBar: true,
                     })
                 }
             })
             .catch((error) => {
-                console.log(error.response)
                 commit('action_errors', error.response.data.errors);
             });
         });
@@ -159,6 +164,7 @@ const actions = {
                     position: 'top-end',
                     icon: 'info',
                     title: '資料已保留',
+                    background: '#F1F8E9',
                     timer: 3000,
                     timerProgressBar: true,
                 })
@@ -171,35 +177,34 @@ const actions = {
      */
     deleteRole({ dispatch }, id) {
         axios.delete('/api/role-delete/'+id)
-        .then((response) => {
-            if (response.data.responseStatus) {
+        .then((response) => {     
+            if (response.data.status == 'failed') {
                 Swal.fire({
-                    title: response.data.responseMessage,
+                    title: response.data.message,
                     icon: 'error',
                     confirmButtonText: '好喔',
                 })
             }
             else{
-                if (response.data.status == 'failed') {
-                    Swal.fire({
-                        title: response.data.message,
-                        icon: 'error',
-                        confirmButtonText: '好喔',
-                    })
-                }
-                else{
-                    Swal.fire({
-                        title: response.data.message,
-                        icon: 'success',
-                        confirmButtonText: '好喔',
-                    })
-                    dispatch('getRoles')
-                }                           
-            }
+                Swal.fire({
+                    toast: true,
+                    showConfirmButton: false,
+                    position: 'top-end',
+                    icon: 'success',
+                    title: response.data.message,
+                    background: '#F1F8E9',
+                    timer: 3000,
+                    timerProgressBar: true,
+                })
+                dispatch('getRoles')
+            }                                     
         })
         .catch((error) => {
-            // console.log(error.response)
-            // router.push({ name: 'Home' })
+            Swal.fire({
+                title: error.response.data.responseMessage,
+                icon: 'error',
+                confirmButtonText: '好喔',
+            })
         })
     },
     /**
@@ -209,20 +214,15 @@ const actions = {
         state.loading = true
         axios.get('/api/permissions')
         .then((response) => {
-            if (response.data.responseStatus) {
-                Swal.fire({
-                    title: response.data.responseMessage,
-                    icon: 'error',
-                    confirmButtonText: '好喔',
-                })
-                router.push({ name: 'Roles' })
-            }
-            else{
-                commit('permissions', response.data.data)
-            }
+            commit('permissions', response.data.data)
         })
-        .catch(() => {
-            router.push({ name: 'Home' })
+        .catch((error) => {
+            Swal.fire({
+                title: error.response.data.responseMessage,
+                icon: 'error',
+                confirmButtonText: '好喔',
+            })
+            router.push({ name: 'Roles' })
         })
     }
 }

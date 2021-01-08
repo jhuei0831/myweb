@@ -16,8 +16,8 @@
                         <td>{{role.item.id}}</td>
                         <td>{{role.item.name}}</td>
                         <td>
-                            <v-btn x-small color="success" @click="enterEdit(role.item.id)">修改</v-btn>
-                            <v-btn x-small color="red white--text" @click="enterDelete(role.item.id)">刪除</v-btn>
+                            <v-btn icon @click="enterEdit(role.item.id)"><v-icon color="success">mdi-circle-edit-outline</v-icon></v-btn>
+                            <v-btn icon @click="enterDelete(role.item.id)"><v-icon color="error">mdi-delete-circle-outline</v-icon></v-btn>
                         </td>
                     </tr>
                 </template>    

@@ -31,23 +31,6 @@ const mutations = {
 }
 
 const actions = {
-    login({commit, dispatch}, formContents) {
-        commit('auth_request')
-        axios.get('/sanctum/csrf-cookie').then(() => {
-            axios.post('/api/login', formContents)
-            .then((response) => {
-                const token = response.data.token;
-                localStorage.setItem('token', token);
-                window.axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
-                commit('auth_success', token);
-                router.push({ name: 'About' })
-                dispatch('getUser')
-            })
-            .catch((error) => {
-                commit('auth_error', error.response.data.message);
-            });
-        });
-    },
     getUser({ commit }) {
         axios.get('/api/user')
         .then((response) => {
@@ -56,9 +39,12 @@ const actions = {
         })
         .catch(() => {
             localStorage.removeItem("token")
-            // alert('error')
-            // dispatch('logout')
-            // router.push({ name: 'Home' })
+            commit('auth_logout')
+            Swal.fire({
+                title: '請重新登入',
+                icon: 'error',
+                confirmButtonText: '好喔',
+            })
         })
     },
     getPermission({commit}, {permission}) {
@@ -83,25 +69,46 @@ const actions = {
             })
         });
     },
+    login({commit, dispatch}, formContents) {
+        commit('auth_request')
+        axios.get('/sanctum/csrf-cookie').then(() => {
+            axios.post('/api/login', formContents)
+            .then((response) => {
+                const token = response.data.token;
+                localStorage.setItem('token', token);
+                window.axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
+                commit('auth_success', token);
+                router.push({ name: 'About' })
+                dispatch('getUser')
+            })
+            .catch((error) => {
+                commit('auth_error', error.response.data.message);
+            });
+        });
+    },
     logout({ commit }) {
         axios.get('api/logout')
         .then((response) => {
             localStorage.removeItem("token")
             commit("auth_logout")
             router.push({ name: "Login" })
-            // location.reload()
             Swal.fire({
                 toast: true,
                 showConfirmButton: false,
                 position: 'top-end',
                 icon: 'success',
                 title: response.data.message,
+                background: '#F1F8E9',
                 timer: 3000,
                 timerProgressBar: true,
             })
         })
         .catch((error) => {
-            console.log(error.response.data.message)
+            Swal.fire({
+                title: error.response.data.message,
+                icon: 'error',
+                confirmButtonText: '好喔',
+            })
         })
     },
 }

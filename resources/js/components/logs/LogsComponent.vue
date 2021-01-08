@@ -17,7 +17,7 @@
                         <td>{{log.item.table}}</td>
                         <td>{{log.item.created_at|formatDate}}</td>
                         <td>                           
-                            <v-btn x-small color="info" @click="getDetail(log.item.id)">詳細資料</v-btn>                               
+                            <v-btn icon @click="getDetail(log.item.id)"><v-icon color="primary">mdi-information-outline</v-icon></v-btn>                               
                         </td>
                     </tr>
                 </template>  
