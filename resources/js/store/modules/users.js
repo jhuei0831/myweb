@@ -43,6 +43,7 @@ const actions = {
         state.loading = true
         axios.post('/api/forgot-password', email)
         .then((response) => {
+            console.log(response)
             Swal.fire({
                 title: response.data.message,
                 text: '請至郵件帳號:'+email.email+'收取信件。',
