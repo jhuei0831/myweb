@@ -6,6 +6,7 @@ use App\Http\Controllers\api\AuthController;
 use App\Http\Controllers\api\LogController;
 use App\Http\Controllers\api\RoleController;
 use App\Http\Controllers\api\UserController;
+use App\Http\Controllers\api\NoticeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,4 +50,11 @@ Route::middleware('auth:sanctum')->group(function () {
     // Logs
     Route::get('logs', [LogController::class, 'index']); // Log列表
     Route::get('logs/{id}', [LogController::class, 'detail']); // Log詳細資料
+
+    // 最新消息
+    Route::get('notices', [NoticeController::class, 'index']); // 消息列表
+    Route::post('notices-create', [NoticeController::class, 'store']); // 新增使用者
+    Route::get('notice/{id}', [NoticeController::class, 'show']); // 取得指定消息
+    Route::put('notice-edit/{id}', [NoticeController::class, 'update']); // 更新指定消息
+    Route::delete('notice-delete/{id}', [NoticeController::class, 'destroy']); // 刪除消息
 });

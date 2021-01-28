@@ -19,7 +19,7 @@ class LogController extends Controller
 
     function index()
     {
-        $logs = Log::all();
+        $logs = Log::orderby('id', 'DESC')->get();
         return response()->json(['status' => 'success', 'data' => $logs]);
     }
 

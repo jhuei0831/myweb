@@ -27,7 +27,11 @@ class PermissionTableSeeder extends Seeder
             'product-list',
             'product-create',
             'product-edit',
-            'product-delete'
+            'product-delete',
+            'notice-list',
+            'notice-create',
+            'notice-edit',
+            'notice-delete'
         ];
         foreach ($permissions as $permission) {
             Permission::create(['name' => $permission, 'guard_name' => 'sanctum']);
