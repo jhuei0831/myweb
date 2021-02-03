@@ -4,6 +4,8 @@ namespace App\Http\Controllers\api;
 # Models
 use App\Models\Notice;
 use Auth;
+use DB;
+use Carbon\Carbon;
 
 # Service
 use App\Services\LogService;
@@ -33,7 +35,8 @@ class NoticeController extends Controller
     public function index()
     {
         $user_id = Auth::user()->id;
-        $notices = Notice::where('user_id', $user_id)->orderby('priority', 'ASC')->get();
+        $database = Auth::user()->database;
+        $notices = DB::connection($database)->table('notices')->orderby('priority', 'ASC')->get();
         return response()->json(["status" => "success", "data" => $notices]);
     }
 
@@ -43,11 +46,16 @@ class NoticeController extends Controller
     public function store(NoticeRequest $request)
     {
         $user_id = Auth::user()->id;
+        $database = Auth::user()->database;
         $validated = $request->validated();
         if ($validated) {
-            $request->request->add(['user_id' => $user_id]);
-            Notice::create($request->except('_token', '_method'));
-            $this->log->write_log('notices', ['message' => '消息新增成功', 'data' => $input], 'create');
+            DB::connection($database)->table('notices')->insert([
+                'priority' => $request->priority, 
+                'title' => $request->title,
+                'content' => $request->content,
+                'created_at' => Carbon::now()
+            ]);
+            $this->log->write_log('notices', ['message' => '消息新增成功'], 'create');
             return response()->json(["status" => "success", "message" => "消息新增成功"]);
         }
         else {
@@ -61,7 +69,8 @@ class NoticeController extends Controller
     public function show($id)
     {
         $user_id = Auth::user()->id;
-        $notice = Notice::where('user_id', $user_id)->find($id);
+        $database = Auth::user()->database;
+        $notice = DB::connection($database)->table('notices')->where('id', $id)->get();
         if ($notice) {
             return response()->json(["status" => "success", "data" => $notice]);
         }
@@ -76,13 +85,18 @@ class NoticeController extends Controller
     public function update(NoticeRequest $request, $id)
     {
         $user_id = Auth::user()->id;
-        $notice = Notice::where('user_id', $user_id)->find($id);
+        $database = Auth::user()->database;
+        $notice = DB::connection($database)->table('notices')->where('id', $id)->get();
 
         if ($notice) {
             $validated = $request->validated();
             $input = $request->only('priority', 'title', 'content');
-            $request->request->add(['user_id' => $user_id]);
-            $notice->update($input);
+            DB::connection($database)->table('notices')->where('id', $id)->update([
+                'priority' => $request->priority, 
+                'title' => $request->title,
+                'content' => $request->content,
+                'updated_at' => Carbon::now()
+            ]);
             $this->log->write_log('notices', ['message' => '消息更新成功', 'data' => $input], 'update');
             return response()->json(["status" => "success", "message" => "消息更新成功"]);
         }
@@ -97,9 +111,10 @@ class NoticeController extends Controller
     public function destroy($id)
     {
         $user_id = Auth::user()->id;
-        $notice = Notice::where('user_id', $user_id)->find($id);
+        $database = Auth::user()->database;
+        $notice = DB::connection($database)->table('notices')->where('id', $id)->get();
         if ($notice) {
-            $notice->delete();
+            DB::connection($database)->table('notices')->where('id', $id)->delete();
             $this->log->write_log('notices', ['message' => '消息刪除成功', 'data' => $notice], 'delete');
             return response()->json(["status" => "success", "message" => '消息刪除成功']);
         } else {

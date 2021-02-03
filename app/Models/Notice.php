@@ -13,7 +13,6 @@ class Notice extends Model
     protected $guard_name = 'sanctum';
 
     protected $fillable = [
-        'user_id',
         'priority',
         'title',
         'content',
