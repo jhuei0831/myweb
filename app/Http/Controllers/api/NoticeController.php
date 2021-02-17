@@ -34,7 +34,6 @@ class NoticeController extends Controller
      */
     public function index()
     {
-        $user_id = Auth::user()->id;
         $database = Auth::user()->database;
         $notices = DB::connection($database)->table('notices')->orderby('priority', 'ASC')->get();
         return response()->json(["status" => "success", "data" => $notices]);
@@ -45,22 +44,15 @@ class NoticeController extends Controller
      */
     public function store(NoticeRequest $request)
     {
-        $user_id = Auth::user()->id;
         $database = Auth::user()->database;
-        $validated = $request->validated();
-        if ($validated) {
-            DB::connection($database)->table('notices')->insert([
-                'priority' => $request->priority, 
-                'title' => $request->title,
-                'content' => $request->content,
-                'created_at' => Carbon::now()
-            ]);
-            $this->log->write_log('notices', ['message' => '消息新增成功'], 'create');
-            return response()->json(["status" => "success", "message" => "消息新增成功"]);
-        }
-        else {
-            return response()->json(["status" => "failed", "message" => "消息新增失敗", 400]);
-        }
+        DB::connection($database)->table('notices')->insert([
+            'priority' => $request->priority, 
+            'title' => $request->title,
+            'content' => $request->content,
+            'created_at' => Carbon::now()
+        ]);
+        $this->log->write_log('notices', ['message' => '消息新增成功'], 'create');
+        return response()->json(["status" => "success", "message" => "消息新增成功"]);
     }
 
     /**
@@ -68,10 +60,9 @@ class NoticeController extends Controller
      */
     public function show($id)
     {
-        $user_id = Auth::user()->id;
         $database = Auth::user()->database;
         $notice = DB::connection($database)->table('notices')->where('id', $id)->get();
-        if ($notice) {
+        if ($notice->isNotEmpty()) {
             return response()->json(["status" => "success", "data" => $notice]);
         }
         else {
@@ -84,12 +75,10 @@ class NoticeController extends Controller
      */
     public function update(NoticeRequest $request, $id)
     {
-        $user_id = Auth::user()->id;
         $database = Auth::user()->database;
         $notice = DB::connection($database)->table('notices')->where('id', $id)->get();
 
-        if ($notice) {
-            $validated = $request->validated();
+        if ($notice->isNotEmpty()) {
             $input = $request->only('priority', 'title', 'content');
             DB::connection($database)->table('notices')->where('id', $id)->update([
                 'priority' => $request->priority, 
@@ -110,10 +99,9 @@ class NoticeController extends Controller
      */
     public function destroy($id)
     {
-        $user_id = Auth::user()->id;
         $database = Auth::user()->database;
         $notice = DB::connection($database)->table('notices')->where('id', $id)->get();
-        if ($notice) {
+        if ($notice->isNotEmpty()) {
             DB::connection($database)->table('notices')->where('id', $id)->delete();
             $this->log->write_log('notices', ['message' => '消息刪除成功', 'data' => $notice], 'delete');
             return response()->json(["status" => "success", "message" => '消息刪除成功']);

@@ -15,8 +15,12 @@ class CreateProductsTable extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->text('detail');
+            $table->string('name')->comment('名稱');
+            $table->text('detail')->comment('內容');
+            $table->integer('price')->unsigned()->comment('價錢');
+            $table->string('unit')->comment('單位');
+            $table->integer('discount')->unsigned()->nullable()->comment('折扣');
+            $table->integer('amount')->unsigned()->comment('剩餘數量');
             $table->timestamps();
         });
     }

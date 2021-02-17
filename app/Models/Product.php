@@ -13,6 +13,6 @@ class Product extends Model
     protected $guard_name = 'sanctum';
     
     protected $fillable = [
-        'name', 'detail'
+        'name', 'detail', 'price', 'unit', 'discount', 'amount'
     ];
 }

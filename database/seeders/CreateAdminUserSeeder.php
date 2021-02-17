@@ -20,7 +20,7 @@ class CreateAdminUserSeeder extends Seeder
             'name' => 'Admin Jhuei',
             'email' => 'admin@gmail.com',
             'password' => bcrypt('password'),
-            'database' => 'oxtomato'
+            'database' => 'mysql'
         ]);
         $role = Role::create(['name' => 'Admin', 'guard_name' => 'sanctum']);
         $permissions = Permission::pluck('id','id')->all();
