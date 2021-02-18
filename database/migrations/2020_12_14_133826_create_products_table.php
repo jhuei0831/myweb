@@ -19,9 +19,13 @@ class CreateProductsTable extends Migration
             $table->text('detail')->comment('內容');
             $table->integer('price')->unsigned()->comment('價錢');
             $table->string('unit')->comment('單位');
-            $table->integer('discount')->unsigned()->nullable()->comment('折扣');
+            $table->float('discount')->unsigned()->nullable()->comment('折扣');
             $table->integer('amount')->unsigned()->comment('剩餘數量');
+            $table->string('images')->comment('圖片資料夾');
             $table->timestamps();
+
+            // 加入索引
+            $table->index(['images']);
         });
     }
 

@@ -9,19 +9,22 @@ use Carbon\Carbon;
 
 # Service
 use App\Services\LogService;
+use App\Services\UploadService;
 
 # Facades
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 #Request
 use App\Http\Requests\ProductRequest;
 
 class ProductController extends Controller
 {
-    public function __construct(LogService $log)
+    public function __construct(LogService $log, UploadService $upload)
     {
         $this->log = $log;
+        $this->upload = $upload;
         $this->middleware('permission:product-list', ['only' => ['index']]);
         $this->middleware('permission:product-create', ['only' => ['store']]);
         $this->middleware('permission:product-edit', ['only' => ['show', 'update']]);
@@ -38,6 +41,11 @@ class ProductController extends Controller
     public function store(ProductRequest $request)
     {
         $database = Auth::user()->database;
+        $uuid = Str::uuid()->toString();
+        // 如果有上傳圖片
+        if ($request->hasfile('images')) {
+            $this->upload->multiple_images($request->file('images'), 'products/'.$database.'/'.$uuid.'/');
+        }   
         DB::connection($database)->table('products')->insert([
             'name' => $request->name,
             'detail' => $request->detail,
@@ -45,6 +53,7 @@ class ProductController extends Controller
             'unit' => $request->unit ?? '個',
             'discount' => $request->discount,
             'amount' => $request->amount,
+            'images' => $request->hasfile('images') ? $uuid : '',
             'created_at' => Carbon::now()
         ]);
         $this->log->write_log('products', ['message' => '商品新增成功'], 'create');
