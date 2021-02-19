@@ -5,12 +5,11 @@ namespace App\Services;
 use Yish\Generators\Foundation\Service\Service;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
-
-class UploadService
+class ImageService
 {
     protected $repository;
 
-    public function multiple_images($images, $path)
+    public function upload_multiple_images($images, $path)
     {
         foreach($images as $file){
  
@@ -35,5 +34,21 @@ class UploadService
             });
             $img->save($thumbnailpath);
         }
+    }
+
+    /**
+     * 刪除指定照片
+     */
+    public function delete_image($images, $disk = 'public')
+    {
+        Storage::disk($disk)->delete($images);
+    }
+
+    /**
+     * 刪除指定資料夾
+     */
+    public function delete_directory($directory, $disk = 'public')
+    {
+        Storage::disk($disk)->deleteDirectory($directory);
     }
 }

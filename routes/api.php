@@ -68,4 +68,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('product/{id}', [ProductController::class, 'show']); // 取得指定商品
     Route::put('product-edit/{id}', [ProductController::class, 'update']); // 更新指定商品
     Route::delete('product-delete/{id}', [ProductController::class, 'destroy']); // 刪除商品
+    Route::delete('product-image-delete/{id}', [ProductController::class, 'delete_image']); // 刪除商品照片
 });
