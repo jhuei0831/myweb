@@ -2,7 +2,7 @@
 	<v-app id="bg">
 		<v-system-bar height="56" app  color="teal lighten-3">
 			<v-layout row wrap justify-center>
-				<img width="200" src="https://lh3.googleusercontent.com/proxy/kOoCIfsaOk7CE1p0C2q1CJl8Gr2gL9VhiYNOPYIpUhXs_ORu3kgcxzisZ7v7rk2EG2FGQ31nO2qmLM_tgkISFAxYrACdKmaZkabGcxZicA" alt="logo">
+				<img width="200" src="" alt="logo">
 			</v-layout>
 		</v-system-bar>
 		<v-navigation-drawer class="hidden-sm-and-up" v-model="drawer" app color="grey lighten-4" floating id="nav-drawer" disable-resize-watcher bottom>

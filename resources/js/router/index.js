@@ -12,6 +12,9 @@ import Logs from '../components/logs/LogsComponent.vue'
 import LogDetail from '../components/logs/DetailComponent.vue'
 import NotFound from '../components/NotFound.vue'
 import Home from '../components/HomeComponent.vue'
+import Products from '../components/Products/ProductsComponent.vue'
+import ProductsCreate from '../components/Products/CreateComponent.vue'
+import ProductsEdit from '../components/roles/EditComponent.vue'
 
 Vue.use(VueRouter)
 
@@ -26,6 +29,9 @@ const routes = [
     {path: '/users/edit/:id', name: 'UsersEdit', meta: { auth: true }, component: UsersEdit},
     {path: '/logs', name: 'Logs', meta: { auth: true }, component: Logs},
     {path: '/logs/detail/:id', name: 'LogDetail', meta: { auth: true }, component: LogDetail},
+    {path: '/products', name: 'Products', meta: { auth: true }, component: Products},
+    {path: '/products/create', name: 'ProductsCreate', meta: { auth: true }, component: ProductsCreate},
+    {path: '/products/edit/:id', name: 'ProductsEdit', meta: { auth: true }, component: ProductsEdit},
     {path: '/login', name: 'Login', component: Login},
     {path: '*', name: 'NotFound', component: NotFound}
 ]
